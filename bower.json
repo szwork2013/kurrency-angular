@@ -1,0 +1,34 @@
+{
+  "name": "kurrency-angular",
+  "main": "./dist/kurrency-angular.js",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "typefoo",
+      "email": "hello@typefoo.com"
+    }
+  ],
+  "description": "Kurrency AngularJS Library",
+  "keywords": [
+    "angularjs",
+    "kurrency"
+  ],
+  "license": "AGPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public",
+    "examples",
+    "src",
+    "Gruntfile",
+    "npm-debug.log",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": ">=1.2"
+  },
+  "devDependencies": {
+    "angular": "~1.2.18"
+  }
+}
