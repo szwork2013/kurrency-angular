@@ -16,15 +16,13 @@
  */
 
 angular.module('kurrency', [])
-  .factory('kurrencyConfig', function kurrencyConfigFactory() {
-    return {
-      cache: false,
-      local: false,
-      accessToken: 'ABC123',
-      mode: 'test'
-    };
+  .constant('kurrencyConfig', {
+    cache: false,
+    local: false,
+    accessToken: 'ABC123',
+    mode: 'test'
   })
-  .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function kurrencyFactory($rootScope, $http, kurrencyConfig) {
+  .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function ($rootScope, $http, kurrencyConfig) {
     function Request(kurrency, opts) {
       var $scope = this;
       $scope.options = {};

@@ -1,9 +1,13 @@
 var markdown = require('node-markdown').Markdown;
+var mountFolder = function (connect, dir) {
+  return connect.static(require('path').resolve(dir));
+};
 
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-conventional-changelog');
@@ -17,6 +21,7 @@ module.exports = function(grunt) {
     modules: [],//to be filled in by build task
     pkg: grunt.file.readJSON('package.json'),
     dist: 'dist',
+    examples: 'examples',
     filename: 'kurrency-angular',
     meta: {
       banner: ['/*',
@@ -73,11 +78,43 @@ module.exports = function(grunt) {
         src: ['src/**/*.js', 'src/**/*.ngdoc'],
         title: 'API Documentation'
       }
+    },
+    watch: {
+      site: {
+        files: [
+          '<%= examples %>/*.html',
+          'template/**/*.html',
+          'src/**/*.js'
+        ],
+        tasks: ['html2js', 'build']
+      },
+      options: {
+        livereload: 35729
+      }
+    },
+    connect: {
+      server: {
+        options: {
+          port: 9000,
+          hostname: '0.0.0.0',
+          middleware: function (connect) {
+            return [
+              mountFolder(connect, 'examples'),
+              mountFolder(connect, '.')
+            ];
+          }
+        }
+      }
     }
   });
 
   // Default task.
   grunt.registerTask('default', ['build']);
+
+  grunt.registerTask('server', [
+    'connect',
+    'watch'
+  ]);
 
   grunt.registerTask('dist', 'Override dist directory', function() {
     var dir = this.args[0];
