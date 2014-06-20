@@ -1,5 +1,5 @@
 /*
- * angular-kurrency
+ * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
  * Version: 0.0.1 - 2014-06-20
