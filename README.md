@@ -1,10 +1,61 @@
-# Vern AngularJS Kurrency Library
+# Kurrency JSAPI Angular Library
 
-Depends on angular
+Depends on angular >= 1.2
 
 # Getting Started
 
-Add the script to your 
+Add the script to your site
+
+```html
+<script src="bower_components/dist/kurrency-angular.js"></script>
+```
+
+Configure your app
+
+```js
+angular.module('ExampleApp', ['kurrency'])
+  .config(['kurrencyConfig', function(kurrencyConfig) {
+    kurrencyConfig.cache = true; // enable caching of data
+    kurrencyConfig.local = false; // set true for local kurrency server testing
+    kurrencyConfig.accessToken = 'EFGHIJ123456789'; // get from your Kurrency account dashboard
+    kurrencyConfig.mode = 'test' // or live
+  }])
+```
+
+Use it in another service or controller
+
+```js
+angular.module('ExampleApp').controller('TestController', function($scope, kurrency) {
+  $scope.product_lines = [];
+  $scope.products = [];
+  
+  kurrency.session.get(function(err, session) {
+    if(err) {
+      return console.log(err);
+      // handle your error better than that!
+    }
+    
+    kurrency.product_lines.list({}, function(err, lines) {
+      if(err) {
+        return console.log(err);
+      }
+      
+      $scope.product_lines = lines;
+      kurrency.products.list({conditions: {active: true, category: lines[0].name}}, function(err, products) {
+        if(err) {
+          return console.log(err);
+        }
+        
+        // do something with products
+      });
+    });
+  });
+});
+```
+
+# API Documentation
+
+
 
 # License
 
