@@ -162,7 +162,7 @@ angular.module('kurrency', [])
               try {
                 out = JSON.parse(c.substring(nameEQ.length, c.length));
               } catch(e) {
-                out = unescape(c.substring(nameEQ.length, c.length));
+                out = decodeURIComponent(c.substring(nameEQ.length, c.length));
               }
               return out;
             }
@@ -225,6 +225,11 @@ angular.module('kurrency', [])
         }
       };
 
+      /*
+       *
+       * Session methods
+       *
+       */
       function session(options) {
         if(options) {
           $scope.config(options);
@@ -254,8 +259,13 @@ angular.module('kurrency', [])
           storage.set('session', $scope.options.session);
           return cb(null, $scope.options.session);
         });
-      }
+      };
 
+      /*
+       *
+       * Cart methods
+       *
+       */
       function cart(options) {
         if(options) {
           $scope.config(options);
@@ -359,6 +369,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Authentication methods
+       *
+       */
       function auth(options) {
         if(options) {
           $scope.config(options);
@@ -378,6 +393,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Address methods
+       *
+       */
       function addresses(options) {
         if(options) {
           $scope.config(options);
@@ -408,6 +428,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Payments methods
+       *
+       */
       function payment_methods(options) {
         if(options) {
           $scope.config(options);
@@ -425,6 +450,13 @@ angular.module('kurrency', [])
           return cb(null, res.pkg.data);
         });
       };
+      payment_methods.prototype.edit = function(data, cb) {
+        // User can edit the nickname
+        var req = new Request($scope).put($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+        req.success(function(res) {
+          return cb(null, res.pkg.data);
+        });
+      };
       payment_methods.prototype.remove = function(data, cb) {
         var req = new Request($scope).del($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
         req.success(function(res) {
@@ -432,6 +464,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Product methods
+       *
+       */
       function products(options) {
         if(options) {
           $scope.config(options);
@@ -451,6 +488,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Product Line methods
+       *
+       */
       function product_lines(options) {
         if(options) {
           $scope.config(options);
@@ -470,6 +512,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Order methods
+       *
+       */
       function orders(options) {
         if(options) {
           $scope.config(options);
@@ -501,8 +548,13 @@ angular.module('kurrency', [])
             return cb(null, res.pkg.data);
           });
         });
-      }
+      };
 
+      /*
+       *
+       * Shipping methods
+       *
+       */
       function shipping(options) {
         if(options) {
           $scope.config(options);
@@ -512,7 +564,7 @@ angular.module('kurrency', [])
         if(!data.products) {
           return cb(new Error('Missing products'), null);
         }
-        var params = angular.extend({}, data);
+        var params = angular.copy(data);
 
         delete params.products;
         params.packages = [{
@@ -534,6 +586,11 @@ angular.module('kurrency', [])
         });
       };
 
+      /*
+       *
+       * Shipment Model
+       *
+       */
       function shipment(options) {
         var $scope = this;
         $scope.rate = null;
@@ -565,7 +622,7 @@ angular.module('kurrency', [])
           $scope.ship_to.email = ship_to.email;
           $scope.ship_to.phone = ship_to.phone;
           if(ship_to.address) {
-            $scope.ship_to.address = address;
+            $scope.ship_to.address = ship_to.address;
           }
           return $scope;
         };
@@ -575,8 +632,13 @@ angular.module('kurrency', [])
 
         $scope = angular.extend($scope, options);
         return $scope;
-      };
+      }
 
+      /*
+       *
+       * Customer Model
+       *
+       */
       function customer(options) {
         var $scope = this;
         $scope._id = undefined;
@@ -604,7 +666,7 @@ angular.module('kurrency', [])
           $scope.ship_to.email = ship_to.email;
           $scope.ship_to.phone = ship_to.phone;
           if(ship_to.address) {
-            $scope.ship_to.address = address;
+            $scope.ship_to.address = ship_to.address;
           }
           return $scope;
         };
@@ -614,8 +676,13 @@ angular.module('kurrency', [])
 
         $scope = angular.extend($scope, options);
         return $scope;
-      };
+      }
 
+      /*
+       *
+       * Payment Method Model
+       *
+       */
       function payment_method(options) {
         var $scope = this;
         $scope.type = 'credit_card';
@@ -625,6 +692,11 @@ angular.module('kurrency', [])
         return $scope;
       }
 
+      /*
+       *
+       * Credit Card Model, extends Payment Method
+       *
+       */
       function credit_card(options) {
         var $scope = new payment_method({
           type: 'credit_card'
@@ -642,6 +714,11 @@ angular.module('kurrency', [])
         return $scope;
       }
 
+      /*
+       *
+       * Bank Account Model, extends Payment Method
+       *
+       */
       function bank_account(options) {
         var $scope = new payment_method({
           type: 'bank_account'

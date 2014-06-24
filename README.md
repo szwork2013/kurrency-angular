@@ -55,7 +55,100 @@ angular.module('ExampleApp').controller('TestController', function($scope, kurre
 
 # API Documentation
 
+## Sessions
 
+In order to call most of the API functions you must have established a session with Kurrency. This session lasts as long as the browser session and will be deleted once the user closes the browser. Server side, the session information can be retained for up to 30 days for use in analytics, lost carts, or incomplete orders.
+
+`kurrency.session.get(callback(err, session))`
+
+Performs a GET session. If there is no `Session-Id`, one will be procured if the `Access-Token` is accepted.
+
+`kurrency.sessions.save(session, callback(err, session))`
+
+Saves the current session data.
+
+## Cart
+
+`kurrency.cart.get(callback(err, cart))`
+
+`kurrency.cart.add(product, quantity, callback(err, cart))`
+
+`kurrency.cart.update(product, quantity, callback(err, cart))`
+
+`kurrency.cart.remove(product, callback(err, cart))`
+
+`kurrency.cart.empty(callback(err, cart))`
+
+`kurrency.cart.replace(new_cart, callback(err, cart))`
+
+## Authentication
+
+Authentication will create a User with an `Authentication-Key` based on the current API `Access-Token`.
+
+This is currently not complete.
+
+`kurrency.auth.login(email, password, callback(err, user))`
+
+`kurrency.auth.register(data, callback(err, user))`
+
+## Addresses
+
+`kurrency.addresses.list(callback(err, addresses))`
+
+`kurrency.addresses.create(data, callback(err, address))`
+
+`kurrency.addresses.edit(address, callback(err, address))`
+
+`kurrency.addresses.remove(address, callback(err, address))`
+
+## Payment Methods
+
+`kurrency.payment_methods.list(callback(err, payment_methods))`
+
+`kurrency.payment_methods.create(data, callback(err, payment_method))`
+
+`kurrency.payment_methods.edit(address, callback(err, payment_method))`
+
+`kurrency.payment_methods.remove(address, callback(err, payment_method))`
+
+## Products
+
+`kurrency.products.list(options, callback(err, products))`
+
+## Product Lines
+
+`kurrency.product_lines.list(options, callback(err, product_lines))`
+
+## Orders
+
+`kurrency.orders.list(options, callback(err, orders))`
+
+`kurrency.orders.create(data, callback(err, order))`
+
+`kurrency.orders.taxes(value, shipment, callback(err, tax))`
+
+## Shipping
+
+`kurrency.shipping.rates(data, callback(err, rates)`
+
+data is an object:
+
+```json
+{
+  ship_to: {
+    address: {
+      address_1: '',
+      address_2: '',
+      address_3: '',
+      city: '',
+      state_code: '',
+      country_code: '',
+      postal_code: ''
+    }
+  },
+  products: <session.data.cart>
+}
+```
 
 # License
 
