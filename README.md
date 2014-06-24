@@ -133,7 +133,7 @@ This is currently not complete.
 
 data is an object:
 
-```json
+```javascript
 {
   ship_to: {
     address: {
