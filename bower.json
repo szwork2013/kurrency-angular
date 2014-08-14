@@ -1,7 +1,7 @@
 {
   "name": "kurrency-angular",
   "main": "./dist/kurrency-angular.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "authors": [
     {
       "name": "typefoo",
@@ -19,7 +19,6 @@
     "node_modules",
     "bower_components",
     "public",
-    "examples",
     "src",
     "Gruntfile",
     "npm-debug.log",
@@ -29,6 +28,6 @@
     "angular": ">=1.2"
   },
   "devDependencies": {
-    "angular": "~1.2.18"
+    "angular": "~1.2.22"
   }
 }

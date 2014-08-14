@@ -1,4 +1,6 @@
 var markdown = require('node-markdown').Markdown;
+var fs = require('fs');
+var path = require('path');
 var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
@@ -9,9 +11,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-conventional-changelog');
   grunt.loadNpmTasks('grunt-ngdocs');
+  grunt.loadNpmTasks('grunt-ngmin');
 
   // Project configuration.
   grunt.util.linefeed = '\n';
@@ -21,6 +25,7 @@ module.exports = function(grunt) {
     modules: [],//to be filled in by build task
     pkg: grunt.file.readJSON('package.json'),
     dist: 'dist',
+    build: 'build',
     examples: 'examples',
     filename: 'kurrency-angular',
     meta: {
@@ -34,23 +39,14 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         options: {
-          banner: '<%= meta.banner %>\n'
+          banner: '<%= meta.banner %>\n',
+          process: function(src, filepath) {
+            src = src.replace('//$templateCache', fs.readFileSync(path.join(grunt.config('build'), 'templates.js')));
+            return src;
+          }
         },
         src: [], //src filled in by build task
         dest: '<%= dist %>/<%= filename %>.js'
-      }
-    },
-    html2js: {
-      dist: {
-        options: {
-          module: null, // no bundle module for all the html2js templates
-          base: '.'
-        },
-        files: [{
-          expand: true,
-          src: ['template/**/*.html'],
-          ext: '.html.js'
-        }]
       }
     },
     changelog: {
@@ -83,10 +79,10 @@ module.exports = function(grunt) {
       site: {
         files: [
           '<%= examples %>/*.html',
-          'template/**/*.html',
+          'kurrency-templates/**/*.html',
           'src/**/*.js'
         ],
-        tasks: ['html2js', 'build']
+        tasks: ['build']
       },
       options: {
         livereload: 35729
@@ -103,6 +99,31 @@ module.exports = function(grunt) {
               mountFolder(connect, '.')
             ];
           }
+        }
+      }
+    },
+    ngmin: {
+      kurrency: {
+        src: [
+          '<%= dist %>/<%= filename %>.js',
+        ],
+        dest: '<%= dist %>/<%= filename %>.js'
+      }
+    },
+    uglify: {
+      my_target: {
+        files: {
+          '<%= dist %>/<%= filename %>.min.js': ['<%= dist %>/<%= filename %>.js']
+        }
+      }
+    },
+    ngtemplates:  {
+      app:        {
+        src:      'kurrency-templates/**/*.html',
+        dest:     '<%= build %>/templates.js',
+        options: {
+          angular:  'w[KURRENCY_CONFIG.ANGULAR]',
+          module:   'kurrency'
         }
       }
     }
@@ -134,12 +155,10 @@ module.exports = function(grunt) {
       modules.push(grunt.file.expand('src/'+name+'/*.js'));
     });
 
-    console.log(modules);
     //Set the concat task to concatenate the given src modules
-    grunt.config('concat.dist.src', grunt.config('concat.dist.src')
-      .concat(modules));
+    grunt.config('concat.dist.src', grunt.config('concat.dist.src').concat(modules));
 
-    grunt.task.run(['concat']);
+    grunt.task.run(['ngtemplates', 'concat', 'ngmin', 'uglify']);
   });
 
   function setVersion(type, suffix) {

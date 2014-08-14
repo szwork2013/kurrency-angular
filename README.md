@@ -1,8 +1,12 @@
 # Kurrency JSAPI Angular Library
 
-Depends on angular >= 1.2
+Depends on angular >= 1.2, it will be downloaded if you are using the script as an embed from www.kurrency.co.
 
 # Getting Started
+
+```
+bower install kurrency-angular --save
+```
 
 Add the script to your site
 

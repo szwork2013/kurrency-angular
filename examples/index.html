@@ -1,9 +1,5 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" ng-app="ExampleApp"> <!--<![endif]-->
-<head>
+<html class="no-js">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <link rel="icon" type="image/png" href="favicon.png">
@@ -12,22 +8,12 @@
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 <body>
-  <div class="site" ng-controller="MainCtrl">
+  <div class="site">
+    <kurrency-product></kurrency-product>
   </div>
 
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
+  <script type="text/javascript">KURRENCY_CONFIG = {'ACCESS_TOKEN': 'b7e3aa14b998ab1867c1631cb211ea1d4f05afedacbbc19b48e31ec828d62947', 'PRODUCT_ID': '538b9464af29d10000c98431'};</script>
   <script src="dist/kurrency-angular.js"></script>
-  <script>
-    angular.module('ExampleApp', ['kurrency'])
-      .config(['kurrencyConfig', function(kurrencyConfig) {
-        kurrencyConfig.cache = true;
-        kurrencyConfig.local = true;
-        kurrencyConfig.accessToken = 'EFGHIJ';
-      }])
-      .controller('MainCtrl', function($scope, kurrency, kurrencyConfig) {
-        console.log(kurrencyConfig);
-      });
-  </script>
   <script>
     if(window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0') {
       document.write('<script src="http://'
