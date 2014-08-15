@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-conventional-changelog');
@@ -26,6 +27,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     dist: 'dist',
     build: 'build',
+    styles: 'styles',
     examples: 'examples',
     filename: 'kurrency-angular',
     meta: {
@@ -84,6 +86,10 @@ module.exports = function(grunt) {
         ],
         tasks: ['build']
       },
+      less: {
+        files: ['<%= styles %>/**/*.less'],
+        tasks: ['less:dev', 'copy:server']
+      },
       options: {
         livereload: 35729
       }
@@ -99,6 +105,18 @@ module.exports = function(grunt) {
               mountFolder(connect, '.')
             ];
           }
+        }
+      }
+    },
+    less: {
+      dev: {
+        files: {
+          'build/styles/main.css': '<%= styles %>/main.less'
+        }
+      },
+      dist: {
+        files: {
+          '<%= dist %>/<%= filename %>.css': '<%= styles %>/main.less'
         }
       }
     },
@@ -126,6 +144,18 @@ module.exports = function(grunt) {
           module:   'kurrency'
         }
       }
+    },
+    copy: {
+      server: {
+        files: [
+          {expand: true, src: ['styles/fonts/**'], dest: 'build/'}
+        ]
+      },
+      dist: {
+        files: [
+          {expand: true, src: ['styles/fonts/**'], dest: 'dist/'}
+        ]
+      }
     }
   });
 
@@ -133,6 +163,8 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['build']);
 
   grunt.registerTask('server', [
+    'less:dev',
+    'copy:server',
     'connect',
     'watch'
   ]);
@@ -158,7 +190,7 @@ module.exports = function(grunt) {
     //Set the concat task to concatenate the given src modules
     grunt.config('concat.dist.src', grunt.config('concat.dist.src').concat(modules));
 
-    grunt.task.run(['ngtemplates', 'concat', 'ngmin', 'uglify']);
+    grunt.task.run(['ngtemplates', 'concat', 'ngmin', 'uglify', 'less:dist', 'copy:dist']);
   });
 
   function setVersion(type, suffix) {

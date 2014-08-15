@@ -1,4 +1,12 @@
 <div class="kurrency-menu">
-  <div class="kurrency-cart"></div>
-  <div class="kurrency-actions"></div>
+  <div class="kurrency-cart">
+    <a href ng-click="checkout()"><span class="kicon-cart"></span></a>
+    <p ng-if="cart.length == 0" ng-bind="config.phrases.cart_empty"></p>
+    <ul>
+      <li ng-repeat="item in cart"></li>
+    </ul>
+  </div>
+  <div class="kurrency-actions">
+    <a href ng-click="account()"><span class="kicon-user"></span></a>
+  </div>
 </div>

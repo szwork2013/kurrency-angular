@@ -1,0 +1,44 @@
+.kurrency-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #fcfcfc;
+  border-top: 1px solid #888;
+  line-height: 60px;
+  padding: 0 10px;
+  font-size: 0px;
+  font-family: 'Open Sans', 'Helvetica', sans-serif;
+  [class^="kicon-"] {
+    font-size: 32px;
+    vertical-align: middle;
+  }
+
+  > div {
+    font-size: 14px;
+    display: inline-block;
+  }
+
+  a {
+    text-decoration: none;
+    color: #4baf67;
+    &:hover {
+      color: lighten(#4baf67, 10%);
+    }
+  }
+
+  .kurrency-cart {
+    width: calc(~"100% - 60px");
+
+    p {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 0 0 10px;
+    }
+  }
+  .kurrency-actions {
+    width: 60px;
+    text-align: center;
+  }
+}

@@ -52,7 +52,10 @@
         cache: false,
         local: false,
         accessToken: 'ABC123',
-        mode: 'test'
+        mode: 'test',
+        phrases: {
+          cart_empty: 'You don\'t have anything in your cart'
+        }
       })
       .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function ($rootScope, $http, kurrencyConfig) {
         function Request(kurrency, opts) {
@@ -102,21 +105,15 @@
             var req = $http(opts);
 
             req.success(function () {
-              $rootScope.apiLoading = false;
+              $rootScope.$broadcast('apiFinished', true);
             });
 
             req.error(function (res) {
-              $rootScope.apiLoading = false;
-              console.log(res);
+              $rootScope.$broadcast('apiFinished', true);
               if (error) {
-                error(res);
+                return error(res);
               }
-              if (res.pkg === undefined) {
-                $rootScope.addRootAlert('error', 'An error occurred connecting to the server');
-                return;
-              }
-
-              $rootScope.addRootAlert('error', res.pkg.statusMessage);
+              $rootScope.$broadcast('apiError', res);
             });
 
             return req;
@@ -806,7 +803,7 @@
 
         return new Kurrency(kurrencyConfig);
       }])
-      .directive('kurrencyMenu', function() {
+      .directive('kurrencyMenu', function(kurrency, kurrencyConfig) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -819,7 +816,11 @@
           },
           replace: true,
           link: function(scope, element, attr) {
-            console.log(scope);
+            scope.config = kurrencyConfig;
+            scope.cart = null;
+            kurrency.cart.get(function(err, cart) {
+              scope.cart = cart;
+            });
           }
         }
       });
@@ -827,20 +828,13 @@
     if(w.KURRENCY_CONFIG) {
       // we are using kurrency from an embed standpoint
       if(!w.KURRENCY_CONFIG.integrated) {
-        var apps = d.querySelectorAll('[ng-app]');
-        if(apps.length === 0) {
-          angular.bootstrap(d.getElementsByTagName('html')[0], ['kurrency']);
-        }
-
-        angular.injector(['ng', 'kurrency']).invoke(['$compile', '$rootScope', function($compile, $rootScope) {
-          angular.element(d).find('body').append($compile('<kurrency-menu></kurrency-menu>')($rootScope));
-        }]);
-
-        angular.module('kurrency').config(['kurrencyConfig', function(kurrencyConfig) {
+        angular.injector(['ng', 'kurrency']).invoke(['$compile', '$rootScope', 'kurrencyConfig', function($compile, $rootScope, kurrencyConfig) {
           kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
           kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
           kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
           kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
+
+          angular.element(d).find('body').append($compile('<kurrency-menu></kurrency-menu>')($rootScope));
         }]);
       }
     }
