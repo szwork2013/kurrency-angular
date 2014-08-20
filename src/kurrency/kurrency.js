@@ -435,6 +435,10 @@
             });
           };
 
+          $scope.loggedIn = function() {
+            return storage.get('user');
+          };
+
           /*
            *
            * Address methods
@@ -803,6 +807,31 @@
 
         return new Kurrency(kurrencyConfig);
       }])
+      .directive('kurrencyPopover', function() {
+        return {
+          scope: true,
+          restrict: 'A',
+          transclude: true,
+          templateUrl: function(tElement, tAttrs) {
+            var url = '/kurrency-templates/kurrency-popover.html';
+            if(tAttrs.templateUrl) {
+              url = tAttrs.templateUrl;
+            }
+
+            return url;
+          },
+          link: function(scope, element, attr) {
+            scope.contents = scope.$eval(attr.kurrencyPopover);
+            var popover = angular.element(element[0].querySelector('.kurrency-popover'));
+            element.bind('mouseover', function(evt) {
+              popover.addClass('active');
+            });
+            element.bind('mouseout', function(evt) {
+              popover.removeClass('active');
+            });
+          }
+        }
+      })
       .directive('kurrencyMenu', function(kurrency, kurrencyConfig) {
         return {
           restrict: 'E',
@@ -818,9 +847,27 @@
           link: function(scope, element, attr) {
             scope.config = kurrencyConfig;
             scope.cart = null;
+            scope.showing = null;
+            scope.kurrency = kurrency;
             kurrency.cart.get(function(err, cart) {
               scope.cart = cart;
             });
+
+            scope.close = function() {
+              scope.showing = null;
+            };
+
+            scope.toggle = function(val) {
+              if(scope.showing === val) {
+                scope.showing = null;
+              } else {
+                scope.showing = val;
+              }
+            };
+
+            scope.show = function(val) {
+              return (val === scope.showing);
+            };
           }
         }
       });

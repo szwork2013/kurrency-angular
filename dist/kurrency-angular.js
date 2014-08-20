@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.0.1 - 2014-08-14
+ * Version: 0.0.1 - 2014-08-20
  * License: AGPL
  */
 'use strict';
@@ -396,6 +396,9 @@
               return cb(null, res.pkg.data);
             });
           };
+          $scope.loggedIn = function () {
+            return storage.get('user');
+          };
           /*
            *
            * Address methods
@@ -729,7 +732,30 @@
         };
         return new Kurrency(kurrencyConfig);
       }
-    ]).directive('kurrencyMenu', function (kurrency, kurrencyConfig) {
+    ]).directive('kurrencyPopover', function () {
+      return {
+        scope: true,
+        restrict: 'A',
+        transclude: true,
+        templateUrl: function (tElement, tAttrs) {
+          var url = '/kurrency-templates/kurrency-popover.html';
+          if (tAttrs.templateUrl) {
+            url = tAttrs.templateUrl;
+          }
+          return url;
+        },
+        link: function (scope, element, attr) {
+          scope.contents = scope.$eval(attr.kurrencyPopover);
+          var popover = angular.element(element[0].querySelector('.kurrency-popover'));
+          element.bind('mouseover', function (evt) {
+            popover.addClass('active');
+          });
+          element.bind('mouseout', function (evt) {
+            popover.removeClass('active');
+          });
+        }
+      };
+    }).directive('kurrencyMenu', function (kurrency, kurrencyConfig) {
       return {
         restrict: 'E',
         templateUrl: function (tElement, tAttrs) {
@@ -743,9 +769,24 @@
         link: function (scope, element, attr) {
           scope.config = kurrencyConfig;
           scope.cart = null;
+          scope.showing = null;
+          scope.kurrency = kurrency;
           kurrency.cart.get(function (err, cart) {
             scope.cart = cart;
           });
+          scope.close = function () {
+            scope.showing = null;
+          };
+          scope.toggle = function (val) {
+            if (scope.showing === val) {
+              scope.showing = null;
+            } else {
+              scope.showing = val;
+            }
+          };
+          scope.show = function (val) {
+            return val === scope.showing;
+          };
         }
       };
     });
@@ -773,7 +814,8 @@
       '$templateCache',
       function ($templateCache) {
         'use strict';
-        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu">\n' + '  <div class="kurrency-cart">\n' + '    <a href ng-click="checkout()"><span class="kicon-cart"></span></a>\n' + '    <p ng-if="cart.length == 0" ng-bind="config.phrases.cart_empty"></p>\n' + '    <ul>\n' + '      <li ng-repeat="item in cart"></li>\n' + '    </ul>\n' + '  </div>\n' + '  <div class="kurrency-actions">\n' + '    <a href ng-click="account()"><span class="kicon-user"></span></a>\n' + '  </div>\n' + '</div>');
+        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.loggedIn(), \'open\': showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li class="sign-in"><a href ng-click="toggle(\'login\')" kurrency-popover="\'Sign In\'"><span class="kicon-user"></span></a></li>\n' + '    <li class="account"><a href ng-click="toggle(\'account\')" kurrency-popover="\'Account\'"><span class="kicon-user-circle"></span></a></li>\n' + '    <li class="cart"><a href ng-click="toggle(\'cart\')" kurrency-popover="\'Shiping Cart\'"><span class="kicon-cart"></span></a></li>\n' + '    <li class="wishlist"><a href ng-click="toggle(\'wishlist\')" kurrency-popover="\'Wishlist\'"><span class="kicon-wand"></span></a></li>\n' + '    <li class="contact"><a href kurrency-popover="\'Contact\'"><span class="kicon-bubbles"></span></a></li>\n' + '    <li class="sign-out"><a href kurrency-popover="\'Sign Out\'"><span class="kicon-exit"></span></a></li>\n' + '  </ul>\n' + '  <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show(\'cart\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Shopping Cart</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show(\'wishlist\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Wishlist</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-login" ng-class="{active: show(\'login\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Sign In</h1>\n' + '      <p>Sign into your Kurrency account.</p>\n' + '      <form>\n' + '        <input type="text" ng-model="login.username" placeholder="Enter your username or email">\n' + '        <input type="password" ng-model="login.password" placeholder="Enter your password">\n' + '        <button class="login-button" ng-click="loginUser()">Sign In</button>\n' + '        <button class="forgot-password" ng-click="toggle(\'forgot-password\')">Forgot your password?</button>\n' + '        <p>Don\'t have an account?</p>\n' + '        <button class="register-button" ng-click="toggle(\'register\')">Register Now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-forgot-password" ng-class="{active: show(\'forgot-password\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-click="toggle(\'login\')"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Forgot My Password</h1>\n' + '      <p>Enter your email address and we will send you instructions to reset your password</p>\n' + '      <form>\n' + '        <input type="text" ng-model="login.username" placeholder="Enter your username or email">\n' + '        <button class="login-button" ng-click="forgotPassword()">Send Those Instructions</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-register" ng-class="{active: show(\'register\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-click="toggle(\'login\')"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Register</h1>\n' + '      <p>Enter the fields below to get started</p>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-account" ng-class="{active: show(\'account\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>My Account</h1>\n' + '    </div>\n' + '  </div>\n' + '</div>');
+        $templateCache.put('kurrency-templates/kurrency-popover.html', '<span ng-transclude></span>\n' + '<div class="kurrency-popover">\n' + '  <span ng-bind="contents"></span>\n' + '</div>');
       }
     ]);
   }

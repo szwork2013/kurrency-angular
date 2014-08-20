@@ -1,12 +1,65 @@
-<div class="kurrency-menu">
-  <div class="kurrency-cart">
-    <a href ng-click="checkout()"><span class="kicon-cart"></span></a>
-    <p ng-if="cart.length == 0" ng-bind="config.phrases.cart_empty"></p>
-    <ul>
-      <li ng-repeat="item in cart"></li>
-    </ul>
+<div class="kurrency-menu" ng-class="{'logged-in': kurrency.loggedIn(), 'open': showing}">
+  <ul class="menu-wrapper">
+    <li class="sign-in"><a href ng-click="toggle('login')" kurrency-popover="'Sign In'"><span class="kicon-user"></span></a></li>
+    <li class="account"><a href ng-click="toggle('account')" kurrency-popover="'Account'"><span class="kicon-user-circle"></span></a></li>
+    <li class="cart"><a href ng-click="toggle('cart')" kurrency-popover="'Shiping Cart'"><span class="kicon-cart"></span></a></li>
+    <li class="wishlist"><a href ng-click="toggle('wishlist')" kurrency-popover="'Wishlist'"><span class="kicon-wand"></span></a></li>
+    <li class="contact"><a href kurrency-popover="'Contact'"><span class="kicon-bubbles"></span></a></li>
+    <li class="sign-out"><a href kurrency-popover="'Sign Out'"><span class="kicon-exit"></span></a></li>
+  </ul>
+  <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show('cart')}">
+    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>
+    <div class="kurrency-container">
+      <h1>Shopping Cart</h1>
+    </div>
   </div>
-  <div class="kurrency-actions">
-    <a href ng-click="account()"><span class="kicon-user"></span></a>
+  <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show('wishlist')}">
+    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>
+    <div class="kurrency-container">
+      <h1>Wishlist</h1>
+    </div>
+  </div>
+  <div class="kurrency-sidebar kurrency-login" ng-class="{active: show('login')}">
+    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>
+    <div class="kurrency-container">
+      <h1>Sign In</h1>
+      <p>Sign into your Kurrency account.</p>
+      <form>
+        <input type="text" ng-model="login.username" placeholder="Enter your username or email">
+        <input type="password" ng-model="login.password" placeholder="Enter your password">
+        <button class="login-button" ng-click="loginUser()">Sign In</button>
+        <button class="forgot-password" ng-click="toggle('forgot-password')">Forgot your password?</button>
+        <p>Don't have an account?</p>
+        <button class="register-button" ng-click="toggle('register')">Register Now</button>
+      </form>
+    </div>
+  </div>
+  <div class="kurrency-sidebar kurrency-forgot-password" ng-class="{active: show('forgot-password')}">
+    <div class="closer">
+      <a href class="back" ng-click="toggle('login')"><span class="kicon-arrow-left"></span></a>
+      <a href ng-click="close()"><span class="kicon-close"></span></a></div>
+    <div class="kurrency-container">
+      <h1>Forgot My Password</h1>
+      <p>Enter your email address and we will send you instructions to reset your password</p>
+      <form>
+        <input type="text" ng-model="login.username" placeholder="Enter your username or email">
+        <button class="login-button" ng-click="forgotPassword()">Send Those Instructions</button>
+      </form>
+    </div>
+  </div>
+  <div class="kurrency-sidebar kurrency-register" ng-class="{active: show('register')}">
+    <div class="closer">
+      <a href class="back" ng-click="toggle('login')"><span class="kicon-arrow-left"></span></a>
+      <a href ng-click="close()"><span class="kicon-close"></span></a></div>
+    <div class="kurrency-container">
+      <h1>Register</h1>
+      <p>Enter the fields below to get started</p>
+    </div>
+  </div>
+  <div class="kurrency-sidebar kurrency-account" ng-class="{active: show('account')}">
+    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>
+    <div class="kurrency-container">
+      <h1>My Account</h1>
+    </div>
   </div>
 </div>

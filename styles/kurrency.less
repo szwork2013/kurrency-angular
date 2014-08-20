@@ -1,44 +1,204 @@
+@linkColor: #080808;
+@linkBgColor: #fdfdfd;
+@linkHoverColor: #4baf67;
+@linkHoverBgColor: #fff;
+@linkActiveColor: #fff;
+@linkActiveBgColor: #4baf67;
+@linkBorderColor: #dcdcdc;
+@backgroundColor: #dcdcdc;
+@popoverBgColor: #4baf67;
+@popoverColor: #fff;
+@windowBgColor: #e8ece3;
+@windowBgAltColor: #dfe3da;
 .kurrency-menu {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: #fcfcfc;
-  border-top: 1px solid #888;
-  line-height: 60px;
-  padding: 0 10px;
-  font-size: 0px;
+  top: 0;
+  right: 0;
+  height: 100%;
   font-family: 'Open Sans', 'Helvetica', sans-serif;
+  .transition(all .5s);
   [class^="kicon-"] {
-    font-size: 32px;
+    font-size: 24px;
     vertical-align: middle;
   }
 
-  > div {
-    font-size: 14px;
-    display: inline-block;
-  }
-
-  a {
-    text-decoration: none;
-    color: #4baf67;
-    &:hover {
-      color: lighten(#4baf67, 10%);
+  > .menu-wrapper {
+    display: block;
+    box-sizing: border-box;
+    background-color: @backgroundColor;
+    line-height: 45px;
+    font-size: 0px;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 4px 0;
+    > li {
+      box-sizing: border-box;
+      display: block;
+      text-align: center;
+      padding: 0 4px;
+      a {
+        box-sizing: border-box;
+        display: block;
+        height: 45px;
+        width: 45px;
+        line-height: 45px;
+        border-bottom: 2px solid @linkBorderColor;
+        position: relative;
+        text-decoration: none;
+        color: @linkColor;
+        background-color: @linkBgColor;
+        &:hover {
+          color: @linkHoverColor;
+          background-color: @linkHoverBgColor;
+        }
+        &.active,
+        &:active {
+          background-color: @linkActiveBgColor;
+          color: @linkActiveColor;
+        }
+      }
+      &.sign-in {
+        padding-top: 4px;
+      }
+      &.account {
+        padding-top: 4px;
+        display: none;
+      }
+      &.sign-out {
+        display: none;
+      }
+      &.contact {
+        a {
+          border-bottom: none;
+        }
+      }
     }
   }
 
-  .kurrency-cart {
-    width: calc(~"100% - 60px");
-
-    p {
-      display: inline-block;
-      vertical-align: middle;
-      margin: 0 0 0 10px;
+  &.logged-in {
+    > .menu-wrapper {
+      > li {
+        &.sign-in {
+          display: none;
+        }
+        &.account {
+          display: block;
+        }
+        &.contact {
+          a {
+            border-bottom: 2px solid @linkBorderColor;
+          }
+        }
+        &.sign-out {
+          display: block;
+          a {
+            border-bottom: none;
+          }
+        }
+      }
     }
   }
-  .kurrency-actions {
-    width: 60px;
-    text-align: center;
+
+  &.open {
+    right: 340px;
+  }
+
+  .kurrency-sidebar {
+    position: absolute;
+    left: 53px;
+    top: 0;
+    width: 340px;
+    height: 100%;
+    overflow: hidden;
+    background-color: @windowBgColor;
+    .transition(all .5s);
+    .opacity(0);
+    .closer {
+      position: relative;
+      background-color: @windowBgAltColor;
+      height: 45px;
+      a {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+        display: block;
+        color: @linkColor;
+        background-color: @linkBgColor;
+        text-decoration: none;
+        text-align: center;
+        border-left: 1px solid @windowBgColor;
+        &:hover {
+          color: @linkHoverColor;
+          background-color: @linkHoverBgColor;
+        }
+        &.active,
+        &:active {
+          background-color: @linkActiveBgColor;
+          color: @linkActiveColor;
+        }
+        span {
+          font-size: 18px;
+        }
+        &.back {
+          right: auto;
+          left: 0;
+          border-left: none;
+          border-right: 1px solid @windowBgColor;
+        }
+      }
+    }
+    .kurrency-container {
+      box-sizing: border-box;
+      width: 340px;
+      padding: 20px;
+      height: 100%;
+      .transform(scale(.8));
+      .transition(all .5s);
+      h1 {
+        margin: 0;
+        font-size: 18px;
+        text-align: center;
+      }
+    }
+    &.active {
+      z-index: 5;
+      .opacity(100);
+      .kurrency-container {
+        .transform(scale(1));
+      }
+    }
+  }
+}
+
+.kurrency-popover {
+  position: absolute;
+  width: 100px;
+  height: 45px;
+  left: -130px;
+  top: 0;
+  font-size: 12px;
+  background-color: @popoverBgColor;
+  color: @popoverColor;
+  .opacity(0);
+  pointer-events: none;
+  .transition(left .25s, opacity .25s);
+  &.active {
+    left: -110px;
+    .opacity(100);
+  }
+  &:before {
+    position: absolute;
+    content: "";
+    left: 100px;
+    top: 50%;
+    margin-top: -5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 8.7px;
+    border-color: transparent transparent transparent @popoverBgColor;
   }
 }

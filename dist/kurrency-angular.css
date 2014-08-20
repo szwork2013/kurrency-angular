@@ -1,30 +1,215 @@
 .kurrency-menu {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: #fcfcfc;
-  border-top: 1px solid #888;
-  line-height: 60px;
-  padding: 0 10px;
+  top: 0;
+  right: 0;
+  height: 100%;
+  font-family: 'Open Sans', 'Helvetica', sans-serif;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
 }
 .kurrency-menu [class^="kicon-"] {
-  font-size: 32px;
+  font-size: 24px;
   vertical-align: middle;
 }
-.kurrency-menu .kurrency-cart a {
+.kurrency-menu > .menu-wrapper {
+  display: block;
+  box-sizing: border-box;
+  background-color: #dcdcdc;
+  line-height: 45px;
+  font-size: 0px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 4px 0;
+}
+.kurrency-menu > .menu-wrapper > li {
+  box-sizing: border-box;
+  display: block;
+  text-align: center;
+  padding: 0 4px;
+}
+.kurrency-menu > .menu-wrapper > li a {
+  box-sizing: border-box;
+  display: block;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  border-bottom: 2px solid #dcdcdc;
+  position: relative;
   text-decoration: none;
+  color: #080808;
+  background-color: #fdfdfd;
+}
+.kurrency-menu > .menu-wrapper > li a:hover {
   color: #4baf67;
+  background-color: #ffffff;
 }
-.kurrency-menu .kurrency-cart a:hover {
-  color: #6dc084;
+.kurrency-menu > .menu-wrapper > li a.active,
+.kurrency-menu > .menu-wrapper > li a:active {
+  background-color: #4baf67;
+  color: #ffffff;
 }
-.kurrency-menu .kurrency-cart p {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 0 0 10px;
-  font-family: 'Open Sans', 'Helvetica', sans-serif;
+.kurrency-menu > .menu-wrapper > li.sign-in {
+  padding-top: 4px;
+}
+.kurrency-menu > .menu-wrapper > li.account {
+  padding-top: 4px;
+  display: none;
+}
+.kurrency-menu > .menu-wrapper > li.sign-out {
+  display: none;
+}
+.kurrency-menu > .menu-wrapper > li.contact a {
+  border-bottom: none;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.sign-in {
+  display: none;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.account {
+  display: block;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.contact a {
+  border-bottom: 2px solid #dcdcdc;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.sign-out {
+  display: block;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.sign-out a {
+  border-bottom: none;
+}
+.kurrency-menu.open {
+  right: 340px;
+}
+.kurrency-menu .kurrency-sidebar {
+  position: absolute;
+  left: 53px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  overflow: hidden;
+  background-color: #e8ece3;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.kurrency-menu .kurrency-sidebar .closer {
+  position: relative;
+  background-color: #dfe3da;
+  height: 45px;
+}
+.kurrency-menu .kurrency-sidebar .closer a {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  display: block;
+  color: #080808;
+  background-color: #fdfdfd;
+  text-decoration: none;
+  text-align: center;
+  border-left: 1px solid #e8ece3;
+}
+.kurrency-menu .kurrency-sidebar .closer a:hover {
+  color: #4baf67;
+  background-color: #ffffff;
+}
+.kurrency-menu .kurrency-sidebar .closer a.active,
+.kurrency-menu .kurrency-sidebar .closer a:active {
+  background-color: #4baf67;
+  color: #ffffff;
+}
+.kurrency-menu .kurrency-sidebar .closer a span {
+  font-size: 18px;
+}
+.kurrency-menu .kurrency-sidebar .closer a.back {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid #e8ece3;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container {
+  box-sizing: border-box;
+  width: 340px;
+  padding: 20px;
+  height: 100%;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container h1 {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+}
+.kurrency-menu .kurrency-sidebar.active {
+  z-index: 5;
+  zoom: 1;
+  filter: alpha(opacity=10000);
+  -webkit-opacity: 100;
+  -moz-opacity: 100;
+  opacity: 100;
+}
+.kurrency-menu .kurrency-sidebar.active .kurrency-container {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+.kurrency-popover {
+  position: absolute;
+  width: 100px;
+  height: 45px;
+  left: -130px;
+  top: 0;
+  font-size: 12px;
+  background-color: #4baf67;
+  color: #ffffff;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: left 0.25s, opacity 0.25s;
+  -moz-transition: left 0.25s, opacity 0.25s;
+  -o-transition: left 0.25s, opacity 0.25s;
+  transition: left 0.25s, opacity 0.25s;
+}
+.kurrency-popover.active {
+  left: -110px;
+  zoom: 1;
+  filter: alpha(opacity=10000);
+  -webkit-opacity: 100;
+  -moz-opacity: 100;
+  opacity: 100;
+}
+.kurrency-popover:before {
+  position: absolute;
+  content: "";
+  left: 100px;
+  top: 50%;
+  margin-top: -5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 8.7px;
+  border-color: transparent transparent transparent #4baf67;
 }
 @font-face {
   font-family: 'KurrencyIcons';
@@ -118,6 +303,57 @@
 .kicon-bank2:before {
   content: "\42";
 }
+.kicon-images:before {
+  content: "\e601";
+}
 .kicon-cart:before {
   content: "\e600";
+}
+.kicon-support:before {
+  content: "\e602";
+}
+.kicon-phone:before {
+  content: "\e603";
+}
+.kicon-calendar:before {
+  content: "\e604";
+}
+.kicon-screen:before {
+  content: "\e605";
+}
+.kicon-laptop:before {
+  content: "\e606";
+}
+.kicon-mobile:before {
+  content: "\e607";
+}
+.kicon-tablet:before {
+  content: "\e608";
+}
+.kicon-bubble:before {
+  content: "\e609";
+}
+.kicon-bubbles:before {
+  content: "\e60a";
+}
+.kicon-lock:before {
+  content: "\e60b";
+}
+.kicon-unlocked:before {
+  content: "\e60c";
+}
+.kicon-wand:before {
+  content: "\e60d";
+}
+.kicon-gift:before {
+  content: "\e60e";
+}
+.kicon-lab:before {
+  content: "\e60f";
+}
+.kicon-exit:before {
+  content: "\e610";
+}
+.kicon-arrow-left:before {
+  content: "\e611";
 }
