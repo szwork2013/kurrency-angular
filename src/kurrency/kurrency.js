@@ -91,7 +91,7 @@
           };
 
           $scope.req = function (type, url, data, error) {
-            $rootScope.apiLoading = true;
+            $rootScope.$broadcast('apiLoading', true);
             var opts = angular.extend({}, $scope.options);
             opts.method = type;
             opts.url = url;
@@ -105,15 +105,15 @@
             var req = $http(opts);
 
             req.success(function () {
-              $rootScope.$broadcast('apiFinished', true);
+              $rootScope.$broadcast('apiLoading', false);
             });
 
             req.error(function (res) {
-              $rootScope.$broadcast('apiFinished', true);
+              $rootScope.$broadcast('apiLoading', false);
+              $rootScope.$broadcast('apiError', res);
               if (error) {
                 return error(res);
               }
-              $rootScope.$broadcast('apiError', res);
             });
 
             return req;
@@ -873,19 +873,8 @@
             scope.cart = null;
             scope.showing = null;
             scope.back = null;
-            scope.login = {
-              username: null,
-              password: null
-            };
-            scope.register = {
-              first_name: null,
-              last_name: null,
-              email: null,
-              password: null,
-            };
-            scope.forgot = {
-              email: null
-            };
+            scope.apiLoading = 0;
+
             scope.messages = {
               none: [],
               login: [],
@@ -917,6 +906,22 @@
               }
             };
 
+            scope.resetForms = function() {
+              scope.login = {
+                username: null,
+                password: null
+              };
+              scope.register = {
+                first_name: null,
+                last_name: null,
+                email: null,
+                password: null,
+              };
+              scope.forgot = {
+                email: null
+              };
+            };
+
             scope.close = function() {
               scope.showing = null;
             };
@@ -933,6 +938,8 @@
               } else {
                 scope.back = null;
               }
+              scope.wipeMessages();
+              scope.resetForms();
             };
 
             scope.show = function(val) {
@@ -949,6 +956,7 @@
                   } else {
                     scope.showing = null;
                   }
+                  scope.wipeMessages();
                 }, 500);
               });
             };
@@ -964,6 +972,7 @@
                   } else {
                     scope.showing = null;
                   }
+                  scope.wipeMessages();
                 }, 500);
               });
             };
@@ -987,6 +996,17 @@
             scope.$on('kurrencySignOut', function(evt) {
               scope.showing = null;
             });
+
+            scope.$on('apiLoading', function(evt, val) {
+              if(val === true) {
+                scope.apiLoading++;
+              } else if(scope.apiLoading > 0) {
+                scope.apiLoading--;
+              }
+              console.log('here');
+            });
+
+            scope.resetForms();
           }
         }
       });

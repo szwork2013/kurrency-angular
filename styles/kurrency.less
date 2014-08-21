@@ -23,6 +23,8 @@
 @inputBorderColor: #4baf67;
 @errorColor: #d52626;
 @successColor: #26d551;
+@loadingBgColor: #000;
+@loadingBgOpacity: .50;
 [class^="kurrency-"] {
   .box-sizing(border-box);
   * {
@@ -117,6 +119,30 @@
 
   &.open {
     right: 340px;
+  }
+
+  .kurrency-loading {
+    position: absolute;
+    left: 53px;
+    top: 0;
+    width: 340px;
+    height: 100%;
+    background-color: @loadingBgColor;
+    z-index: -1;
+    .transition(opacity .5s);
+    .opacity(0);
+    &.active {
+      .opacity(@loadingBgOpacity);
+      z-index: 1000;
+    }
+    .loading-indicator {
+      position: absolute;
+      width: 100%;
+      bottom: 10px;
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+    }
   }
 
   .kurrency-sidebar {

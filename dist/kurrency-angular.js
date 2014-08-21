@@ -86,7 +86,7 @@
             return $scope;
           };
           $scope.req = function (type, url, data, error) {
-            $rootScope.apiLoading = true;
+            $rootScope.$broadcast('apiLoading', true);
             var opts = angular.extend({}, $scope.options);
             opts.method = type;
             opts.url = url;
@@ -98,14 +98,14 @@
             }
             var req = $http(opts);
             req.success(function () {
-              $rootScope.$broadcast('apiFinished', true);
+              $rootScope.$broadcast('apiLoading', false);
             });
             req.error(function (res) {
-              $rootScope.$broadcast('apiFinished', true);
+              $rootScope.$broadcast('apiLoading', false);
+              $rootScope.$broadcast('apiError', res);
               if (error) {
                 return error(res);
               }
-              $rootScope.$broadcast('apiError', res);
             });
             return req;
           };
@@ -793,17 +793,7 @@
           scope.cart = null;
           scope.showing = null;
           scope.back = null;
-          scope.login = {
-            username: null,
-            password: null
-          };
-          scope.register = {
-            first_name: null,
-            last_name: null,
-            email: null,
-            password: null
-          };
-          scope.forgot = { email: null };
+          scope.apiLoading = 0;
           scope.messages = {
             none: [],
             login: [],
@@ -833,6 +823,19 @@
               scope.messages[i] = [];
             }
           };
+          scope.resetForms = function () {
+            scope.login = {
+              username: null,
+              password: null
+            };
+            scope.register = {
+              first_name: null,
+              last_name: null,
+              email: null,
+              password: null
+            };
+            scope.forgot = { email: null };
+          };
           scope.close = function () {
             scope.showing = null;
           };
@@ -847,6 +850,8 @@
             } else {
               scope.back = null;
             }
+            scope.wipeMessages();
+            scope.resetForms();
           };
           scope.show = function (val) {
             return val === scope.showing;
@@ -861,6 +866,7 @@
                 } else {
                   scope.showing = null;
                 }
+                scope.wipeMessages();
               }, 500);
             });
           };
@@ -875,6 +881,7 @@
                 } else {
                   scope.showing = null;
                 }
+                scope.wipeMessages();
               }, 500);
             });
           };
@@ -894,6 +901,15 @@
           scope.$on('kurrencySignOut', function (evt) {
             scope.showing = null;
           });
+          scope.$on('apiLoading', function (evt, val) {
+            if (val === true) {
+              scope.apiLoading++;
+            } else if (scope.apiLoading > 0) {
+              scope.apiLoading--;
+            }
+            console.log('here');
+          });
+          scope.resetForms();
         }
       };
     });
@@ -921,7 +937,7 @@
       '$templateCache',
       function ($templateCache) {
         'use strict';
-        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.auth.loggedIn(), \'open\': showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li class="sign-in"><a href ng-click="toggle(\'login\')" kurrency-popover="\'Sign In\'"><span class="kicon-user"></span></a></li>\n' + '    <li class="account"><a href ng-click="toggle(\'account\')" kurrency-popover="\'Account\'"><span class="kicon-user-circle"></span></a></li>\n' + '    <li class="cart"><a href ng-click="toggle(\'cart\')" kurrency-popover="\'Shipping Cart\'"><span class="kicon-cart"></span></a></li>\n' + '    <li class="wishlist"><a href ng-click="toggle(\'wishlist\')" kurrency-popover="\'Wishlist\'"><span class="kicon-wand"></span></a></li>\n' + '    <li class="contact"><a href kurrency-popover="\'Contact\'" ng-click="toggle(\'contact\')"><span class="kicon-bubbles"></span></a></li>\n' + '    <li class="sign-out"><a href kurrency-popover="\'Sign Out\'" ng-click="kurrency.auth.signOut()"><span class="kicon-exit"></span></a></li>\n' + '  </ul>\n' + '  <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show(\'cart\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Shopping Cart</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show(\'wishlist\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Wishlist</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-login" ng-class="{active: show(\'login\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Sign In</h1>\n' + '      <p>Sign into your Kurrency account.</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'login\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="loginUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="login.username" placeholder="Enter your username or email">\n' + '        <input class="kurrency-input" type="password" ng-model="login.password" placeholder="Enter your password">\n' + '        <button type="submit" class="kurrency-button login-button">Sign In</button>\n' + '        <button type="button" class="kurrency-button small forgot-password" ng-click="toggle(\'forgot-password\', \'login\')">Forgot your password?</button>\n' + '        <p>Don\'t have an account?</p>\n' + '        <button type="button" class="kurrency-button small register-button" ng-click="toggle(\'register\', \'login\')">Register Now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-forgot-password" ng-class="{active: show(\'forgot-password\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Forgot My Password</h1>\n' + '      <p>Enter your email address and we will send you instructions to reset your password</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'forgot-password\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="forgotPassword()">\n' + '        <input class="kurrency-input" type="text" ng-model="forgot.email" placeholder="Enter your email address">\n' + '        <button class="kurrency-button" type="submit" class="login-button">Send Those Instructions</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-register" ng-class="{active: show(\'register\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Register</h1>\n' + '      <p>Enter the fields below to get started</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'register\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="registerUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="register.first_name" placeholder="Enter your first name">\n' + '        <input class="kurrency-input" type="text" ng-model="register.last_name" placeholder="Enter your last name">\n' + '        <input class="kurrency-input" type="email" ng-model="register.email" placeholder="Enter your email">\n' + '        <input class="kurrency-input" type="password" ng-model="register.password" placeholder="Enter a password">\n' + '        <button type="submit" class="kurrency-button register-button">Register</button>\n' + '        <p>Already have an account?</p>\n' + '        <button type="button" class="kurrency-button small login-button" ng-click="toggle(\'login\', \'register\')">Sign in now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-account" ng-class="{active: show(\'account\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>My Account</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-contact" ng-class="{active: show(\'contact\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Contact Us</h1>\n' + '    </div>\n' + '  </div>\n' + '</div>');
+        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.auth.loggedIn(), \'open\': showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li class="sign-in"><a href ng-click="toggle(\'login\')" kurrency-popover="\'Sign In\'"><span class="kicon-user"></span></a></li>\n' + '    <li class="account"><a href ng-click="toggle(\'account\')" kurrency-popover="\'Account\'"><span class="kicon-user-circle"></span></a></li>\n' + '    <li class="cart"><a href ng-click="toggle(\'cart\')" kurrency-popover="\'Shipping Cart\'"><span class="kicon-cart"></span></a></li>\n' + '    <li class="wishlist"><a href ng-click="toggle(\'wishlist\')" kurrency-popover="\'Wishlist\'"><span class="kicon-wand"></span></a></li>\n' + '    <li class="contact"><a href kurrency-popover="\'Contact\'" ng-click="toggle(\'contact\')"><span class="kicon-bubbles"></span></a></li>\n' + '    <li class="sign-out"><a href kurrency-popover="\'Sign Out\'" ng-click="kurrency.auth.signOut()"><span class="kicon-exit"></span></a></li>\n' + '  </ul>\n' + '  <div class="kurrency-loading" ng-class="{active: (apiLoading > 0)}"><div class="loading-indicator">Loading...</div></div>\n' + '  <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show(\'cart\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Shopping Cart</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show(\'wishlist\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Wishlist</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-login" ng-class="{active: show(\'login\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Sign In</h1>\n' + '      <p>Sign into your Kurrency account.</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'login\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="loginUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="login.username" placeholder="Enter your username or email">\n' + '        <input class="kurrency-input" type="password" ng-model="login.password" placeholder="Enter your password">\n' + '        <button type="submit" class="kurrency-button login-button">Sign In</button>\n' + '        <button type="button" class="kurrency-button small forgot-password" ng-click="toggle(\'forgot-password\', \'login\')">Forgot your password?</button>\n' + '        <p>Don\'t have an account?</p>\n' + '        <button type="button" class="kurrency-button small register-button" ng-click="toggle(\'register\', \'login\')">Register Now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-forgot-password" ng-class="{active: show(\'forgot-password\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Forgot My Password</h1>\n' + '      <p>Enter your email address and we will send you instructions to reset your password</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'forgot-password\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="forgotPassword()">\n' + '        <input class="kurrency-input" type="text" ng-model="forgot.email" placeholder="Enter your email address">\n' + '        <button class="kurrency-button" type="submit" class="login-button">Send Those Instructions</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-register" ng-class="{active: show(\'register\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Register</h1>\n' + '      <p>Enter the fields below to get started</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'register\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="registerUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="register.first_name" placeholder="Enter your first name">\n' + '        <input class="kurrency-input" type="text" ng-model="register.last_name" placeholder="Enter your last name">\n' + '        <input class="kurrency-input" type="email" ng-model="register.email" placeholder="Enter your email">\n' + '        <input class="kurrency-input" type="password" ng-model="register.password" placeholder="Enter a password">\n' + '        <button type="submit" class="kurrency-button register-button">Register</button>\n' + '        <p>Already have an account?</p>\n' + '        <button type="button" class="kurrency-button small login-button" ng-click="toggle(\'login\', \'register\')">Sign in now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-account" ng-class="{active: show(\'account\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>My Account</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-contact" ng-class="{active: show(\'contact\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Contact Us</h1>\n' + '    </div>\n' + '  </div>\n' + '</div>');
         $templateCache.put('kurrency-templates/kurrency-popover.html', '<span ng-transclude></span>\n' + '<div class="kurrency-popover">\n' + '  <span ng-bind="contents"></span>\n' + '</div>');
       }
     ]);

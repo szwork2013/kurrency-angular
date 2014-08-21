@@ -88,6 +88,39 @@
 .kurrency-menu.open {
   right: 340px;
 }
+.kurrency-menu .kurrency-loading {
+  position: absolute;
+  left: 53px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background-color: #000000;
+  z-index: 1000;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.kurrency-menu .kurrency-loading.active {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  -webkit-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+.kurrency-menu .kurrency-loading .loading-indicator {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
 .kurrency-menu .kurrency-sidebar {
   position: absolute;
   left: 53px;
