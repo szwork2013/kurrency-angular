@@ -4,7 +4,7 @@
     <li class="account"><a href ng-click="toggle('account')" kurrency-popover="'Account'"><span class="kicon-user-circle"></span></a></li>
     <li class="cart"><a href ng-click="toggle('cart')" kurrency-popover="'Shipping Cart'"><span class="kicon-cart"></span></a></li>
     <li class="wishlist"><a href ng-click="toggle('wishlist')" kurrency-popover="'Wishlist'"><span class="kicon-wand"></span></a></li>
-    <li class="contact"><a href kurrency-popover="'Contact'"><span class="kicon-bubbles"></span></a></li>
+    <li class="contact"><a href kurrency-popover="'Contact'" ng-click="toggle('contact')"><span class="kicon-bubbles"></span></a></li>
     <li class="sign-out"><a href kurrency-popover="'Sign Out'" ng-click="kurrency.auth.signOut()"><span class="kicon-exit"></span></a></li>
   </ul>
   <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show('cart')}">
@@ -89,6 +89,15 @@
     </div>
     <div class="kurrency-container">
       <h1>My Account</h1>
+    </div>
+  </div>
+  <div class="kurrency-sidebar kurrency-contact" ng-class="{active: show('contact')}">
+    <div class="closer">
+      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>
+      <a href ng-click="close()"><span class="kicon-close"></span></a>
+    </div>
+    <div class="kurrency-container">
+      <h1>Contact Us</h1>
     </div>
   </div>
 </div>
