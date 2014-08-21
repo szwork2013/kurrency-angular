@@ -1,3 +1,13 @@
+[class^="kurrency-"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+[class^="kurrency-"] * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 .kurrency-menu {
   position: fixed;
   top: 0;
@@ -15,7 +25,6 @@
 }
 .kurrency-menu > .menu-wrapper {
   display: block;
-  box-sizing: border-box;
   background-color: #dcdcdc;
   line-height: 45px;
   font-size: 0px;
@@ -24,13 +33,11 @@
   padding: 0 0 4px 0;
 }
 .kurrency-menu > .menu-wrapper > li {
-  box-sizing: border-box;
   display: block;
   text-align: center;
   padding: 0 4px;
 }
 .kurrency-menu > .menu-wrapper > li a {
-  box-sizing: border-box;
   display: block;
   height: 45px;
   width: 45px;
@@ -137,7 +144,6 @@
   border-right: 1px solid #e8ece3;
 }
 .kurrency-menu .kurrency-sidebar .kurrency-container {
-  box-sizing: border-box;
   width: 340px;
   padding: 20px;
   height: 100%;
@@ -170,6 +176,19 @@
   -o-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
+}
+.kurrency-menu p {
+  padding: 0 10px;
+}
+.kurrency-menu .alerts > div {
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.kurrency-menu .alerts > div.alert-error {
+  color: #d52626;
+}
+.kurrency-menu .alerts > div.alert-success {
+  color: #26d551;
 }
 .kurrency-popover {
   position: absolute;
@@ -210,6 +229,43 @@
   border-style: solid;
   border-width: 5px 0 5px 8.7px;
   border-color: transparent transparent transparent #4baf67;
+}
+.kurrency-input {
+  display: block;
+  width: 100%;
+  background: #ffffff;
+  color: #999999;
+  border: none;
+  margin: 1px 0 0;
+  padding: 0 8px;
+  font-size: 16px;
+  line-height: 50px;
+}
+.kurrency-button {
+  display: block;
+  width: 100%;
+  background: #4baf67;
+  border: none;
+  color: #ffffff;
+  padding: 0 10px;
+  line-height: 60px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+.kurrency-button:hover {
+  background: #3c8b52;
+  color: #ffffff;
+}
+.kurrency-button.small {
+  line-height: 40px;
+  color: #eff7f1;
+  background: #779d81;
+}
+.kurrency-button.small:hover {
+  color: #ffffff;
+  background: #5e8368;
 }
 @font-face {
   font-family: 'KurrencyIcons';

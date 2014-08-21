@@ -10,6 +10,25 @@
 @popoverColor: #fff;
 @windowBgColor: #e8ece3;
 @windowBgAltColor: #dfe3da;
+@buttonColor: #fff;
+@buttonBgColor: #4baf67;
+@buttonHoverBgColor: darken(@buttonBgColor, 10%);
+@buttonHoverColor: #fff;
+@buttonAltColor: #eff7f1;
+@buttonAltBgColor: #779d81;
+@buttonAltHoverColor: #fff;
+@buttonAltHoverBgColor: darken(@buttonAltBgColor, 10%);
+@inputColor: #999;
+@inputBgColor: #fff;
+@inputBorderColor: #4baf67;
+@errorColor: #d52626;
+@successColor: #26d551;
+[class^="kurrency-"] {
+  .box-sizing(border-box);
+  * {
+    .box-sizing(border-box);
+  }
+}
 .kurrency-menu {
   position: fixed;
   top: 0;
@@ -24,7 +43,6 @@
 
   > .menu-wrapper {
     display: block;
-    box-sizing: border-box;
     background-color: @backgroundColor;
     line-height: 45px;
     font-size: 0px;
@@ -32,12 +50,10 @@
     margin: 0;
     padding: 0 0 4px 0;
     > li {
-      box-sizing: border-box;
       display: block;
       text-align: center;
       padding: 0 4px;
       a {
-        box-sizing: border-box;
         display: block;
         height: 45px;
         width: 45px;
@@ -151,7 +167,6 @@
       }
     }
     .kurrency-container {
-      box-sizing: border-box;
       width: 340px;
       padding: 20px;
       height: 100%;
@@ -168,6 +183,21 @@
       .opacity(100);
       .kurrency-container {
         .transform(scale(1));
+      }
+    }
+  }
+  p {
+    padding: 0 10px;
+  }
+  .alerts {
+    > div {
+      font-size: 11px;
+      margin-bottom: 10px;
+      &.alert-error {
+        color: @errorColor;
+      }
+      &.alert-success {
+        color: @successColor;
       }
     }
   }
@@ -200,5 +230,44 @@
     border-style: solid;
     border-width: 5px 0 5px 8.7px;
     border-color: transparent transparent transparent @popoverBgColor;
+  }
+}
+
+.kurrency-input {
+  display: block;
+  width: 100%;
+  background: @inputBgColor;
+  color: @inputColor;
+  border: none;
+  margin: 1px 0 0;
+  padding: 0 8px;
+  font-size: 16px;
+  line-height: 50px;
+}
+
+.kurrency-button {
+  display: block;
+  width: 100%;
+  background: @buttonBgColor;
+  border: none;
+  color: @buttonColor;
+  padding: 0 10px;
+  line-height: 60px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-transform: uppercase;
+  &:hover {
+    background: @buttonHoverBgColor;
+    color: @buttonHoverColor;
+  }
+  &.small {
+    line-height: 40px;
+    color: @buttonAltColor;
+    background: @buttonAltBgColor;
+    &:hover {
+      color: @buttonAltHoverColor;
+      background: @buttonAltHoverBgColor;
+    }
   }
 }

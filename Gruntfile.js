@@ -88,21 +88,36 @@ module.exports = function(grunt) {
       },
       less: {
         files: ['<%= styles %>/**/*.less'],
-        tasks: ['less:dev', 'copy:server']
+        tasks: ['less:dev', 'copy:server'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
       },
-      options: {
-        livereload: 35729
+      livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: [
+          '<%= examples %>/*.html',
+          'kurrency-templates/**/*.html',
+          'src/**/*.js'
+        ]
       }
     },
     connect: {
-      server: {
+      options: {
+        port: 9000,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: '0.0.0.0',
+        livereload: 35729
+      },
+      livereload: {
         options: {
-          port: 9000,
-          hostname: '0.0.0.0',
+          open: true,
           middleware: function (connect) {
             return [
-              mountFolder(connect, 'examples'),
-              mountFolder(connect, '.')
+              connect.static('examples'),
+              connect.static('.')
             ];
           }
         }
@@ -111,7 +126,7 @@ module.exports = function(grunt) {
     less: {
       dev: {
         files: {
-          'build/styles/main.css': '<%= styles %>/main.less'
+          '<%= build %>/styles/main.css': '<%= styles %>/main.less'
         }
       },
       dist: {

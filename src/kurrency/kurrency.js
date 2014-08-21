@@ -262,6 +262,8 @@
               storage.remove('session');
               $scope.options.session = null;
             }
+
+            $rootScope.$broadcast('kurrencyError', res);
           };
 
           /*
@@ -422,7 +424,11 @@
           }
 
           auth.prototype.register = function (data, cb) {
-
+            var req = new Request($scope).post($scope.options.baseUrl + '/register', data, $scope.handleError);
+            req.success(function (res) {
+              storage.set('user', res.pkg.data);
+              return cb(null, res.pkg.data);
+            });
           };
           auth.prototype.login = function (username, password, cb) {
             var req = new Request($scope).post($scope.options.baseUrl + '/login', {
@@ -435,7 +441,14 @@
             });
           };
 
-          $scope.loggedIn = function() {
+          auth.prototype.signOut = function() {
+            storage.remove('session');
+            storage.remove('user');
+            $scope.options.session = null;
+            $scope.options.user = null;
+          };
+
+          auth.prototype.loggedIn = function() {
             return storage.get('user');
           };
 
@@ -832,7 +845,7 @@
           }
         }
       })
-      .directive('kurrencyMenu', function(kurrency, kurrencyConfig) {
+      .directive('kurrencyMenu', function(kurrency, kurrencyConfig, $timeout) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -848,26 +861,110 @@
             scope.config = kurrencyConfig;
             scope.cart = null;
             scope.showing = null;
+            scope.back = null;
+            scope.login = {
+              username: null,
+              password: null
+            };
+            scope.register = {
+              first_name: null,
+              last_name: null,
+              email: null,
+              password: null,
+            };
+            scope.forgot = {
+              email: null
+            };
+            scope.messages = {
+              none: [],
+              login: [],
+              'forgot-password': [],
+              register: [],
+              checkout: [],
+              wishlist: []
+            };
             scope.kurrency = kurrency;
             kurrency.cart.get(function(err, cart) {
               scope.cart = cart;
             });
 
+            scope.addMessage = function(type, msg) {
+              var section = scope.showing;
+              if(!section) {
+                section = 'none';
+              }
+
+              scope.messages[section].push({type: type, message: msg});
+              //$timeout(function() {
+              //  scope.messages[section].pop();
+              //}, 5000);
+            };
+
+            scope.wipeMessages = function() {
+              for(var i in scope.messages) {
+                scope.messages[i] = [];
+              }
+            };
+
             scope.close = function() {
               scope.showing = null;
             };
 
-            scope.toggle = function(val) {
+            scope.toggle = function(val, back) {
               if(scope.showing === val) {
                 scope.showing = null;
               } else {
                 scope.showing = val;
+              }
+
+              if(back) {
+                scope.back = back;
+              } else {
+                scope.back = null;
               }
             };
 
             scope.show = function(val) {
               return (val === scope.showing);
             };
+
+            scope.loginUser = function(section) {
+              scope.wipeMessages();
+              kurrency.auth.login(scope.login.username, scope.login.password, function(user) {
+                scope.addMessage('success', 'Successfully logged in');
+                if(section) {
+                  scope.showing = section;
+                } else {
+                  scope.showing = null;
+                }
+              });
+            };
+
+            scope.registerUser = function(section) {
+              scope.wipeMessages();
+              scope.register.confirm_password = scope.register.password;
+              kurrency.auth.register(scope.register, function(user) {
+                scope.addMessage('success', 'Account registered, and logged in');
+                if(section) {
+                  scope.showing = section;
+                } else {
+                  scope.showing = null;
+                }
+              });
+            };
+
+            scope.forgotPassword = function() {
+
+            };
+
+            scope.$on('kurrencyError', function(evt, res) {
+              console.log(res);
+              if(!res.pkg) {
+                return scope.addMessage('error', 'An error occurred connecting to Kurrency\'s servers, check your connection.');
+              }
+
+              scope.addMessage('error', res.pkg.statusMessage);
+            });
           }
         }
       });
