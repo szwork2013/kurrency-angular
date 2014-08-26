@@ -20,7 +20,8 @@
   transition: all 0.5s;
 }
 .kurrency-menu [class^="kicon-"] {
-  font-size: 24px;
+  font-size: 32px;
+  line-height: 42px;
   vertical-align: middle;
 }
 .kurrency-menu > .menu-wrapper {
@@ -47,6 +48,7 @@
   text-decoration: none;
   color: #080808;
   background-color: #fdfdfd;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .kurrency-menu > .menu-wrapper > li a:hover {
   color: #4baf67;
@@ -95,11 +97,11 @@
   width: 340px;
   height: 100%;
   background-color: #000000;
-  z-index: 1000;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s;
+  z-index: -1;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
   zoom: 1;
   filter: alpha(opacity=0);
   -webkit-opacity: 0;
@@ -112,6 +114,7 @@
   -webkit-opacity: 0.5;
   -moz-opacity: 0.5;
   opacity: 0.5;
+  z-index: 1000;
 }
 .kurrency-menu .kurrency-loading .loading-indicator {
   position: absolute;
@@ -270,9 +273,8 @@
   color: #999999;
   border: none;
   margin: 1px 0 0;
-  padding: 0 8px;
+  padding: 14px 8px;
   font-size: 16px;
-  line-height: 50px;
 }
 .kurrency-button {
   display: block;
@@ -286,6 +288,7 @@
   cursor: pointer;
   margin-top: 10px;
   text-transform: uppercase;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .kurrency-button:hover {
   background: #3c8b52;
@@ -299,6 +302,9 @@
 .kurrency-button.small:hover {
   color: #ffffff;
   background: #5e8368;
+}
+.kurrency-button[type="submit"] {
+  margin-top: 1px;
 }
 @font-face {
   font-family: 'KurrencyIcons';
@@ -319,6 +325,24 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.kicon-account:before {
+  content: "\e612";
+}
+.kicon-cart:before {
+  content: "\e613";
+}
+.kicon-contact:before {
+  content: "\e614";
+}
+.kicon-login:before {
+  content: "\e615";
+}
+.kicon-sign_out:before {
+  content: "\e616";
+}
+.kicon-wishlist:before {
+  content: "\e617";
 }
 .kicon-world:before {
   content: "\e641";
@@ -395,7 +419,7 @@
 .kicon-images:before {
   content: "\e601";
 }
-.kicon-cart:before {
+.kicon-cart2:before {
   content: "\e600";
 }
 .kicon-support:before {

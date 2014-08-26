@@ -39,7 +39,8 @@
   font-family: 'Open Sans', 'Helvetica', sans-serif;
   .transition(all .5s);
   [class^="kicon-"] {
-    font-size: 24px;
+    font-size: 32px;
+    line-height: 42px;
     vertical-align: middle;
   }
 
@@ -65,6 +66,7 @@
         text-decoration: none;
         color: @linkColor;
         background-color: @linkBgColor;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
         &:hover {
           color: @linkHoverColor;
           background-color: @linkHoverBgColor;
@@ -266,9 +268,8 @@
   color: @inputColor;
   border: none;
   margin: 1px 0 0;
-  padding: 0 8px;
+  padding: 14px 8px;
   font-size: 16px;
-  line-height: 50px;
 }
 
 .kurrency-button {
@@ -283,6 +284,7 @@
   cursor: pointer;
   margin-top: 10px;
   text-transform: uppercase;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
   &:hover {
     background: @buttonHoverBgColor;
     color: @buttonHoverColor;
@@ -295,5 +297,8 @@
       color: @buttonAltHoverColor;
       background: @buttonAltHoverBgColor;
     }
+  }
+  &[type="submit"] {
+    margin-top: 1px;
   }
 }

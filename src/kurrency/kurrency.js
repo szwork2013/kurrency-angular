@@ -888,6 +888,14 @@
               scope.cart = cart;
             });
 
+            scope.checkClass = function(c) {
+              if(scope.showing === c) {
+                return {active: true};
+              }
+
+              return '';
+            };
+
             scope.addMessage = function(type, msg) {
               var section = scope.showing;
               if(!section) {
