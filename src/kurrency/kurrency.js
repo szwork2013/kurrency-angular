@@ -871,6 +871,7 @@
           link: function(scope, element, attr) {
             scope.config = kurrencyConfig;
             scope.cart = null;
+            scope.wishlist = null;
             scope.showing = null;
             scope.back = null;
             scope.apiLoading = 0;
@@ -881,7 +882,8 @@
               'forgot-password': [],
               register: [],
               checkout: [],
-              wishlist: []
+              wishlist: [],
+              contact: []
             };
             scope.kurrency = kurrency;
             kurrency.cart.get(function(err, cart) {
@@ -928,6 +930,12 @@
               scope.forgot = {
                 email: null
               };
+              scope.contact = {
+                name: null,
+                email: null,
+                phone: null,
+                message: null
+              }
             };
 
             scope.close = function() {

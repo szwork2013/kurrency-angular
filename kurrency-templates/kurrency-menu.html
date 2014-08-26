@@ -12,6 +12,18 @@
     <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>
     <div class="kurrency-container">
       <h1>Shopping Cart</h1>
+      <div ng-show="!cart || !cart.length">
+        <p>You have nothing in your cart</p>
+        <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>
+      </div>
+      <div ng-show="cart && cart.length">
+        <ul>
+          <li ng-repeat="product in cart">
+
+          </li>
+        </ul>
+        <button type="button" class="kurrency-button checkout-button" ng-click="toggle('checkout', 'cart')">Checkout</button>
+      </div>
     </div>
   </div>
   <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show('wishlist')}">
@@ -21,6 +33,18 @@
     </div>
     <div class="kurrency-container">
       <h1>Wishlist</h1>
+      <div ng-show="!wishlist || !wishlist.length">
+        <p>You have nothing in your wishlist</p>
+        <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>
+      </div>
+      <div ng-show="wishlist && wishlist.length">
+        <ul>
+          <li ng-repeat="product in cart">
+
+          </li>
+        </ul>
+        <button type="button" class="kurrency-button share-wishlist-button" ng-click="toggle('share-wishlist', 'wishlist')">Share my wishlist</button>
+      </div>
     </div>
   </div>
   <div class="kurrency-sidebar kurrency-login" ng-class="{active: show('login')}">
@@ -99,6 +123,16 @@
     </div>
     <div class="kurrency-container">
       <h1>Contact Us</h1>
+      <p>Fill out the form below and we'll respond as soon as possible</p>
+      <div class="alerts">
+        <div ng-repeat="alert in messages['contact']" class="alert-{{alert.type}}">{{alert.message}}</div>
+      </div>
+      <form ng-submit="sendContact()">
+        <input class="kurrency-input" type="text" ng-model="contact.name" placeholder="Enter your name">
+        <input class="kurrency-input" type="email" ng-model="contact.email" placeholder="Enter your email">
+        <textarea rows="3" class="kurrency-input" ng-model="contact.message" placeholder="Enter a message or concern to send to us"></textarea>
+        <button type="submit" class="kurrency-button contact-button">Contact</button>
+      </form>
     </div>
   </div>
 </div>

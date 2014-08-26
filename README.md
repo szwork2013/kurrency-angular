@@ -1,6 +1,6 @@
 # Kurrency JSAPI Angular Library
 
-Depends on angular >= 1.2, it will be downloaded if you are using the script as an embed from www.kurrency.co.
+Depends on angular >= 1.2, it will be downloaded at runtime if you are using the script standalone or from www.kurrency.co.
 
 # Getting Started
 
@@ -89,11 +89,11 @@ Saves the current session data.
 
 Authentication will create a User with an `Authentication-Key` based on the current API `Access-Token`.
 
-This is currently not complete.
-
 `kurrency.auth.login(email, password, callback(err, user))`
 
 `kurrency.auth.register(data, callback(err, user))`
+
+`kurrency.auth.forgotPassword(email, callback(err, success))`
 
 ## Addresses
 

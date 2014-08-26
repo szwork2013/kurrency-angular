@@ -270,6 +270,19 @@
   margin: 1px 0 0;
   padding: 14px 8px;
   font-size: 16px;
+  line-height: 20px;
+  position: relative;
+  .box-shadow(0 0 1px 2px rgba(102, 175, 233, 0));
+  .transition(box-shadow .25s);
+  &:focus {
+    outline: 0;
+    .box-shadow(0 0 1px 2px rgba(102, 175, 233, 1));
+    z-index: 1;
+  }
+}
+
+textarea.kurrency-input {
+  resize: none;
 }
 
 .kurrency-button {

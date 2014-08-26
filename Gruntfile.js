@@ -84,7 +84,10 @@ module.exports = function(grunt) {
           'kurrency-templates/**/*.html',
           'src/**/*.js'
         ],
-        tasks: ['build']
+        tasks: ['build'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
       },
       less: {
         files: ['<%= styles %>/**/*.less'],
@@ -106,10 +109,10 @@ module.exports = function(grunt) {
     },
     connect: {
       options: {
-        port: 9000,
+        port: 9001,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: '0.0.0.0',
-        livereload: 35729
+        livereload: 35730
       },
       livereload: {
         options: {
