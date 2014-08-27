@@ -1,30 +1,59 @@
-@linkColor: #080808;
-@linkBgColor: #fdfdfd;
-@linkHoverColor: #4baf67;
-@linkHoverBgColor: #fff;
+@backgroundColor: #555555;
+@defaultColor: #6f6e6e;
+@defaultFontFamily: 'Questrial';
+@headerFontFamily: 'WinterthurCondensedRegular';
+@headerFontSize: 28px;
+
+@linkColor: #d7d5d4;
+@linkBgColor: #555555;
+@linkHoverColor: #fff;
+@linkHoverBgColor: #555555;
 @linkActiveColor: #fff;
-@linkActiveBgColor: #4baf67;
-@linkBorderColor: #dcdcdc;
-@backgroundColor: #dcdcdc;
-@popoverBgColor: #4baf67;
+@linkActiveBgColor: #555555;
+@linkBorderColor: #555555;
+
+@popoverBgColor: #555555;
 @popoverColor: #fff;
-@windowBgColor: #e8ece3;
-@windowBgAltColor: #dfe3da;
+
+@windowBgColor: #e4e0e0;
+@windowBgAltColor: #636363;
+@windowSpacerColor: #d7d7d7;
+
+@closeButtonColor: #6f6e6e;
+@closeButtonBgColor: #f8f7f7;
+@closeButtonHoverColor: #6f6e6e;
+@closeButtonHoverBgColor: #fff;
+@closeButtonActiveColor: #fff;
+@closeButtonActiveBgColor: #6f6e6e;
+
+@buttonFontFamily: 'WinterthurCondensedRegular';
+@buttonFontSize: 28px;
 @buttonColor: #fff;
-@buttonBgColor: #4baf67;
-@buttonHoverBgColor: darken(@buttonBgColor, 10%);
+@buttonBgColor: #bbbaba;
 @buttonHoverColor: #fff;
-@buttonAltColor: #eff7f1;
-@buttonAltBgColor: #779d81;
+@buttonHoverBgColor: #9d9d9d;
+@buttonActiveColor: #fff;
+@buttonActiveBgColor: #545f68;
+@buttonAltFontSize: 18px;
+@buttonAltColor: #fff;
+@buttonAltBgColor: #c4c6c4;
 @buttonAltHoverColor: #fff;
-@buttonAltHoverBgColor: darken(@buttonAltBgColor, 10%);
-@inputColor: #999;
-@inputBgColor: #fff;
-@inputBorderColor: #4baf67;
+@buttonAltHoverBgColor: #b3b4b3;
+@buttonAltActiveColor: #fff;
+@buttonAltActiveBgColor: #545f68;
+
+@inputFontFamily: 'Questrial';
+@inputFontSize: 15px;
+@inputFontWeight: lighter;
+@inputColor: #6f6e6e;
+@inputBgColor: #f8f7f7;
+@inputBorderColor: transparent;
+
 @errorColor: #d52626;
 @successColor: #26d551;
 @loadingBgColor: #000;
 @loadingBgOpacity: .50;
+
 [class^="kurrency-"] {
   .box-sizing(border-box);
   * {
@@ -36,10 +65,13 @@
   top: 0;
   right: 0;
   height: 100%;
-  font-family: 'Open Sans', 'Helvetica', sans-serif;
+  color: @defaultColor;
+  font-family: @defaultFontFamily, 'Helvetica', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   .transition(all .5s);
   [class^="kicon-"] {
-    font-size: 32px;
+    font-size: 42px;
     line-height: 42px;
     vertical-align: middle;
   }
@@ -169,19 +201,18 @@
         height: 45px;
         line-height: 45px;
         display: block;
-        color: @linkColor;
-        background-color: @linkBgColor;
+        color: @closeButtonColor;
+        background-color: @closeButtonBgColor;
         text-decoration: none;
         text-align: center;
-        border-left: 1px solid @windowBgColor;
         &:hover {
-          color: @linkHoverColor;
-          background-color: @linkHoverBgColor;
+          color: @closeButtonHoverColor;
+          background-color: @closeButtonHoverBgColor;
         }
         &.active,
         &:active {
-          background-color: @linkActiveBgColor;
-          color: @linkActiveColor;
+          background-color: @closeButtonActiveBgColor;
+          color: @closeButtonActiveColor;
         }
         span {
           font-size: 18px;
@@ -189,8 +220,6 @@
         &.back {
           right: auto;
           left: 0;
-          border-left: none;
-          border-right: 1px solid @windowBgColor;
         }
       }
     }
@@ -201,9 +230,20 @@
       .transform(scale(.8));
       .transition(all .5s);
       h1 {
-        margin: 0;
-        font-size: 18px;
-        text-align: center;
+        margin: 7px 0 0;
+        font-size: @headerFontSize;
+        text-align: left;
+        font-family: @headerFontFamily;
+        letter-spacing: 1.5px;
+        line-height: 1.0;
+        & + p {
+          margin-bottom: 25px;
+        }
+      }
+      .spacer {
+        height: 2px;
+        background-color: @windowSpacerColor;
+        margin: 36px 0;
       }
     }
     &.active {
@@ -213,9 +253,20 @@
         .transform(scale(1));
       }
     }
+    &.kurrency-forgot-password,
+    &.kurrency-contact {
+      .kurrency-container {
+        h1 {
+          letter-spacing: 1.0px;
+        }
+      }
+    }
   }
   p {
-    padding: 0 10px;
+    padding: 0;
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.4;
   }
   .alerts {
     > div {
@@ -233,24 +284,25 @@
 
 .kurrency-popover {
   position: absolute;
-  width: 100px;
+  width: 120px;
   height: 45px;
-  left: -130px;
+  left: -150px;
   top: 0;
-  font-size: 12px;
+  font-size: 13px;
   background-color: @popoverBgColor;
   color: @popoverColor;
   .opacity(0);
   pointer-events: none;
+  text-transform: uppercase;
   .transition(left .25s, opacity .25s);
   &.active {
-    left: -110px;
+    left: -130px;
     .opacity(100);
   }
   &:before {
     position: absolute;
     content: "";
-    left: 100px;
+    left: 120px;
     top: 50%;
     margin-top: -5px;
     width: 0;
@@ -267,10 +319,13 @@
   background: @inputBgColor;
   color: @inputColor;
   border: none;
-  margin: 1px 0 0;
-  padding: 14px 8px;
-  font-size: 16px;
-  line-height: 20px;
+  margin: 5px 0 0;
+  padding: 14px 16px;
+  font-size: @inputFontSize;
+  font-family: @inputFontFamily;
+  font-weight: @inputFontWeight;
+  letter-spacing: 1.0px;
+  line-height: 1.4;
   position: relative;
   .box-shadow(0 0 1px 2px rgba(102, 175, 233, 0));
   .transition(box-shadow .25s);
@@ -291,27 +346,52 @@ textarea.kurrency-input {
   background: @buttonBgColor;
   border: none;
   color: @buttonColor;
-  padding: 0 10px;
+  padding: 6px 10px 0;
   line-height: 60px;
-  font-size: 14px;
+  font-size: @buttonFontSize;
+  letter-spacing: 2.0px;
+  font-weight: 300;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 5px;
   text-transform: uppercase;
+  font-family: @buttonFontFamily;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   &:hover {
     background: @buttonHoverBgColor;
     color: @buttonHoverColor;
   }
+  &:active,
+  &.active {
+    color: @buttonActiveColor;
+    background: @buttonActiveBgColor;
+  }
+  &:focus {
+    outline: 0;
+  }
+  &[disabled] {
+    .opacity(33);
+  }
   &.small {
     line-height: 40px;
+    letter-spacing: 1.5px;
+    padding-top: 5px;
     color: @buttonAltColor;
     background: @buttonAltBgColor;
+    font-size: @buttonAltFontSize;
     &:hover {
       color: @buttonAltHoverColor;
       background: @buttonAltHoverBgColor;
     }
+    &:active,
+    &.active {
+      color: @buttonAltActiveColor;
+      background: @buttonAltActiveBgColor;
+    }
   }
   &[type="submit"] {
-    margin-top: 1px;
+    margin-top: 6px;
+  }
+  & + p {
+    margin-top: 25px;
   }
 }
