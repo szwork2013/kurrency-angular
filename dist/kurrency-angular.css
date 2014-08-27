@@ -198,7 +198,7 @@
   font-size: 28px;
   text-align: left;
   font-family: 'WinterthurCondensedRegular';
-  letter-spacing: 2.0px;
+  letter-spacing: 1.5px;
   line-height: 1.0;
 }
 .kurrency-menu .kurrency-sidebar .kurrency-container h1 + p {
@@ -223,6 +223,10 @@
   -o-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
+}
+.kurrency-menu .kurrency-sidebar.kurrency-forgot-password .kurrency-container h1,
+.kurrency-menu .kurrency-sidebar.kurrency-contact .kurrency-container h1 {
+  letter-spacing: 1.0px;
 }
 .kurrency-menu p {
   padding: 0;
@@ -365,9 +369,6 @@ textarea.kurrency-input {
 .kurrency-button.small.active {
   color: #ffffff;
   background: #545f68;
-}
-.kurrency-button.send-password-instructions {
-  letter-spacing: 1.5px;
 }
 .kurrency-button[type="submit"] {
   margin-top: 6px;

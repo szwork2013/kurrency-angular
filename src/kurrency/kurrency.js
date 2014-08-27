@@ -9,19 +9,6 @@
  *
  */
 
-WebFontConfig = {
-  google: { families: [ 'Questrial::latin' ] }
-};
-(function() {
-  var wf = document.createElement('script');
-  wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-  wf.type = 'text/javascript';
-  wf.async = 'true';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(wf, s);
-})();
-
 (function(w, d) {
   'use strict';
 
@@ -39,7 +26,7 @@ WebFontConfig = {
     var scrip = d.createElement('script');
     scrip.type = 'text/javascript';
     scrip.async = true;
-    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js';
+    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js';
     d.getElementsByTagName('body')[0].appendChild(scrip);
     if (scrip.readyState) {
       scrip.onreadystatechange = function () {
@@ -1048,6 +1035,21 @@ WebFontConfig = {
 
           angular.element(d).find('body').append($compile('<kurrency-menu></kurrency-menu>')($rootScope));
         }]);
+
+        if(!w.KURRENCY_CONFIG.GOOGLE_FONTS || w.KURRENCY_CONFIG.GOOGLE_FONTS === true) {
+          w.WebFontConfig = {
+            google: { families: [ 'Questrial::latin' ] }
+          };
+          (function () {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+              '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+          })();
+        }
       }
     }
 
