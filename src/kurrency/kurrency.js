@@ -45,7 +45,8 @@
   }
 
   function setupKurrency() {
-    angular.module('kurrency', [])
+    angular.module('KurrencyApp', []);
+    angular.module('KurrencyApp')
       .constant('kurrencyConfig', {
         cache: false,
         local: false,
@@ -473,27 +474,35 @@
           }
 
           addresses.prototype.list = function (cb) {
-            var req = new Request($scope).get($scope.options.baseUrl + '/addresses', null, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).get($scope.options.baseUrl + '/addresses', null, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           addresses.prototype.create = function (data, cb) {
-            var req = new Request($scope).post($scope.options.baseUrl + '/addresses', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).post($scope.options.baseUrl + '/addresses', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           addresses.prototype.edit = function (data, cb) {
-            var req = new Request($scope).put($scope.options.baseUrl + '/addresses', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).put($scope.options.baseUrl + '/addresses', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           addresses.prototype.remove = function (data, cb) {
-            var req = new Request($scope).del($scope.options.baseUrl + '/addresses', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).del($scope.options.baseUrl + '/addresses', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
 
@@ -509,28 +518,36 @@
           }
 
           payment_methods.prototype.list = function (cb) {
-            var req = new Request($scope).get($scope.options.baseUrl + '/payment_methods', null, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).get($scope.options.baseUrl + '/payment_methods', null, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           payment_methods.prototype.create = function (data, cb) {
-            var req = new Request($scope).post($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).post($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           payment_methods.prototype.edit = function (data, cb) {
             // User can edit the nickname
-            var req = new Request($scope).put($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).put($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           payment_methods.prototype.remove = function (data, cb) {
-            var req = new Request($scope).del($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).del($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
 
@@ -546,16 +563,18 @@
           }
 
           products.prototype.list = function (options, cb) {
-            var stringOptions = JSON.stringify(options);
-            if (cache.products[stringOptions]) {
-              return cb(null, cache.products[stringOptions]);
-            }
-            var req = new Request($scope).get($scope.options.baseUrl + '/products', options, $scope.handleError);
-            req.success(function (res) {
-              if ($scope.options.caching === true) {
-                cache.products[stringOptions] = res.pkg.data;
+            $scope.session.get(function (err, session) {
+              var stringOptions = JSON.stringify(options);
+              if (cache.products[stringOptions]) {
+                return cb(null, cache.products[stringOptions]);
               }
-              return cb(null, res.pkg.data);
+              var req = new Request($scope).get($scope.options.baseUrl + '/products', options, $scope.handleError);
+              req.success(function (res) {
+                if ($scope.options.caching === true) {
+                  cache.products[stringOptions] = res.pkg.data;
+                }
+                return cb(null, res.pkg.data);
+              });
             });
           };
 
@@ -571,16 +590,18 @@
           }
 
           product_lines.prototype.list = function (options, cb) {
-            var stringOptions = JSON.stringify(options);
-            if (cache.product_lines[stringOptions]) {
-              return cb(null, cache.product_lines[stringOptions]);
-            }
-            var req = new Request($scope).get($scope.options.baseUrl + '/product-lines', options, $scope.handleError);
-            req.success(function (res) {
-              if ($scope.options.caching === true) {
-                cache.product_lines[stringOptions] = res.pkg.data;
+            $scope.session.get(function (err, session) {
+              var stringOptions = JSON.stringify(options);
+              if (cache.product_lines[stringOptions]) {
+                return cb(null, cache.product_lines[stringOptions]);
               }
-              return cb(null, res.pkg.data);
+              var req = new Request($scope).get($scope.options.baseUrl + '/product-lines', options, $scope.handleError);
+              req.success(function (res) {
+                if ($scope.options.caching === true) {
+                  cache.product_lines[stringOptions] = res.pkg.data;
+                }
+                return cb(null, res.pkg.data);
+              });
             });
           };
 
@@ -596,15 +617,19 @@
           }
 
           orders.prototype.list = function (options, cb) {
-            var req = new Request($scope).get($scope.options.baseUrl + '/orders', options, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).get($scope.options.baseUrl + '/orders', options, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           orders.prototype.create = function (data, cb) {
-            var req = new Request($scope).post($scope.options.baseUrl + '/orders', data, $scope.handleError);
-            req.success(function (res) {
-              return cb(null, res.pkg.data);
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).post($scope.options.baseUrl + '/orders', data, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
             });
           };
           orders.prototype.taxes = function (value, shipment, cb) {
@@ -652,13 +677,15 @@
               params.packages[0].price += data.products[i].price * data.products[i].qty;
             }
 
-            var req = new Request($scope).post($scope.options.baseUrl + '/shipping/rates', params, $scope.handleError);
-            req.success(function (res) {
-              var rates = res.pkg.data;
-              rates.sort(function (a, b) {
-                return a.cost - b.cost;
+            $scope.session.get(function (err, session) {
+              var req = new Request($scope).post($scope.options.baseUrl + '/shipping/rates', params, $scope.handleError);
+              req.success(function (res) {
+                var rates = res.pkg.data;
+                rates.sort(function (a, b) {
+                  return a.cost - b.cost;
+                });
+                return cb(null, rates);
               });
-              return cb(null, rates);
             });
           };
 
@@ -854,7 +881,31 @@
           }
         }
       })
-      .directive('kurrencyMenu', function(kurrency, kurrencyConfig, $timeout) {
+      .directive('kurrencyProduct', ['kurrency', 'kurrencyConfig', function(kurrency, kurrencyConfig) {
+        return {
+          restrict: 'E',
+          scope: {id: '@'},
+          templateUrl: function(tElement, tAttrs) {
+            var url = '/kurrency-templates/kurrency-product.html';
+            if(tAttrs.templateUrl) {
+              url = tAttrs.templateUrl;
+            }
+
+            return url;
+          },
+          replace: true,
+          link: function(scope, element, attr) {
+            scope.kurrency = kurrency;
+            scope.config = kurrencyConfig;
+            scope.product = null;
+
+            kurrency.products.list({_id: scope.id}, function(err, products) {
+              scope.product = products[0];
+            });
+          }
+        }
+      }])
+      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', '$timeout', function(kurrency, kurrencyConfig, $timeout) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -1022,18 +1073,20 @@
             scope.resetForms();
           }
         }
-      });
+      }]);
 
     if(w.KURRENCY_CONFIG) {
       // we are using kurrency from an embed standpoint
       if(!w.KURRENCY_CONFIG.integrated) {
-        angular.injector(['ng', 'kurrency']).invoke(['$compile', '$rootScope', 'kurrencyConfig', function($compile, $rootScope, kurrencyConfig) {
+        angular.injector(['ng', 'KurrencyApp']).invoke(['$compile', '$rootScope', 'kurrency', 'kurrencyConfig', function($compile, $rootScope, kurrency, kurrencyConfig) {
           kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
           kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
           kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
           kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
 
-          angular.element(d).find('body').append($compile('<kurrency-menu></kurrency-menu>')($rootScope));
+
+          angular.element(d).find('body').append('<kurrency-menu></kurrency-menu>');
+          angular.bootstrap(angular.element(d).find('body')[0], ['KurrencyApp']);
         }]);
 
         if(!w.KURRENCY_CONFIG.GOOGLE_FONTS || w.KURRENCY_CONFIG.GOOGLE_FONTS === true) {

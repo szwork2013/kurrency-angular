@@ -159,7 +159,7 @@ module.exports = function(grunt) {
         dest:     '<%= build %>/templates.js',
         options: {
           angular:  'w[KURRENCY_CONFIG.ANGULAR]',
-          module:   'kurrency'
+          module:   'KurrencyApp'
         }
       }
     },
@@ -181,6 +181,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['build']);
 
   grunt.registerTask('server', [
+    'build',
     'less:dev',
     'copy:server',
     'connect',
