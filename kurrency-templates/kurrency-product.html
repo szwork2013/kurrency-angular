@@ -1,11 +1,16 @@
 <div class="kurrency-product">
   <div class="kurrency-product-container">
-    <img ng-src="{{product.images[0]}}" alt="{{product.name}}">
+    <kurrency-image src="product.images[0]" options="{size: '300x200'}" alt="product.name"></kurrency-image>
   </div>
   <div class="kurrency-product-container">
-    <h2 ng-bind="product.name"></h2>
-    <h3 ng-show="product.sub_title" ng-bind="product.sub_title"></h3>
+    <div class="column">
+      <h2 ng-bind="product.name"></h2>
+      <h3 ng-show="product.sub_title" ng-bind="product.sub_title"></h3>
+      <span class="price" ng-bind="product.price / 100 | currency"></span>
+    </div>
+    <div class="column">
+      <button type="button">Buy Now</button>
+    </div>
     <p ng-bind-html="product.short_description"></p>
-    <span class="price" ng-bind="product.price / 100 | currency"></span>
   </div>
 </div>

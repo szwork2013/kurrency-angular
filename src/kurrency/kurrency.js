@@ -223,7 +223,7 @@
           $scope.Request = Request;
 
           var storage = new $scope.Stor();
-          var baseUrls = {
+          var baseUrls = $scope.baseUrls = {
             test: 'http://0.0.0.0:3458/jsapi',
             production: 'https://api.kurrency.io/api/jsapi'
           };
@@ -856,6 +856,9 @@
 
         return new Kurrency(kurrencyConfig);
       }])
+      .config(function($sceProvider) {
+        $sceProvider.enabled(false);
+      })
       .directive('kurrencyPopover', function() {
         return {
           scope: true,
@@ -881,6 +884,39 @@
           }
         }
       })
+      .directive('kurrencyImage', ['kurrency', 'kurrencyConfig', '$parse', function(kurrency, kurrencyConfig, $parse) {
+        return {
+          restrict: 'E',
+          scope: {src: '=', options: '@', alt: '='},
+          template: '<img ng-src="{{newSrc}}" alt="{{alt}}">',
+          link: function(scope, element, attr) {
+            scope.newSrc = null;
+            attr.$observe('options', function(opts) {
+              scope.options = scope.$eval(opts);
+            });
+            scope.$watch('src', function() {
+              if(!scope.src) {
+                return;
+              }
+
+              scope.newSrc = buildUrl(scope.src, scope.options);
+            });
+
+            function buildUrl(src, options) {
+              var base = kurrencyConfig.local ? kurrency.baseUrls.test : kurrency.baseUrls.production;
+              var url = base + '/imager?access-token=' + kurrencyConfig.accessToken + '&url=' + encodeURIComponent(src);
+              if(options.size) {
+                url += '&size=' + options.size;
+              }
+              if(options.effect) {
+                url += '&effect=' + options.effect;
+              }
+
+              return url;
+            }
+          }
+        }
+      }])
       .directive('kurrencyProduct', ['kurrency', 'kurrencyConfig', function(kurrency, kurrencyConfig) {
         return {
           restrict: 'E',
