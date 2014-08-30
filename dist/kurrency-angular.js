@@ -849,7 +849,7 @@
       function (kurrency, kurrencyConfig) {
         return {
           restrict: 'E',
-          scope: { id: '@' },
+          scope: { id: '=' },
           templateUrl: function (tElement, tAttrs) {
             var url = '/kurrency-templates/kurrency-product.html';
             if (tAttrs.templateUrl) {

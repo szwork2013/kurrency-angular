@@ -379,9 +379,6 @@ textarea.kurrency-input {
 .kurrency-product {
   width: 800px;
 }
-.kurrency-product img {
-  width: 100%;
-}
 @font-face {
   font-family: 'KurrencyIcons';
   src: url('/build/styles/fonts/KurrencyIcons.eot?-orzlfj');

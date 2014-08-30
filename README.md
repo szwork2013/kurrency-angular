@@ -154,6 +154,32 @@ data is an object:
 }
 ```
 
+# AngularJS Directives
+
+This Kurrency library comes with several AngularJS directives for things like handling the menu widget, product, and product line listings. It also has a useful imager tool for resizing images in the CDN.
+
+## Menu Widget
+
+Should be placed near the ending </body> tag
+
+`<kurrency-menu></kurrency-menu>`
+
+## Product Widget
+
+`<kurrency-product id="'53ff8b2a35ed366c2b939f58'"></kurrency-product>`
+
+
+## Imager
+
+Place anywhere in your project
+
+`<kurrency-image src="product.images[0]" options="{size: '300x200'}" alt="product.name"></kurrency-image>
+
+Or for a static URL:
+
+`<kurrency-image src="'http://mywebsite.com/path/to/image.jpg" options="{size: '300x200'}" alt="product.name"></kurrency-image>
+
+
 # License
 
 The Affero General Public License (AGPL)
