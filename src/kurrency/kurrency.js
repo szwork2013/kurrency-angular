@@ -1370,6 +1370,11 @@
             scope.stateList = kurrencyConfig.states;
             scope.countryList = kurrencyConfig.countries;
             scope.shippingAddressCopied = false;
+            scope.rates = [];
+            scope.selectedRate = null;
+            scope.tax_total = 0;
+            scope.shipping_total = 0;
+            scope.final_total = 0;
 
             // load Gmaps if it isn't on the page
             if(!$window.google) {
@@ -1395,6 +1400,8 @@
               'forgot-password': [],
               register: [],
               checkout: [],
+              'checkout-2': [],
+              'checkout-3': [],
               wishlist: [],
               contact: []
             };
@@ -1415,6 +1422,12 @@
                 var line_total = parseInt(scope.cart[i].qty, 10) * scope.cart[i].price;
                 scope.product_total += line_total;
               }
+            };
+
+            scope.updateFinalTotal = function() {
+              scope.final_total = scope.product_total +
+                scope.shipping_total +
+                scope.tax_total;
             };
 
             scope.$on('cartUpdated', function(evt, cart) {
@@ -1484,6 +1497,56 @@
               });
             };
 
+            scope.getTaxes = function() {
+              kurrency.orders.taxes(scope.product_total, {
+                ship_to: {
+                  address: {
+                    postal_code: scope.checkout.ship_to.postal_code
+                  }
+                }
+              }, function(err, tax) {
+                scope.tax_total = tax;
+                scope.updateFinalTotal();
+              });
+            };
+
+            scope.getRates = function() {
+              if(!scope.checkout.ship_to.postal_code
+                || scope.checkout.ship_to.postal_code.length < 5) {
+                return;
+              }
+
+              kurrency.shipping.rates({
+                ship_to: {
+                  address: {
+                    address_1: scope.checkout.ship_to.address,
+                    state_code: scope.checkout.ship_to.state,
+                    country_code: scope.checkout.ship_to.country_code,
+                    postal_code: scope.checkout.ship_to.postal_code
+                  }
+                },
+                products: scope.cart
+              }, function(err, rates) {
+                if(err) {
+                  return console.log(err);
+                }
+
+                scope.rates = rates;
+                scope.selectedRate = scope.rates[0];
+                scope.updateFinalTotal();
+              });
+            };
+
+            scope.$watch('selectedRate', function() {
+              if(!scope.selectedRate) {
+                return;
+              }
+              scope.shipping_total = scope.selectedRate.cost * 100;
+              scope.checkout.service_carrier = scope.selectedRate.carrier;
+              scope.checkout.service_code = scope.selectedRate.carrier_rate;
+              scope.updateFinalTotal();
+            }, true);
+
             scope.addMessage = function(type, msg) {
               var section = scope.showing;
               if(!section) {
@@ -1542,6 +1605,10 @@
               }
               scope.wipeMessages();
               scope.resetForms();
+              if(val === 'checkout-3') {
+                scope.getRates();
+                scope.getTaxes();
+              }
             };
 
             scope.show = function(val) {
