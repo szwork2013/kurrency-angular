@@ -17,9 +17,20 @@
         <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>
       </div>
       <div ng-show="cart && cart.length">
-        <ul>
-          <li ng-repeat="product in cart">
-
+        <ul class="cart-products">
+          <li class="cart-product" ng-repeat="product in cart">
+            <div class="left">
+              <div class="name" ng-bind="product.name"></div>
+              <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>
+            </div>
+            <div class="right">
+              <div class="price"><span ng-bind="product.price/100 | currency"></span></div>
+              <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>
+            </div>
+          </li>
+          <li class="cart-product total">
+            <div class="left">Product Total</div>
+            <div class="right product-total">{{product_total/100 | currency}}</div>
           </li>
         </ul>
         <button type="button" class="kurrency-button checkout-button" ng-click="toggle('checkout', 'cart')">Checkout</button>
@@ -133,6 +144,22 @@
         <input class="kurrency-input" type="email" ng-model="contact.email" placeholder="Enter your email">
         <textarea rows="3" class="kurrency-input" ng-model="contact.message" placeholder="Enter a message or concern to send to us"></textarea>
         <button type="submit" class="kurrency-button contact-button">Contact</button>
+      </form>
+    </div>
+  </div>
+  <div class="kurrency-sidebar kurrency-checkout" ng-class="{active: show('checkout')}">
+    <div class="closer">
+      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>
+      <a href ng-click="close()"><span class="kicon-close"></span></a>
+    </div>
+    <div class="kurrency-container">
+      <h1>Checkout</h1>
+      <p>Please fill in the data below to complete checkout</p>
+      <div class="alerts">
+        <div ng-repeat="alert in messages['checkout']" class="alert-{{alert.type}}">{{alert.message}}</div>
+      </div>
+      <form ng-submit="submitCheckout()">
+        <button type="submit" class="kurrency-button contact-button">Checkout</button>
       </form>
     </div>
   </div>

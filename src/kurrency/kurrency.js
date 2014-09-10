@@ -938,6 +938,16 @@
             kurrency.products.list({_id: scope.id}, function(err, products) {
               scope.product = products[0];
             });
+
+            scope.addToCart = function(product, qty) {
+              kurrency.cart.add(product, qty, function(err, cart) {
+                if(err) {
+                  return console.log(err);
+                }
+
+                scope.$emit('cartUpdated', cart);
+              });
+            };
           }
         }
       }])
@@ -960,6 +970,8 @@
             scope.showing = null;
             scope.back = null;
             scope.apiLoading = 0;
+            scope.product_total = 0;
+            scope.quantity_total = 0;
 
             scope.messages = {
               none: [],
@@ -973,7 +985,37 @@
             scope.kurrency = kurrency;
             kurrency.cart.get(function(err, cart) {
               scope.cart = cart;
+              scope.updateProductTotal();
             });
+
+            scope.updateProductTotal = function() {
+              scope.product_total = 0;
+              scope.quantity_total = 0;
+              for(var i = 0; i < scope.cart.length; i++) {
+                scope.quantity_total += scope.cart[i].qty;
+                var line_total = scope.cart[i].qty * scope.cart[i].price;
+                scope.product_total += line_total;
+              }
+            };
+
+            scope.$on('cartUpdated', function(evt, cart) {
+              scope.cart = cart;
+              scope.updateProductTotal();
+            });
+
+            scope.updateQuantity = function(product) {
+              scope.updateProductTotal();
+              kurrency.cart.update(product, product.qty, function(err, cart) {
+                scope.cart = cart;
+              });
+            };
+
+            scope.removeProduct = function(product) {
+              kurrency.cart.remove(product, function(err, cart) {
+                scope.cart = cart;
+                scope.updateProductTotal();
+              });
+            };
 
             scope.checkClass = function(c) {
               if(scope.showing === c) {

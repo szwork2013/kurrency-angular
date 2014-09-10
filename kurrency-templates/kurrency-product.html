@@ -9,7 +9,7 @@
       <span class="price" ng-bind="product.price / 100 | currency"></span>
     </div>
     <div class="column">
-      <button type="button">Buy Now</button>
+      <button type="button" ng-click="addToCart(product, 1)">Buy Now</button>
     </div>
     <p ng-bind-html="product.short_description"></p>
   </div>
