@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.0.1 - 2014-09-09
+ * Version: 0.0.1 - 2014-09-10
  * License: AGPL
  */
 /**
@@ -24,7 +24,7 @@
       w.KURRENCY_CONFIG.ANGULAR = 'angular';
     }
   }
-  if (!w[KURRENCY_CONFIG.ANGULAR] && (typeof w.KURRENCY_CONFIG.REQUIRE_ANGULAR === 'undefined' || w.KURRENCY_CONFIG.REQUIRE_ANGULAR === true)) {
+  if (!w[w.KURRENCY_CONFIG.ANGULAR] && (typeof w.KURRENCY_CONFIG.REQUIRE_ANGULAR === 'undefined' || w.KURRENCY_CONFIG.REQUIRE_ANGULAR === true)) {
     var scrip = d.createElement('script');
     scrip.type = 'text/javascript';
     scrip.async = true;
@@ -52,7 +52,383 @@
       local: false,
       accessToken: 'ABC123',
       mode: 'test',
-      phrases: { cart_empty: 'You don\'t have anything in your cart' }
+      phrases: { cart_empty: 'You don\'t have anything in your cart' },
+      months: [
+        {
+          name: 'January',
+          value: 1
+        },
+        {
+          name: 'February',
+          value: 2
+        },
+        {
+          name: 'March',
+          value: 3
+        },
+        {
+          name: 'April',
+          value: 4
+        },
+        {
+          name: 'May',
+          value: 5
+        },
+        {
+          name: 'June',
+          value: 6
+        },
+        {
+          name: 'July',
+          value: 7
+        },
+        {
+          name: 'August',
+          value: 8
+        },
+        {
+          name: 'September',
+          value: 9
+        },
+        {
+          name: 'October',
+          value: 10
+        },
+        {
+          name: 'November',
+          value: 11
+        },
+        {
+          name: 'December',
+          value: 12
+        }
+      ],
+      years: [
+        {
+          name: new Date().getFullYear(),
+          value: new Date().getFullYear()
+        },
+        {
+          name: new Date().getFullYear() + 1,
+          value: new Date().getFullYear() + 1
+        },
+        {
+          name: new Date().getFullYear() + 2,
+          value: new Date().getFullYear() + 2
+        },
+        {
+          name: new Date().getFullYear() + 3,
+          value: new Date().getFullYear() + 3
+        },
+        {
+          name: new Date().getFullYear() + 4,
+          value: new Date().getFullYear() + 4
+        },
+        {
+          name: new Date().getFullYear() + 5,
+          value: new Date().getFullYear() + 5
+        },
+        {
+          name: new Date().getFullYear() + 6,
+          value: new Date().getFullYear() + 6
+        },
+        {
+          name: new Date().getFullYear() + 7,
+          value: new Date().getFullYear() + 7
+        }
+      ],
+      states: [
+        {
+          'name': 'Alberta',
+          'value': 'AB'
+        },
+        {
+          'name': 'Alabama',
+          'value': 'AL'
+        },
+        {
+          'name': 'Alaska',
+          'value': 'AK'
+        },
+        {
+          'name': 'American Samoa',
+          'value': 'AS'
+        },
+        {
+          'name': 'Arizona',
+          'value': 'AZ'
+        },
+        {
+          'name': 'Arkansas',
+          'value': 'AR'
+        },
+        {
+          'name': 'British Columbia',
+          'value': 'BC'
+        },
+        {
+          'name': 'California',
+          'value': 'CA'
+        },
+        {
+          'name': 'Colorado',
+          'value': 'CO'
+        },
+        {
+          'name': 'Connecticut',
+          'value': 'CT'
+        },
+        {
+          'name': 'Delaware',
+          'value': 'DE'
+        },
+        {
+          'name': 'District Of Columbia',
+          'value': 'DC'
+        },
+        {
+          'name': 'Federated States Of Micronesia',
+          'value': 'FM'
+        },
+        {
+          'name': 'Florida',
+          'value': 'FL'
+        },
+        {
+          'name': 'Georgia',
+          'value': 'GA'
+        },
+        {
+          'name': 'Guam',
+          'value': 'GU'
+        },
+        {
+          'name': 'Hawaii',
+          'value': 'HI'
+        },
+        {
+          'name': 'Idaho',
+          'value': 'ID'
+        },
+        {
+          'name': 'Illinois',
+          'value': 'IL'
+        },
+        {
+          'name': 'Indiana',
+          'value': 'IN'
+        },
+        {
+          'name': 'Iowa',
+          'value': 'IA'
+        },
+        {
+          'name': 'Kansas',
+          'value': 'KS'
+        },
+        {
+          'name': 'Kentucky',
+          'value': 'KY'
+        },
+        {
+          'name': 'Louisiana',
+          'value': 'LA'
+        },
+        {
+          'name': 'Manitoba',
+          'value': 'MB'
+        },
+        {
+          'name': 'Maine',
+          'value': 'ME'
+        },
+        {
+          'name': 'Marshall Islands',
+          'value': 'MH'
+        },
+        {
+          'name': 'Maryland',
+          'value': 'MD'
+        },
+        {
+          'name': 'Massachusetts',
+          'value': 'MA'
+        },
+        {
+          'name': 'Michigan',
+          'value': 'MI'
+        },
+        {
+          'name': 'Minnesota',
+          'value': 'MN'
+        },
+        {
+          'name': 'Mississippi',
+          'value': 'MS'
+        },
+        {
+          'name': 'Missouri',
+          'value': 'MO'
+        },
+        {
+          'name': 'Montana',
+          'value': 'MT'
+        },
+        {
+          'name': 'New Brunswich',
+          'value': 'NB'
+        },
+        {
+          'name': 'Nebraska',
+          'value': 'NE'
+        },
+        {
+          'name': 'Newfoundland and Labrador',
+          'value': 'NL'
+        },
+        {
+          'name': 'Nevada',
+          'value': 'NV'
+        },
+        {
+          'name': 'New Hampshire',
+          'value': 'NH'
+        },
+        {
+          'name': 'New Jersey',
+          'value': 'NJ'
+        },
+        {
+          'name': 'New Mexico',
+          'value': 'NM'
+        },
+        {
+          'name': 'New York',
+          'value': 'NY'
+        },
+        {
+          'name': 'North Carolina',
+          'value': 'NC'
+        },
+        {
+          'name': 'North Dakota',
+          'value': 'ND'
+        },
+        {
+          'name': 'Nova Scotia',
+          'value': 'NS'
+        },
+        {
+          'name': 'Northern Mariana Islands',
+          'value': 'MP'
+        },
+        {
+          'name': 'Ohio',
+          'value': 'OH'
+        },
+        {
+          'name': 'Oklahoma',
+          'value': 'OK'
+        },
+        {
+          'name': 'Ontario',
+          'value': 'ON'
+        },
+        {
+          'name': 'Oregon',
+          'value': 'OR'
+        },
+        {
+          'name': 'Palau',
+          'value': 'PW'
+        },
+        {
+          'name': 'Pennsylvania',
+          'value': 'PA'
+        },
+        {
+          'name': 'Prince Edward Island',
+          'value': 'PE'
+        },
+        {
+          'name': 'Puerto Rico',
+          'value': 'PR'
+        },
+        {
+          'name': 'Quebec',
+          'value': 'QB'
+        },
+        {
+          'name': 'Rhode Island',
+          'value': 'RI'
+        },
+        {
+          'name': 'South Carolina',
+          'value': 'SC'
+        },
+        {
+          'name': 'South Dakota',
+          'value': 'SD'
+        },
+        {
+          'name': 'Saskatchewan',
+          'value': 'SK'
+        },
+        {
+          'name': 'Tennessee',
+          'value': 'TN'
+        },
+        {
+          'name': 'Texas',
+          'value': 'TX'
+        },
+        {
+          'name': 'Utah',
+          'value': 'UT'
+        },
+        {
+          'name': 'Vermont',
+          'value': 'VT'
+        },
+        {
+          'name': 'Virgin Islands',
+          'value': 'VI'
+        },
+        {
+          'name': 'Virginia',
+          'value': 'VA'
+        },
+        {
+          'name': 'Washington',
+          'value': 'WA'
+        },
+        {
+          'name': 'West Virginia',
+          'value': 'WV'
+        },
+        {
+          'name': 'Wisconsin',
+          'value': 'WI'
+        },
+        {
+          'name': 'Wyoming',
+          'value': 'WY'
+        },
+        {
+          'name': 'Yukon',
+          'value': 'YT'
+        }
+      ],
+      countries: [
+        {
+          name: 'United States',
+          value: 'US'
+        },
+        {
+          name: 'Canada',
+          value: 'CA'
+        }
+      ]
     }).factory('kurrency', [
       '$rootScope',
       '$http',
@@ -296,7 +672,7 @@
             $scope.cart.get(function (err, cart) {
               for (var i = 0; i < cart.length; i++) {
                 if (cart[i]._id === product._id) {
-                  cart[i].qty += parseInt(qty);
+                  cart[i].qty += parseInt(qty, 10);
                   return $scope.session.get(function (err, session) {
                     session.data.cart = cart;
                     $scope.session.save(session, function (err, session) {
@@ -309,12 +685,15 @@
                 _id: product._id,
                 name: product.name,
                 sub_title: product.sub_title,
-                qty: parseInt(qty),
+                qty: parseInt(qty, 10),
                 image: product.images[0],
                 weight: product.weight,
                 dimensions: product.dimensions,
                 price: product.price,
-                product_lines: product.product_lines
+                product_lines: product.product_lines,
+                requires_shipping: product.requires_shipping,
+                allow_presale: product.allow_presale,
+                taxable: product.taxable
               });
               $scope.session.get(function (err, session) {
                 session.data.cart = cart;
@@ -880,7 +1259,9 @@
       'kurrency',
       'kurrencyConfig',
       '$timeout',
-      function (kurrency, kurrencyConfig, $timeout) {
+      '$window',
+      '$document',
+      function (kurrency, kurrencyConfig, $timeout, $window, $document) {
         return {
           restrict: 'E',
           templateUrl: function (tElement, tAttrs) {
@@ -900,6 +1281,39 @@
             scope.apiLoading = 0;
             scope.product_total = 0;
             scope.quantity_total = 0;
+            scope.paymentEnabled = false;
+            scope.requiresShipping = false;
+            scope.addressList = [];
+            scope.paymentList = [];
+            scope.checkout = {
+              service_carrier: null,
+              service_code: null,
+              ship_to: null,
+              customer: null,
+              payment_method: null,
+              products: null,
+              notes: ''
+            };
+            scope.geocodeComplete = false;
+            scope.stateList = kurrencyConfig.states;
+            scope.countryList = kurrencyConfig.countries;
+            // load Gmaps if it isn't on the page
+            if (!$window.google) {
+              var check = $document[0].getElementsByTagName('script');
+              var found = false;
+              for (var i = 0; i < check.length; i++) {
+                if (check[i].src.indexOf('maps.googleapis') > -1) {
+                  found = true;
+                }
+              }
+              if (!found) {
+                var gscript = d.createElement('script');
+                gscript.type = 'text/javascript';
+                gscript.async = true;
+                gscript.src = '//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDfl3BRqXwFWerx20m00Hec6mSFyL42w0Y&callback=initialize';
+                d.getElementsByTagName('body')[0].appendChild(gscript);
+              }
+            }
             scope.messages = {
               none: [],
               login: [],
@@ -918,8 +1332,11 @@
               scope.product_total = 0;
               scope.quantity_total = 0;
               for (var i = 0; i < scope.cart.length; i++) {
-                scope.quantity_total += scope.cart[i].qty;
-                var line_total = scope.cart[i].qty * scope.cart[i].price;
+                if (scope.cart[i].requires_shipping) {
+                  scope.requiresShipping = true;
+                }
+                scope.quantity_total += parseInt(scope.cart[i].qty, 10);
+                var line_total = parseInt(scope.cart[i].qty, 10) * scope.cart[i].price;
                 scope.product_total += line_total;
               }
             };
@@ -944,6 +1361,35 @@
                 return { active: true };
               }
               return '';
+            };
+            scope.lookupGeoCode = function (address, postal_code, obj) {
+              if (postal_code.length < 5) {
+                return;
+              }
+              if (!$window.google) {
+                return scope.geocodeComplete = true;
+              }
+              var geocoder = new google.maps.Geocoder();
+              geocoder.geocode({ address: address + ' ' + postal_code }, function (res, status) {
+                if (status !== google.maps.GeocoderStatus.OK) {
+                  return scope.geocodeComplete = true;
+                }
+                console.log(res);
+                for (var i = 0; i < res[0].address_components.length; i++) {
+                  var part = res[0].address_components[i];
+                  if (part.types[0] === 'locality') {
+                    obj.city = part.long_name;
+                  }
+                  if (part.types[0] === 'administrative_area_level_1') {
+                    obj.state = part.short_name;
+                  }
+                  if (part.types[0] === 'country') {
+                    obj.country_code = part.short_name;
+                  }
+                }
+                scope.geocodeComplete = true;
+                scope.$apply();
+              });
             };
             scope.addMessage = function (type, msg) {
               var section = scope.showing;
@@ -1091,11 +1537,13 @@
         }
       }
     }
+    w.initialize = function () {
+    };
     w[KURRENCY_CONFIG.ANGULAR].module('KurrencyApp').run([
       '$templateCache',
       function ($templateCache) {
         'use strict';
-        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.auth.loggedIn(), \'open\': showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li class="sign-in"><a href ng-click="toggle(\'login\')" kurrency-popover="\'Sign In\'" ng-class="checkClass(\'login\')"><span class="kicon-login"></span></a></li>\n' + '    <li class="account"><a href ng-click="toggle(\'account\')" kurrency-popover="\'Account\'" ng-class="checkClass(\'account\')"><span class="kicon-account"></span></a></li>\n' + '    <li class="cart"><a href ng-click="toggle(\'cart\')" kurrency-popover="\'Shopping Cart\'" ng-class="checkClass(\'cart\')"><span class="kicon-cart"></span></a></li>\n' + '    <li class="wishlist"><a href ng-click="toggle(\'wishlist\')" kurrency-popover="\'Wishlist\'" ng-class="checkClass(\'wishlist\')"><span class="kicon-wishlist"></span></a></li>\n' + '    <li class="contact"><a href kurrency-popover="\'Contact\'" ng-click="toggle(\'contact\')" ng-class="checkClass(\'contact\')"><span class="kicon-contact"></span></a></li>\n' + '    <li class="sign-out"><a href kurrency-popover="\'Sign Out\'" ng-click="kurrency.auth.signOut()"><span class="kicon-sign_out"></span></a></li>\n' + '  </ul>\n' + '  <div class="kurrency-loading" ng-class="{active: (apiLoading > 0)}"><div class="loading-indicator">Loading...</div></div>\n' + '  <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show(\'cart\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Shopping Cart</h1>\n' + '      <div ng-show="!cart || !cart.length">\n' + '        <p>You have nothing in your cart</p>\n' + '        <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>\n' + '      </div>\n' + '      <div ng-show="cart && cart.length">\n' + '        <ul class="cart-products">\n' + '          <li class="cart-product" ng-repeat="product in cart">\n' + '            <div class="left">\n' + '              <div class="name" ng-bind="product.name"></div>\n' + '              <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>\n' + '            </div>\n' + '            <div class="right">\n' + '              <div class="price"><span ng-bind="product.price/100 | currency"></span></div>\n' + '              <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>\n' + '            </div>\n' + '          </li>\n' + '          <li class="cart-product total">\n' + '            <div class="left">Product Total</div>\n' + '            <div class="right product-total">{{product_total/100 | currency}}</div>\n' + '          </li>\n' + '        </ul>\n' + '        <button type="button" class="kurrency-button checkout-button" ng-click="toggle(\'checkout\', \'cart\')">Checkout</button>\n' + '      </div>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show(\'wishlist\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Wishlist</h1>\n' + '      <div ng-show="!wishlist || !wishlist.length">\n' + '        <p>You have nothing in your wishlist</p>\n' + '        <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>\n' + '      </div>\n' + '      <div ng-show="wishlist && wishlist.length">\n' + '        <ul>\n' + '          <li ng-repeat="product in cart">\n' + '\n' + '          </li>\n' + '        </ul>\n' + '        <button type="button" class="kurrency-button share-wishlist-button" ng-click="toggle(\'share-wishlist\', \'wishlist\')">Share my wishlist</button>\n' + '      </div>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-login" ng-class="{active: show(\'login\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Sign In</h1>\n' + '      <p>Sign into your Kurrency account.</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'login\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="loginUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="login.username" placeholder="Enter your username or email">\n' + '        <input class="kurrency-input" type="password" ng-model="login.password" placeholder="Enter your password">\n' + '        <button type="submit" class="kurrency-button login-button">Sign In</button>\n' + '        <div class="spacer"></div>\n' + '        <button type="button" class="kurrency-button small forgot-password" ng-click="toggle(\'forgot-password\', \'login\')">Forgot your password?</button>\n' + '        <p>Don\'t have an account?</p>\n' + '        <button type="button" class="kurrency-button small register-button" ng-click="toggle(\'register\', \'login\')">Register Now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-forgot-password" ng-class="{active: show(\'forgot-password\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Forgot My Password</h1>\n' + '      <p>Enter your email address and we will send you instructions to reset your password</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'forgot-password\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="forgotPassword()">\n' + '        <input class="kurrency-input" type="text" ng-model="forgot.email" placeholder="Enter your email address">\n' + '        <button class="kurrency-button send-password-instructions" type="submit" class="login-button">Send Instructions</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-register" ng-class="{active: show(\'register\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Register</h1>\n' + '      <p>Enter the fields below to get started</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'register\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="registerUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="register.first_name" placeholder="Enter your first name">\n' + '        <input class="kurrency-input" type="text" ng-model="register.last_name" placeholder="Enter your last name">\n' + '        <input class="kurrency-input" type="email" ng-model="register.email" placeholder="Enter your email">\n' + '        <input class="kurrency-input" type="password" ng-model="register.password" placeholder="Enter a password">\n' + '        <button type="submit" class="kurrency-button register-button">Register</button>\n' + '        <p>Already have an account?</p>\n' + '        <button type="button" class="kurrency-button small login-button" ng-click="toggle(\'login\', \'register\')">Sign in now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-account" ng-class="{active: show(\'account\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>My Account</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-contact" ng-class="{active: show(\'contact\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Contact Us</h1>\n' + '      <p>Fill out the form below and we\'ll respond as soon as possible</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'contact\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="sendContact()">\n' + '        <input class="kurrency-input" type="text" ng-model="contact.name" placeholder="Enter your name">\n' + '        <input class="kurrency-input" type="email" ng-model="contact.email" placeholder="Enter your email">\n' + '        <textarea rows="3" class="kurrency-input" ng-model="contact.message" placeholder="Enter a message or concern to send to us"></textarea>\n' + '        <button type="submit" class="kurrency-button contact-button">Contact</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-checkout" ng-class="{active: show(\'checkout\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Checkout</h1>\n' + '      <p>Please fill in the data below to complete checkout</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'checkout\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="submitCheckout()">\n' + '        <button type="submit" class="kurrency-button contact-button">Checkout</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '</div>');
+        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.auth.loggedIn(), \'open\': showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li class="sign-in"><a href ng-click="toggle(\'login\')" kurrency-popover="\'Sign In\'" ng-class="checkClass(\'login\')"><span class="kicon-login"></span></a></li>\n' + '    <li class="account"><a href ng-click="toggle(\'account\')" kurrency-popover="\'Account\'" ng-class="checkClass(\'account\')"><span class="kicon-account"></span></a></li>\n' + '    <li class="cart" ng-class="{\'cart-empty\': cart.length <= 0}"><a href ng-click="toggle(\'cart\')" kurrency-popover="\'Shopping Cart\'" ng-class="checkClass(\'cart\')"><span class="kicon-cart"></span><span class="count">{{quantity_total}}</span></a></li>\n' + '    <li class="wishlist"><a href ng-click="toggle(\'wishlist\')" kurrency-popover="\'Wishlist\'" ng-class="checkClass(\'wishlist\')"><span class="kicon-wishlist"></span></a></li>\n' + '    <li class="contact"><a href kurrency-popover="\'Contact\'" ng-click="toggle(\'contact\')" ng-class="checkClass(\'contact\')"><span class="kicon-contact"></span></a></li>\n' + '    <li class="sign-out"><a href kurrency-popover="\'Sign Out\'" ng-click="kurrency.auth.signOut()"><span class="kicon-sign_out"></span></a></li>\n' + '  </ul>\n' + '  <div class="kurrency-loading" ng-class="{active: (apiLoading > 0)}"><div class="loading-indicator">Loading...</div></div>\n' + '  <div class="kurrency-sidebar kurrency-cart" ng-class="{active: show(\'cart\')}">\n' + '    <div class="closer"><a href ng-click="close()"><span class="kicon-close"></span></a></div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Shopping Cart</h1>\n' + '      <div ng-show="!cart || !cart.length">\n' + '        <p>You have nothing in your cart</p>\n' + '        <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>\n' + '      </div>\n' + '      <div ng-show="cart && cart.length">\n' + '        <ul class="cart-products">\n' + '          <li class="cart-product" ng-repeat="product in cart">\n' + '            <div class="left">\n' + '              <div class="name" ng-bind="product.name"></div>\n' + '              <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>\n' + '            </div>\n' + '            <div class="right">\n' + '              <div class="price"><span ng-bind="product.price/100 | currency"></span></div>\n' + '              <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>\n' + '            </div>\n' + '          </li>\n' + '          <li class="cart-product total">\n' + '            <div class="left">Product Total</div>\n' + '            <div class="right product-total">{{product_total/100 | currency}}</div>\n' + '          </li>\n' + '        </ul>\n' + '        <button type="button" class="kurrency-button checkout-button" ng-click="toggle(\'checkout\', \'cart\')">Checkout</button>\n' + '      </div>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-wishlist" ng-class="{active: show(\'wishlist\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Wishlist</h1>\n' + '      <div ng-show="!wishlist || !wishlist.length">\n' + '        <p>You have nothing in your wishlist</p>\n' + '        <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>\n' + '      </div>\n' + '      <div ng-show="wishlist && wishlist.length">\n' + '        <ul>\n' + '          <li ng-repeat="product in cart">\n' + '\n' + '          </li>\n' + '        </ul>\n' + '        <button type="button" class="kurrency-button share-wishlist-button" ng-click="toggle(\'share-wishlist\', \'wishlist\')">Share my wishlist</button>\n' + '      </div>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-login" ng-class="{active: show(\'login\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Sign In</h1>\n' + '      <p>Sign into your Kurrency account.</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'login\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="loginUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="login.username" placeholder="Enter your username or email">\n' + '        <input class="kurrency-input" type="password" ng-model="login.password" placeholder="Enter your password">\n' + '        <button type="submit" class="kurrency-button login-button">Sign In</button>\n' + '        <div class="spacer"></div>\n' + '        <button type="button" class="kurrency-button small forgot-password" ng-click="toggle(\'forgot-password\', \'login\')">Forgot your password?</button>\n' + '        <p>Don\'t have an account?</p>\n' + '        <button type="button" class="kurrency-button small register-button" ng-click="toggle(\'register\', \'login\')">Register Now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-forgot-password" ng-class="{active: show(\'forgot-password\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Forgot My Password</h1>\n' + '      <p>Enter your email address and we will send you instructions to reset your password</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'forgot-password\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="forgotPassword()">\n' + '        <input class="kurrency-input" type="text" ng-model="forgot.email" placeholder="Enter your email address">\n' + '        <button class="kurrency-button send-password-instructions" type="submit" class="login-button">Send Instructions</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-register" ng-class="{active: show(\'register\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Register</h1>\n' + '      <p>Enter the fields below to get started</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'register\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="registerUser()">\n' + '        <input class="kurrency-input" type="text" ng-model="register.first_name" placeholder="Enter your first name">\n' + '        <input class="kurrency-input" type="text" ng-model="register.last_name" placeholder="Enter your last name">\n' + '        <input class="kurrency-input" type="email" ng-model="register.email" placeholder="Enter your email">\n' + '        <input class="kurrency-input" type="password" ng-model="register.password" placeholder="Enter a password">\n' + '        <button type="submit" class="kurrency-button register-button">Register</button>\n' + '        <p>Already have an account?</p>\n' + '        <button type="button" class="kurrency-button small login-button" ng-click="toggle(\'login\', \'register\')">Sign in now</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-account" ng-class="{active: show(\'account\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>My Account</h1>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-contact" ng-class="{active: show(\'contact\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Contact Us</h1>\n' + '      <p>Fill out the form below and we\'ll respond as soon as possible</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'contact\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form ng-submit="sendContact()">\n' + '        <input class="kurrency-input" type="text" ng-model="contact.name" placeholder="Enter your name">\n' + '        <input class="kurrency-input" type="email" ng-model="contact.email" placeholder="Enter your email">\n' + '        <textarea rows="3" class="kurrency-input" ng-model="contact.message" placeholder="Enter a message or concern to send to us"></textarea>\n' + '        <button type="submit" class="kurrency-button contact-button">Contact</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-checkout" ng-class="{active: show(\'checkout\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Checkout</h1>\n' + '      <p>Please complete the form below to finish checkout</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'checkout\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form>\n' + '        <div ng-show="requiresShipping">\n' + '          <div ng-show="addressList.length > 0">\n' + '            <p>Select from a shipping address you have saved</p>\n' + '            <select class="kurrency-input" ng-model="checkout.ship_to" ng-options="address as address.address for address in addressList"></select>\n' + '          </div>\n' + '          <p>Enter a shipping address</p>\n' + '          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address" placeholder="Enter your address">\n' + '          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address2" placeholder="(optional) Address Line 2">\n' + '          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.ship_to.address, checkout.ship_to.postal_code, checkout.ship_to)">\n' + '          <div ng-show="geocodeComplete">\n' + '            <input class="kurrency-input" type="text" ng-model="checkout.ship_to.city" placeholder="Enter your city">\n' + '            <select class="kurrency-input" ng-model="checkout.ship_to.state" ng-options="state.value as state.name for state in stateList"></select>\n' + '            <select class="kurrency-input" ng-model="checkout.ship_to.country_code" ng-options="country.value as country.name for country in countryList"></select>\n' + '          </div>\n' + '        </div>\n' + '        <button type="submit" class="kurrency-button contact-button" ng-click="toggle(\'checkout-2\', \'checkout\')">Continue</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '  <div class="kurrency-sidebar kurrency-checkout" ng-class="{active: show(\'checkout-2\')}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <h1>Checkout</h1>\n' + '      <p>Please complete the form below to finish checkout</p>\n' + '      <div class="alerts">\n' + '        <div ng-repeat="alert in messages[\'checkout\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '      </div>\n' + '      <form>\n' + '        <div>\n' + '          <div ng-show="addressList.length > 0">\n' + '            <p>Select from a billing address you have saved</p>\n' + '            <select class="kurrency-input" ng-model="checkout.bill_to" ng-options="address as address.address for address in addressList"></select>\n' + '          </div>\n' + '          <p>Enter a billing address</p>\n' + '          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address" placeholder="Enter your address">\n' + '          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address2" placeholder="(optional) Address Line 2">\n' + '          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.bill_to.address, checkout.bill_to.postal_code, checkout.bill_to)">\n' + '          <div ng-show="geocodeComplete">\n' + '            <input class="kurrency-input" type="text" ng-model="checkout.bill_to.city" placeholder="Enter your city">\n' + '            <select class="kurrency-input" ng-model="checkout.bill_to.state" ng-options="state.value as state.name for state in stateList"></select>\n' + '            <select class="kurrency-input" ng-model="checkout.bill_to.country_code" ng-options="country.value as country.name for country in countryList"></select>\n' + '          </div>\n' + '        </div>\n' + '        <button type="submit" class="kurrency-button contact-button" ng-click="toggle(\'checkout-3\', \'checkout-2\')">Continue</button>\n' + '      </form>\n' + '    </div>\n' + '  </div>\n' + '</div>');
         $templateCache.put('kurrency-templates/kurrency-popover.html', '<span ng-transclude></span>\n' + '<div class="kurrency-popover">\n' + '  <span ng-bind="contents"></span>\n' + '</div>');
         $templateCache.put('kurrency-templates/kurrency-product.html', '<div class="kurrency-product">\n' + '  <div class="kurrency-product-container">\n' + '    <kurrency-image src="product.images[0]" options="{size: \'300x200\'}" alt="product.name"></kurrency-image>\n' + '  </div>\n' + '  <div class="kurrency-product-container">\n' + '    <div class="column">\n' + '      <h2 ng-bind="product.name"></h2>\n' + '      <h3 ng-show="product.sub_title" ng-bind="product.sub_title"></h3>\n' + '      <span class="price" ng-bind="product.price / 100 | currency"></span>\n' + '    </div>\n' + '    <div class="column">\n' + '      <button type="button" ng-click="addToCart(product, 1)">Buy Now</button>\n' + '    </div>\n' + '    <p ng-bind-html="product.short_description"></p>\n' + '  </div>\n' + '</div>');
       }

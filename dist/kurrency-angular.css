@@ -75,6 +75,44 @@
 .kurrency-menu > .menu-wrapper > li.contact a {
   border-bottom: none;
 }
+.kurrency-menu > .menu-wrapper > li.cart a {
+  position: relative;
+}
+.kurrency-menu > .menu-wrapper > li.cart a .count {
+  display: block;
+  position: absolute;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  background: #e4e0e0;
+  color: #6f6e6e;
+  line-height: 16px;
+  font-size: 13px;
+  -webkit-border-radius: 7.5px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 7.5px;
+  -moz-background-clip: padding;
+  border-radius: 7.5px;
+  background-clip: padding-box;
+  top: 5px;
+  right: 1px;
+  zoom: 1;
+  filter: alpha(opacity=10000);
+  -webkit-opacity: 100;
+  -moz-opacity: 100;
+  opacity: 100;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+}
+.kurrency-menu > .menu-wrapper > li.cart.cart-empty a .count {
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
 .kurrency-menu.logged-in > .menu-wrapper > li.sign-in {
   display: none;
 }
@@ -134,6 +172,7 @@
   width: 340px;
   height: 100%;
   overflow: hidden;
+  overflow-y: auto;
   background-color: #e4e0e0;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
@@ -182,7 +221,7 @@
 .kurrency-menu .kurrency-sidebar .kurrency-container {
   width: 340px;
   padding: 20px;
-  height: 100%;
+  min-height: 100%;
   -webkit-transform: scale(0.8);
   -moz-transform: scale(0.8);
   -o-transform: scale(0.8);
@@ -348,10 +387,11 @@ textarea.kurrency-input {
 }
 .kurrency-button[disabled] {
   zoom: 1;
-  filter: alpha(opacity=3300);
-  -webkit-opacity: 33;
-  -moz-opacity: 33;
-  opacity: 33;
+  filter: alpha(opacity=33);
+  -webkit-opacity: 0.33;
+  -moz-opacity: 0.33;
+  opacity: 0.33;
+  cursor: default;
 }
 .kurrency-button.small {
   line-height: 40px;

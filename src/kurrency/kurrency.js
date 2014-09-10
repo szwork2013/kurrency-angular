@@ -22,7 +22,7 @@
     }
   }
 
-  if (!w[KURRENCY_CONFIG.ANGULAR] && (typeof w.KURRENCY_CONFIG.REQUIRE_ANGULAR === 'undefined' || w.KURRENCY_CONFIG.REQUIRE_ANGULAR === true)) {
+  if (!w[w.KURRENCY_CONFIG.ANGULAR] && (typeof w.KURRENCY_CONFIG.REQUIRE_ANGULAR === 'undefined' || w.KURRENCY_CONFIG.REQUIRE_ANGULAR === true)) {
     var scrip = d.createElement('script');
     scrip.type = 'text/javascript';
     scrip.async = true;
@@ -54,7 +54,385 @@
         mode: 'test',
         phrases: {
           cart_empty: 'You don\'t have anything in your cart'
-        }
+        },
+        months: [
+          {
+            name: 'January',
+            value: 1
+          },
+          {
+            name: 'February',
+            value: 2
+          },
+          {
+            name: 'March',
+            value: 3
+          },
+          {
+            name: 'April',
+            value: 4
+          },
+          {
+            name: 'May',
+            value: 5
+          },
+          {
+            name: 'June',
+            value: 6
+          },
+          {
+            name: 'July',
+            value: 7
+          },
+          {
+            name: 'August',
+            value: 8
+          },
+          {
+            name: 'September',
+            value: 9
+          },
+          {
+            name: 'October',
+            value: 10
+          },
+          {
+            name: 'November',
+            value: 11
+          },
+          {
+            name: 'December',
+            value: 12
+          }
+        ],
+        // this is so inefficient lol, change
+        years: [
+          {
+            name: new Date().getFullYear(),
+            value: new Date().getFullYear()
+          },
+          {
+            name: new Date().getFullYear()+1,
+            value: new Date().getFullYear()+1
+          },
+          {
+            name: new Date().getFullYear()+2,
+            value: new Date().getFullYear()+2
+          },
+          {
+            name: new Date().getFullYear()+3,
+            value: new Date().getFullYear()+3
+          },
+          {
+            name: new Date().getFullYear()+4,
+            value: new Date().getFullYear()+4
+          },
+          {
+            name: new Date().getFullYear()+5,
+            value: new Date().getFullYear()+5
+          },
+          {
+            name: new Date().getFullYear()+6,
+            value: new Date().getFullYear()+6
+          },
+          {
+            name: new Date().getFullYear()+7,
+            value: new Date().getFullYear()+7
+          }
+        ],
+        states:
+          [
+            {
+              'name': 'Alberta',
+              'value': 'AB'
+            },
+            {
+              'name': 'Alabama',
+              'value': 'AL'
+            },
+            {
+              'name': 'Alaska',
+              'value': 'AK'
+            },
+            {
+              'name': 'American Samoa',
+              'value': 'AS'
+            },
+            {
+              'name': 'Arizona',
+              'value': 'AZ'
+            },
+            {
+              'name': 'Arkansas',
+              'value': 'AR'
+            },
+            {
+              'name': 'British Columbia',
+              'value': 'BC'
+            },
+            {
+              'name': 'California',
+              'value': 'CA'
+            },
+            {
+              'name': 'Colorado',
+              'value': 'CO'
+            },
+            {
+              'name': 'Connecticut',
+              'value': 'CT'
+            },
+            {
+              'name': 'Delaware',
+              'value': 'DE'
+            },
+            {
+              'name': 'District Of Columbia',
+              'value': 'DC'
+            },
+            {
+              'name': 'Federated States Of Micronesia',
+              'value': 'FM'
+            },
+            {
+              'name': 'Florida',
+              'value': 'FL'
+            },
+            {
+              'name': 'Georgia',
+              'value': 'GA'
+            },
+            {
+              'name': 'Guam',
+              'value': 'GU'
+            },
+            {
+              'name': 'Hawaii',
+              'value': 'HI'
+            },
+            {
+              'name': 'Idaho',
+              'value': 'ID'
+            },
+            {
+              'name': 'Illinois',
+              'value': 'IL'
+            },
+            {
+              'name': 'Indiana',
+              'value': 'IN'
+            },
+            {
+              'name': 'Iowa',
+              'value': 'IA'
+            },
+            {
+              'name': 'Kansas',
+              'value': 'KS'
+            },
+            {
+              'name': 'Kentucky',
+              'value': 'KY'
+            },
+            {
+              'name': 'Louisiana',
+              'value': 'LA'
+            },
+            {
+              'name': 'Manitoba',
+              'value': 'MB'
+            },
+            {
+              'name': 'Maine',
+              'value': 'ME'
+            },
+            {
+              'name': 'Marshall Islands',
+              'value': 'MH'
+            },
+            {
+              'name': 'Maryland',
+              'value': 'MD'
+            },
+            {
+              'name': 'Massachusetts',
+              'value': 'MA'
+            },
+            {
+              'name': 'Michigan',
+              'value': 'MI'
+            },
+            {
+              'name': 'Minnesota',
+              'value': 'MN'
+            },
+            {
+              'name': 'Mississippi',
+              'value': 'MS'
+            },
+            {
+              'name': 'Missouri',
+              'value': 'MO'
+            },
+            {
+              'name': 'Montana',
+              'value': 'MT'
+            },
+            {
+              'name': 'New Brunswich',
+              'value': 'NB'
+            },
+            {
+              'name': 'Nebraska',
+              'value': 'NE'
+            },
+            {
+              'name': 'Newfoundland and Labrador',
+              'value': 'NL'
+            },
+            {
+              'name': 'Nevada',
+              'value': 'NV'
+            },
+            {
+              'name': 'New Hampshire',
+              'value': 'NH'
+            },
+            {
+              'name': 'New Jersey',
+              'value': 'NJ'
+            },
+            {
+              'name': 'New Mexico',
+              'value': 'NM'
+            },
+            {
+              'name': 'New York',
+              'value': 'NY'
+            },
+            {
+              'name': 'North Carolina',
+              'value': 'NC'
+            },
+            {
+              'name': 'North Dakota',
+              'value': 'ND'
+            },
+            {
+              'name': 'Nova Scotia',
+              'value': 'NS'
+            },
+            {
+              'name': 'Northern Mariana Islands',
+              'value': 'MP'
+            },
+            {
+              'name': 'Ohio',
+              'value': 'OH'
+            },
+            {
+              'name': 'Oklahoma',
+              'value': 'OK'
+            },
+            {
+              'name': 'Ontario',
+              'value': 'ON'
+            },
+            {
+              'name': 'Oregon',
+              'value': 'OR'
+            },
+            {
+              'name': 'Palau',
+              'value': 'PW'
+            },
+            {
+              'name': 'Pennsylvania',
+              'value': 'PA'
+            },
+            {
+              'name': 'Prince Edward Island',
+              'value': 'PE'
+            },
+            {
+              'name': 'Puerto Rico',
+              'value': 'PR'
+            },
+            {
+              'name': 'Quebec',
+              'value': 'QB'
+            },
+            {
+              'name': 'Rhode Island',
+              'value': 'RI'
+            },
+            {
+              'name': 'South Carolina',
+              'value': 'SC'
+            },
+            {
+              'name': 'South Dakota',
+              'value': 'SD'
+            },
+            {
+              'name': 'Saskatchewan',
+              'value': 'SK'
+            },
+            {
+              'name': 'Tennessee',
+              'value': 'TN'
+            },
+            {
+              'name': 'Texas',
+              'value': 'TX'
+            },
+            {
+              'name': 'Utah',
+              'value': 'UT'
+            },
+            {
+              'name': 'Vermont',
+              'value': 'VT'
+            },
+            {
+              'name': 'Virgin Islands',
+              'value': 'VI'
+            },
+            {
+              'name': 'Virginia',
+              'value': 'VA'
+            },
+            {
+              'name': 'Washington',
+              'value': 'WA'
+            },
+            {
+              'name': 'West Virginia',
+              'value': 'WV'
+            },
+            {
+              'name': 'Wisconsin',
+              'value': 'WI'
+            },
+            {
+              'name': 'Wyoming',
+              'value': 'WY'
+            },
+            {
+              'name': 'Yukon',
+              'value': 'YT'
+            }
+          ],
+          countries: [
+            {
+              name: 'United States',
+              value: 'US'
+            },
+            {
+              name: 'Canada',
+              value: 'CA'
+            }
+          ]
       })
       .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function ($rootScope, $http, kurrencyConfig) {
         function Request(kurrency, opts) {
@@ -327,7 +705,7 @@
             $scope.cart.get(function (err, cart) {
               for (var i = 0; i < cart.length; i++) {
                 if (cart[i]._id === product._id) {
-                  cart[i].qty += parseInt(qty);
+                  cart[i].qty += parseInt(qty, 10);
                   return $scope.session.get(function (err, session) {
                     session.data.cart = cart;
                     $scope.session.save(session, function (err, session) {
@@ -341,12 +719,15 @@
                 _id: product._id,
                 name: product.name,
                 sub_title: product.sub_title,
-                qty: parseInt(qty),
+                qty: parseInt(qty, 10),
                 image: product.images[0],
                 weight: product.weight,
                 dimensions: product.dimensions,
                 price: product.price,
-                product_lines: product.product_lines
+                product_lines: product.product_lines,
+                requires_shipping: product.requires_shipping,
+                allow_presale: product.allow_presale,
+                taxable: product.taxable
               });
               $scope.session.get(function (err, session) {
                 session.data.cart = cart;
@@ -951,7 +1332,7 @@
           }
         }
       }])
-      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', '$timeout', function(kurrency, kurrencyConfig, $timeout) {
+      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', '$timeout', '$window', '$document', function(kurrency, kurrencyConfig, $timeout, $window, $document) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -972,6 +1353,40 @@
             scope.apiLoading = 0;
             scope.product_total = 0;
             scope.quantity_total = 0;
+            scope.paymentEnabled = false;
+            scope.requiresShipping = false;
+            scope.addressList = [];
+            scope.paymentList = [];
+            scope.checkout = {
+              service_carrier: null,
+              service_code: null,
+              ship_to: null,
+              customer: null,
+              payment_method: null,
+              products: null,
+              notes: ''
+            };
+            scope.geocodeComplete = false;
+            scope.stateList = kurrencyConfig.states;
+            scope.countryList = kurrencyConfig.countries;
+
+            // load Gmaps if it isn't on the page
+            if(!$window.google) {
+              var check = $document[0].getElementsByTagName('script');
+              var found = false;
+              for(var i = 0; i < check.length; i++) {
+                if(check[i].src.indexOf('maps.googleapis') > -1) {
+                  found = true;
+                }
+              }
+              if(!found) {
+                var gscript = d.createElement('script');
+                gscript.type = 'text/javascript';
+                gscript.async = true;
+                gscript.src = '//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDfl3BRqXwFWerx20m00Hec6mSFyL42w0Y&callback=initialize';
+                d.getElementsByTagName('body')[0].appendChild(gscript);
+              }
+            }
 
             scope.messages = {
               none: [],
@@ -992,8 +1407,11 @@
               scope.product_total = 0;
               scope.quantity_total = 0;
               for(var i = 0; i < scope.cart.length; i++) {
-                scope.quantity_total += scope.cart[i].qty;
-                var line_total = scope.cart[i].qty * scope.cart[i].price;
+                if(scope.cart[i].requires_shipping) {
+                  scope.requiresShipping = true;
+                }
+                scope.quantity_total += parseInt(scope.cart[i].qty, 10);
+                var line_total = parseInt(scope.cart[i].qty, 10) * scope.cart[i].price;
                 scope.product_total += line_total;
               }
             };
@@ -1025,6 +1443,41 @@
               return '';
             };
 
+            scope.lookupGeoCode = function(address, postal_code, obj) {
+              if(postal_code.length < 5) {
+                return;
+              }
+
+              if(!$window.google) {
+                return scope.geocodeComplete = true;
+              }
+
+              var geocoder = new google.maps.Geocoder();
+              geocoder.geocode({
+                address: address + ' ' + postal_code
+              }, function(res, status) {
+                if(status !== google.maps.GeocoderStatus.OK) {
+                  return scope.geocodeComplete = true;
+                }
+
+                console.log(res);
+                for(var i = 0; i < res[0].address_components.length; i++) {
+                  var part = res[0].address_components[i];
+                  if(part.types[0] === 'locality') {
+                    obj.city = part.long_name;
+                  }
+                  if(part.types[0] === 'administrative_area_level_1') {
+                    obj.state = part.short_name;
+                  }
+                  if(part.types[0] === 'country') {
+                    obj.country_code = part.short_name;
+                  }
+                }
+                scope.geocodeComplete = true;
+                scope.$apply();
+              });
+            };
+
             scope.addMessage = function(type, msg) {
               var section = scope.showing;
               if(!section) {
@@ -1052,7 +1505,7 @@
                 first_name: null,
                 last_name: null,
                 email: null,
-                password: null,
+                password: null
               };
               scope.forgot = {
                 email: null
@@ -1183,6 +1636,11 @@
         }
       }
     }
+
+    w.initialize = function() {
+      // for Gmaps
+      //console.log(w.google);
+    };
 
     //$templateCache
   }

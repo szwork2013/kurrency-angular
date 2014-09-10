@@ -124,6 +124,34 @@
           border-bottom: none;
         }
       }
+      &.cart {
+        a {
+          position: relative;
+          .count {
+            display: block;
+            position: absolute;
+            text-align: center;
+            width: 15px;
+            height: 15px;
+            background: @windowBgColor;
+            color: @defaultColor;
+            line-height: 16px;
+            font-size: 13px;
+            .border-radius(7.5px);
+            top: 5px;
+            right: 1px;
+            .opacity(100);
+            .transition(opacity .5s linear);
+          }
+        }
+        &.cart-empty {
+          a {
+            .count {
+              .opacity(0);
+            }
+          }
+        }
+      }
     }
   }
 
@@ -186,6 +214,7 @@
     width: 340px;
     height: 100%;
     overflow: hidden;
+    overflow-y: auto;
     background-color: @windowBgColor;
     .transition(all .5s);
     .opacity(0);
@@ -226,7 +255,7 @@
     .kurrency-container {
       width: 340px;
       padding: 20px;
-      height: 100%;
+      min-height: 100%;
       .transform(scale(.8));
       .transition(all .5s);
       h1 {
@@ -369,7 +398,8 @@ textarea.kurrency-input {
     outline: 0;
   }
   &[disabled] {
-    .opacity(33);
+    .opacity(.33);
+    cursor: default;
   }
   &.small {
     line-height: 40px;
