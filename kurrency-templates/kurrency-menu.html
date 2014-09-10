@@ -165,14 +165,16 @@
             <select class="kurrency-input" ng-model="checkout.ship_to" ng-options="address as address.address for address in addressList"></select>
           </div>
           <p>Enter a shipping address</p>
-          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address" placeholder="Enter your address">
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.name" placeholder="Your Name">
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.company_name" placeholder="(optional) Company Name">
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.ship_to.address, checkout.ship_to.postal_code, checkout.ship_to)">
           <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address2" placeholder="(optional) Address Line 2">
-          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.ship_to.address, checkout.ship_to.postal_code, checkout.ship_to)">
           <div ng-show="geocodeComplete">
             <input class="kurrency-input" type="text" ng-model="checkout.ship_to.city" placeholder="Enter your city">
             <select class="kurrency-input" ng-model="checkout.ship_to.state" ng-options="state.value as state.name for state in stateList"></select>
             <select class="kurrency-input" ng-model="checkout.ship_to.country_code" ng-options="country.value as country.name for country in countryList"></select>
           </div>
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.ship_to.address, checkout.ship_to.postal_code, checkout.ship_to)">
         </div>
         <button type="submit" class="kurrency-button contact-button" ng-click="toggle('checkout-2', 'checkout')">Continue</button>
       </form>
@@ -191,19 +193,22 @@
       </div>
       <form>
         <div>
+          <button type="button" class="kurrency-button small" ng-click="copyShippingAddress()" ng-hide="shippingAddressCopied">Copy Shipping Address</button>
           <div ng-show="addressList.length > 0">
             <p>Select from a billing address you have saved</p>
             <select class="kurrency-input" ng-model="checkout.bill_to" ng-options="address as address.address for address in addressList"></select>
           </div>
           <p>Enter a billing address</p>
-          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address" placeholder="Enter your address">
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.name" placeholder="Your Name">
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.company_name" placeholder="(optional) Company Name">
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.bill_to.address, checkout.bill_to.postal_code, checkout.bill_to)">
           <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address2" placeholder="(optional) Address Line 2">
-          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.bill_to.address, checkout.bill_to.postal_code, checkout.bill_to)">
           <div ng-show="geocodeComplete">
             <input class="kurrency-input" type="text" ng-model="checkout.bill_to.city" placeholder="Enter your city">
             <select class="kurrency-input" ng-model="checkout.bill_to.state" ng-options="state.value as state.name for state in stateList"></select>
             <select class="kurrency-input" ng-model="checkout.bill_to.country_code" ng-options="country.value as country.name for country in countryList"></select>
           </div>
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.bill_to.address, checkout.bill_to.postal_code, checkout.bill_to)">
         </div>
         <button type="submit" class="kurrency-button contact-button" ng-click="toggle('checkout-3', 'checkout-2')">Continue</button>
       </form>

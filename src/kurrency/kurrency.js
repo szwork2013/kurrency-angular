@@ -1361,7 +1361,7 @@
               service_carrier: null,
               service_code: null,
               ship_to: null,
-              customer: null,
+              bill_to: null,
               payment_method: null,
               products: null,
               notes: ''
@@ -1369,6 +1369,7 @@
             scope.geocodeComplete = false;
             scope.stateList = kurrencyConfig.states;
             scope.countryList = kurrencyConfig.countries;
+            scope.shippingAddressCopied = false;
 
             // load Gmaps if it isn't on the page
             if(!$window.google) {
@@ -1443,8 +1444,13 @@
               return '';
             };
 
+            scope.copyShippingAddress = function() {
+              scope.checkout.bill_to = angular.extend({}, scope.checkout.ship_to);
+              scope.shippingAddressCopied = true;
+            };
+
             scope.lookupGeoCode = function(address, postal_code, obj) {
-              if(postal_code.length < 5) {
+              if(!postal_code || postal_code.length < 5) {
                 return;
               }
 
