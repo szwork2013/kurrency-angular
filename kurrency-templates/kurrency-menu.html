@@ -126,6 +126,50 @@
     </div>
     <div class="kurrency-container">
       <h1>My Account</h1>
+      <p>Shipping Addresses</p>
+      <ul class="addresses-list">
+        <li class="address" ng-repeat="address in addressList">
+          <div class="clearfix" ng-show="!address.$$editing">
+            <div class="left">
+              <div><span ng-bind="address.name | limitTo:18"></span></div>
+              <div><span ng-bind="(address.email | limitTo:18) + '...'"></span></div>
+              <div><span ng-bind="address.phone | limitTo:18"></span></div>
+            </div>
+            <div class="right">
+              <div><span ng-bind="address.address.address_1 | limitTo:18"></span></div>
+              <div><span ng-bind="address.address.city + ', ' + address.address.state_code | limitTo:18"></span></div>
+              <div><span ng-bind="address.address.postal_code + ', ' + address.address.country_code"></span></div>
+            </div>
+          </div>
+          <div class="edit-holder" ng-show="address.$$editing">
+            <form ng-submit="updateAddress(address)">
+              <input class="kurrency-input" type="text" ng-model="address.name" placeholder="Your Name">
+              <input class="kurrency-input" type="text" ng-model="address.company_name" placeholder="(optional) Company Name">
+              <input class="kurrency-input" type="text" ng-model="address.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">
+              <div ng-show="geocodeComplete">
+                <input class="kurrency-input" type="text" ng-model="address.address.address_2" placeholder="(optional) Address Line 2">
+                <input class="kurrency-input" type="text" ng-model="address.address.city" placeholder="Enter your city">
+                <select class="kurrency-input" ng-model="address.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
+                <select class="kurrency-input" ng-model="address.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
+              </div>
+              <input class="kurrency-input" type="text" ng-model="address.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">
+              <button class="kurrency-button small half cancel" ng-click="address.$$editing = false">Cancel</button>
+              <button class="kurrency-button small half submit" ng-click="deleteAddress(address)">Save</button>
+            </form>
+          </div>
+          <div ng-show="!address.$$editing">
+            <button class="kurrency-button small half edit" ng-click="address.$$editing = true">Edit</button>
+            <button class="kurrency-button small half delete" ng-click="deleteAddress(address)">Delete</button>
+          </div>
+        </li>
+      </ul>
+      <p>Payment Methods</p>
+      <ul class="payment-methods">
+        <li class="payment-method" ng-repeat="payment_method in paymentMethodList">
+          <div class="left" ng-bind="payment_method.nickname"></div>
+          <div class="right" ng-bind="payment_method.type"></div>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="kurrency-sidebar kurrency-contact" ng-class="{active: show('contact')}">
@@ -159,6 +203,10 @@
         <div ng-repeat="alert in messages['checkout']" class="alert-{{alert.type}}">{{alert.message}}</div>
       </div>
       <form>
+        <div ng-show="!kurrency.auth.loggedIn()">
+          <p>Have an account?</p>
+          <button class="kurrency-button small" type="button" ng-click="toggle('login', 'checkout', 'checkout')">Login Now</button>
+        </div>
         <div>
           <p>Enter your email address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.email" placeholder="Your email address">
@@ -166,14 +214,14 @@
         <div ng-show="requiresShipping">
           <div ng-show="addressList.length > 0">
             <p>Select from a shipping address you have saved</p>
-            <select class="kurrency-input" ng-model="checkout.shipment.ship_to" ng-options="address as address.address for address in addressList"></select>
+            <select class="kurrency-input" ng-model="checkout.shipment.ship_to" ng-options="address as address.address.address_1 for address in addressList" ng-change="changedAddress()"><option value>Select an address</option></select>
           </div>
           <p>Enter a shipping address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.name" placeholder="Your Name">
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.company_name" placeholder="(optional) Company Name">
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.shipment.ship_to.address.address_1, checkout.shipment.ship_to.address.postal_code, checkout.shipment)">
-          <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.address.address_2" placeholder="(optional) Address Line 2">
           <div ng-show="geocodeComplete">
+            <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.address.address_2" placeholder="(optional) Address Line 2">
             <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.address.city" placeholder="Enter your city">
             <select class="kurrency-input" ng-model="checkout.shipment.ship_to.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
             <select class="kurrency-input" ng-model="checkout.shipment.ship_to.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
@@ -204,14 +252,14 @@
         <div>
           <div ng-show="addressList.length > 0">
             <p>Select from a billing address you have saved</p>
-            <select class="kurrency-input" ng-model="checkout.bill_to" ng-options="address as address.address for address in addressList"></select>
+            <select class="kurrency-input" ng-model="checkout.bill_to" ng-options="address as address.address.address_1 for address in addressList" ng-change="changedAddress()"><option value>Select an address</option></select>
           </div>
           <p>Enter a billing address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.name" placeholder="Your Name">
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.company_name" placeholder="(optional) Company Name">
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.billing.ship_to.address.address_1, checkout.billing.ship_to.address.postal_code, checkout.billing)">
-          <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.address_2" placeholder="(optional) Address Line 2">
           <div ng-show="geocodeComplete">
+            <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.address_2" placeholder="(optional) Address Line 2">
             <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.city" placeholder="Enter your city">
             <select class="kurrency-input" ng-model="checkout.bill_to.address.ship_to.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
             <select class="kurrency-input" ng-model="checkout.bill_to.address.ship_to.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>

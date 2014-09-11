@@ -432,17 +432,64 @@ textarea.kurrency-input {
 .kurrency-button + p {
   margin-top: 25px;
 }
+.kurrency-button.half {
+  width: 48%;
+  display: inline-block;
+}
+.kurrency-button.half:first-child {
+  margin-right: 5px;
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
 .kurrency-product {
   width: 800px;
 }
 .kurrency-cart .cart-products,
-.kurrency-checkout .cart-products {
+.kurrency-checkout .cart-products,
+.kurrency-account .cart-products,
+.kurrency-cart .addresses-list,
+.kurrency-checkout .addresses-list,
+.kurrency-account .addresses-list,
+.kurrency-cart .payment-methods,
+.kurrency-checkout .payment-methods,
+.kurrency-account .payment-methods {
   margin: 30px 0;
   padding: 0;
   list-style: none;
 }
 .kurrency-cart .cart-products .cart-product,
-.kurrency-checkout .cart-products .cart-product {
+.kurrency-checkout .cart-products .cart-product,
+.kurrency-account .cart-products .cart-product,
+.kurrency-cart .addresses-list .cart-product,
+.kurrency-checkout .addresses-list .cart-product,
+.kurrency-account .addresses-list .cart-product,
+.kurrency-cart .payment-methods .cart-product,
+.kurrency-checkout .payment-methods .cart-product,
+.kurrency-account .payment-methods .cart-product,
+.kurrency-cart .cart-products .address,
+.kurrency-checkout .cart-products .address,
+.kurrency-account .cart-products .address,
+.kurrency-cart .addresses-list .address,
+.kurrency-checkout .addresses-list .address,
+.kurrency-account .addresses-list .address,
+.kurrency-cart .payment-methods .address,
+.kurrency-checkout .payment-methods .address,
+.kurrency-account .payment-methods .address,
+.kurrency-cart .cart-products .payment-method,
+.kurrency-checkout .cart-products .payment-method,
+.kurrency-account .cart-products .payment-method,
+.kurrency-cart .addresses-list .payment-method,
+.kurrency-checkout .addresses-list .payment-method,
+.kurrency-account .addresses-list .payment-method,
+.kurrency-cart .payment-methods .payment-method,
+.kurrency-checkout .payment-methods .payment-method,
+.kurrency-account .payment-methods .payment-method {
   background-color: #f8f7f7;
   margin-bottom: 1px;
   margin-left: -20px;
@@ -450,7 +497,32 @@ textarea.kurrency-input {
   padding: 10px 20px;
 }
 .kurrency-cart .cart-products .cart-product:after,
-.kurrency-checkout .cart-products .cart-product:after {
+.kurrency-checkout .cart-products .cart-product:after,
+.kurrency-account .cart-products .cart-product:after,
+.kurrency-cart .addresses-list .cart-product:after,
+.kurrency-checkout .addresses-list .cart-product:after,
+.kurrency-account .addresses-list .cart-product:after,
+.kurrency-cart .payment-methods .cart-product:after,
+.kurrency-checkout .payment-methods .cart-product:after,
+.kurrency-account .payment-methods .cart-product:after,
+.kurrency-cart .cart-products .address:after,
+.kurrency-checkout .cart-products .address:after,
+.kurrency-account .cart-products .address:after,
+.kurrency-cart .addresses-list .address:after,
+.kurrency-checkout .addresses-list .address:after,
+.kurrency-account .addresses-list .address:after,
+.kurrency-cart .payment-methods .address:after,
+.kurrency-checkout .payment-methods .address:after,
+.kurrency-account .payment-methods .address:after,
+.kurrency-cart .cart-products .payment-method:after,
+.kurrency-checkout .cart-products .payment-method:after,
+.kurrency-account .cart-products .payment-method:after,
+.kurrency-cart .addresses-list .payment-method:after,
+.kurrency-checkout .addresses-list .payment-method:after,
+.kurrency-account .addresses-list .payment-method:after,
+.kurrency-cart .payment-methods .payment-method:after,
+.kurrency-checkout .payment-methods .payment-method:after,
+.kurrency-account .payment-methods .payment-method:after {
   visibility: hidden;
   display: block;
   font-size: 0;
@@ -459,24 +531,149 @@ textarea.kurrency-input {
   height: 0;
 }
 .kurrency-cart .cart-products .cart-product .left,
-.kurrency-checkout .cart-products .cart-product .left {
+.kurrency-checkout .cart-products .cart-product .left,
+.kurrency-account .cart-products .cart-product .left,
+.kurrency-cart .addresses-list .cart-product .left,
+.kurrency-checkout .addresses-list .cart-product .left,
+.kurrency-account .addresses-list .cart-product .left,
+.kurrency-cart .payment-methods .cart-product .left,
+.kurrency-checkout .payment-methods .cart-product .left,
+.kurrency-account .payment-methods .cart-product .left,
+.kurrency-cart .cart-products .address .left,
+.kurrency-checkout .cart-products .address .left,
+.kurrency-account .cart-products .address .left,
+.kurrency-cart .addresses-list .address .left,
+.kurrency-checkout .addresses-list .address .left,
+.kurrency-account .addresses-list .address .left,
+.kurrency-cart .payment-methods .address .left,
+.kurrency-checkout .payment-methods .address .left,
+.kurrency-account .payment-methods .address .left,
+.kurrency-cart .cart-products .payment-method .left,
+.kurrency-checkout .cart-products .payment-method .left,
+.kurrency-account .cart-products .payment-method .left,
+.kurrency-cart .addresses-list .payment-method .left,
+.kurrency-checkout .addresses-list .payment-method .left,
+.kurrency-account .addresses-list .payment-method .left,
+.kurrency-cart .payment-methods .payment-method .left,
+.kurrency-checkout .payment-methods .payment-method .left,
+.kurrency-account .payment-methods .payment-method .left {
   float: left;
 }
 .kurrency-cart .cart-products .cart-product .right,
-.kurrency-checkout .cart-products .cart-product .right {
+.kurrency-checkout .cart-products .cart-product .right,
+.kurrency-account .cart-products .cart-product .right,
+.kurrency-cart .addresses-list .cart-product .right,
+.kurrency-checkout .addresses-list .cart-product .right,
+.kurrency-account .addresses-list .cart-product .right,
+.kurrency-cart .payment-methods .cart-product .right,
+.kurrency-checkout .payment-methods .cart-product .right,
+.kurrency-account .payment-methods .cart-product .right,
+.kurrency-cart .cart-products .address .right,
+.kurrency-checkout .cart-products .address .right,
+.kurrency-account .cart-products .address .right,
+.kurrency-cart .addresses-list .address .right,
+.kurrency-checkout .addresses-list .address .right,
+.kurrency-account .addresses-list .address .right,
+.kurrency-cart .payment-methods .address .right,
+.kurrency-checkout .payment-methods .address .right,
+.kurrency-account .payment-methods .address .right,
+.kurrency-cart .cart-products .payment-method .right,
+.kurrency-checkout .cart-products .payment-method .right,
+.kurrency-account .cart-products .payment-method .right,
+.kurrency-cart .addresses-list .payment-method .right,
+.kurrency-checkout .addresses-list .payment-method .right,
+.kurrency-account .addresses-list .payment-method .right,
+.kurrency-cart .payment-methods .payment-method .right,
+.kurrency-checkout .payment-methods .payment-method .right,
+.kurrency-account .payment-methods .payment-method .right {
   float: right;
 }
 .kurrency-cart .cart-products .cart-product .name,
-.kurrency-checkout .cart-products .cart-product .name {
+.kurrency-checkout .cart-products .cart-product .name,
+.kurrency-account .cart-products .cart-product .name,
+.kurrency-cart .addresses-list .cart-product .name,
+.kurrency-checkout .addresses-list .cart-product .name,
+.kurrency-account .addresses-list .cart-product .name,
+.kurrency-cart .payment-methods .cart-product .name,
+.kurrency-checkout .payment-methods .cart-product .name,
+.kurrency-account .payment-methods .cart-product .name,
+.kurrency-cart .cart-products .address .name,
+.kurrency-checkout .cart-products .address .name,
+.kurrency-account .cart-products .address .name,
+.kurrency-cart .addresses-list .address .name,
+.kurrency-checkout .addresses-list .address .name,
+.kurrency-account .addresses-list .address .name,
+.kurrency-cart .payment-methods .address .name,
+.kurrency-checkout .payment-methods .address .name,
+.kurrency-account .payment-methods .address .name,
+.kurrency-cart .cart-products .payment-method .name,
+.kurrency-checkout .cart-products .payment-method .name,
+.kurrency-account .cart-products .payment-method .name,
+.kurrency-cart .addresses-list .payment-method .name,
+.kurrency-checkout .addresses-list .payment-method .name,
+.kurrency-account .addresses-list .payment-method .name,
+.kurrency-cart .payment-methods .payment-method .name,
+.kurrency-checkout .payment-methods .payment-method .name,
+.kurrency-account .payment-methods .payment-method .name {
   margin-bottom: 10px;
   font-weight: bold;
 }
 .kurrency-cart .cart-products .cart-product .price,
-.kurrency-checkout .cart-products .cart-product .price {
+.kurrency-checkout .cart-products .cart-product .price,
+.kurrency-account .cart-products .cart-product .price,
+.kurrency-cart .addresses-list .cart-product .price,
+.kurrency-checkout .addresses-list .cart-product .price,
+.kurrency-account .addresses-list .cart-product .price,
+.kurrency-cart .payment-methods .cart-product .price,
+.kurrency-checkout .payment-methods .cart-product .price,
+.kurrency-account .payment-methods .cart-product .price,
+.kurrency-cart .cart-products .address .price,
+.kurrency-checkout .cart-products .address .price,
+.kurrency-account .cart-products .address .price,
+.kurrency-cart .addresses-list .address .price,
+.kurrency-checkout .addresses-list .address .price,
+.kurrency-account .addresses-list .address .price,
+.kurrency-cart .payment-methods .address .price,
+.kurrency-checkout .payment-methods .address .price,
+.kurrency-account .payment-methods .address .price,
+.kurrency-cart .cart-products .payment-method .price,
+.kurrency-checkout .cart-products .payment-method .price,
+.kurrency-account .cart-products .payment-method .price,
+.kurrency-cart .addresses-list .payment-method .price,
+.kurrency-checkout .addresses-list .payment-method .price,
+.kurrency-account .addresses-list .payment-method .price,
+.kurrency-cart .payment-methods .payment-method .price,
+.kurrency-checkout .payment-methods .payment-method .price,
+.kurrency-account .payment-methods .payment-method .price {
   margin-bottom: 10px;
 }
 .kurrency-cart .cart-products .cart-product .quantity input,
-.kurrency-checkout .cart-products .cart-product .quantity input {
+.kurrency-checkout .cart-products .cart-product .quantity input,
+.kurrency-account .cart-products .cart-product .quantity input,
+.kurrency-cart .addresses-list .cart-product .quantity input,
+.kurrency-checkout .addresses-list .cart-product .quantity input,
+.kurrency-account .addresses-list .cart-product .quantity input,
+.kurrency-cart .payment-methods .cart-product .quantity input,
+.kurrency-checkout .payment-methods .cart-product .quantity input,
+.kurrency-account .payment-methods .cart-product .quantity input,
+.kurrency-cart .cart-products .address .quantity input,
+.kurrency-checkout .cart-products .address .quantity input,
+.kurrency-account .cart-products .address .quantity input,
+.kurrency-cart .addresses-list .address .quantity input,
+.kurrency-checkout .addresses-list .address .quantity input,
+.kurrency-account .addresses-list .address .quantity input,
+.kurrency-cart .payment-methods .address .quantity input,
+.kurrency-checkout .payment-methods .address .quantity input,
+.kurrency-account .payment-methods .address .quantity input,
+.kurrency-cart .cart-products .payment-method .quantity input,
+.kurrency-checkout .cart-products .payment-method .quantity input,
+.kurrency-account .cart-products .payment-method .quantity input,
+.kurrency-cart .addresses-list .payment-method .quantity input,
+.kurrency-checkout .addresses-list .payment-method .quantity input,
+.kurrency-account .addresses-list .payment-method .quantity input,
+.kurrency-cart .payment-methods .payment-method .quantity input,
+.kurrency-checkout .payment-methods .payment-method .quantity input,
+.kurrency-account .payment-methods .payment-method .quantity input {
   width: 20px;
   border: none;
   background: white;
@@ -486,23 +683,128 @@ textarea.kurrency-input {
   font-size: 14px;
 }
 .kurrency-cart .cart-products .cart-product .remove a,
-.kurrency-checkout .cart-products .cart-product .remove a {
+.kurrency-checkout .cart-products .cart-product .remove a,
+.kurrency-account .cart-products .cart-product .remove a,
+.kurrency-cart .addresses-list .cart-product .remove a,
+.kurrency-checkout .addresses-list .cart-product .remove a,
+.kurrency-account .addresses-list .cart-product .remove a,
+.kurrency-cart .payment-methods .cart-product .remove a,
+.kurrency-checkout .payment-methods .cart-product .remove a,
+.kurrency-account .payment-methods .cart-product .remove a,
+.kurrency-cart .cart-products .address .remove a,
+.kurrency-checkout .cart-products .address .remove a,
+.kurrency-account .cart-products .address .remove a,
+.kurrency-cart .addresses-list .address .remove a,
+.kurrency-checkout .addresses-list .address .remove a,
+.kurrency-account .addresses-list .address .remove a,
+.kurrency-cart .payment-methods .address .remove a,
+.kurrency-checkout .payment-methods .address .remove a,
+.kurrency-account .payment-methods .address .remove a,
+.kurrency-cart .cart-products .payment-method .remove a,
+.kurrency-checkout .cart-products .payment-method .remove a,
+.kurrency-account .cart-products .payment-method .remove a,
+.kurrency-cart .addresses-list .payment-method .remove a,
+.kurrency-checkout .addresses-list .payment-method .remove a,
+.kurrency-account .addresses-list .payment-method .remove a,
+.kurrency-cart .payment-methods .payment-method .remove a,
+.kurrency-checkout .payment-methods .payment-method .remove a,
+.kurrency-account .payment-methods .payment-method .remove a {
   color: #6f6e6e;
   text-decoration: none;
   font-style: italic;
 }
 .kurrency-cart .cart-products .cart-product .remove a:hover,
-.kurrency-checkout .cart-products .cart-product .remove a:hover {
+.kurrency-checkout .cart-products .cart-product .remove a:hover,
+.kurrency-account .cart-products .cart-product .remove a:hover,
+.kurrency-cart .addresses-list .cart-product .remove a:hover,
+.kurrency-checkout .addresses-list .cart-product .remove a:hover,
+.kurrency-account .addresses-list .cart-product .remove a:hover,
+.kurrency-cart .payment-methods .cart-product .remove a:hover,
+.kurrency-checkout .payment-methods .cart-product .remove a:hover,
+.kurrency-account .payment-methods .cart-product .remove a:hover,
+.kurrency-cart .cart-products .address .remove a:hover,
+.kurrency-checkout .cart-products .address .remove a:hover,
+.kurrency-account .cart-products .address .remove a:hover,
+.kurrency-cart .addresses-list .address .remove a:hover,
+.kurrency-checkout .addresses-list .address .remove a:hover,
+.kurrency-account .addresses-list .address .remove a:hover,
+.kurrency-cart .payment-methods .address .remove a:hover,
+.kurrency-checkout .payment-methods .address .remove a:hover,
+.kurrency-account .payment-methods .address .remove a:hover,
+.kurrency-cart .cart-products .payment-method .remove a:hover,
+.kurrency-checkout .cart-products .payment-method .remove a:hover,
+.kurrency-account .cart-products .payment-method .remove a:hover,
+.kurrency-cart .addresses-list .payment-method .remove a:hover,
+.kurrency-checkout .addresses-list .payment-method .remove a:hover,
+.kurrency-account .addresses-list .payment-method .remove a:hover,
+.kurrency-cart .payment-methods .payment-method .remove a:hover,
+.kurrency-checkout .payment-methods .payment-method .remove a:hover,
+.kurrency-account .payment-methods .payment-method .remove a:hover {
   text-decoration: underline;
   color: #555555;
 }
 .kurrency-cart .cart-products .cart-product.total,
-.kurrency-checkout .cart-products .cart-product.total {
+.kurrency-checkout .cart-products .cart-product.total,
+.kurrency-account .cart-products .cart-product.total,
+.kurrency-cart .addresses-list .cart-product.total,
+.kurrency-checkout .addresses-list .cart-product.total,
+.kurrency-account .addresses-list .cart-product.total,
+.kurrency-cart .payment-methods .cart-product.total,
+.kurrency-checkout .payment-methods .cart-product.total,
+.kurrency-account .payment-methods .cart-product.total,
+.kurrency-cart .cart-products .address.total,
+.kurrency-checkout .cart-products .address.total,
+.kurrency-account .cart-products .address.total,
+.kurrency-cart .addresses-list .address.total,
+.kurrency-checkout .addresses-list .address.total,
+.kurrency-account .addresses-list .address.total,
+.kurrency-cart .payment-methods .address.total,
+.kurrency-checkout .payment-methods .address.total,
+.kurrency-account .payment-methods .address.total,
+.kurrency-cart .cart-products .payment-method.total,
+.kurrency-checkout .cart-products .payment-method.total,
+.kurrency-account .cart-products .payment-method.total,
+.kurrency-cart .addresses-list .payment-method.total,
+.kurrency-checkout .addresses-list .payment-method.total,
+.kurrency-account .addresses-list .payment-method.total,
+.kurrency-cart .payment-methods .payment-method.total,
+.kurrency-checkout .payment-methods .payment-method.total,
+.kurrency-account .payment-methods .payment-method.total {
   background: transparent;
 }
 .kurrency-cart .cart-products .cart-product.final,
-.kurrency-checkout .cart-products .cart-product.final {
+.kurrency-checkout .cart-products .cart-product.final,
+.kurrency-account .cart-products .cart-product.final,
+.kurrency-cart .addresses-list .cart-product.final,
+.kurrency-checkout .addresses-list .cart-product.final,
+.kurrency-account .addresses-list .cart-product.final,
+.kurrency-cart .payment-methods .cart-product.final,
+.kurrency-checkout .payment-methods .cart-product.final,
+.kurrency-account .payment-methods .cart-product.final,
+.kurrency-cart .cart-products .address.final,
+.kurrency-checkout .cart-products .address.final,
+.kurrency-account .cart-products .address.final,
+.kurrency-cart .addresses-list .address.final,
+.kurrency-checkout .addresses-list .address.final,
+.kurrency-account .addresses-list .address.final,
+.kurrency-cart .payment-methods .address.final,
+.kurrency-checkout .payment-methods .address.final,
+.kurrency-account .payment-methods .address.final,
+.kurrency-cart .cart-products .payment-method.final,
+.kurrency-checkout .cart-products .payment-method.final,
+.kurrency-account .cart-products .payment-method.final,
+.kurrency-cart .addresses-list .payment-method.final,
+.kurrency-checkout .addresses-list .payment-method.final,
+.kurrency-account .addresses-list .payment-method.final,
+.kurrency-cart .payment-methods .payment-method.final,
+.kurrency-checkout .payment-methods .payment-method.final,
+.kurrency-account .payment-methods .payment-method.final {
   font-weight: bold;
+}
+.kurrency-cart .addresses-list,
+.kurrency-checkout .addresses-list,
+.kurrency-account .addresses-list {
+  margin-top: 0;
 }
 @font-face {
   font-family: 'KurrencyIcons';

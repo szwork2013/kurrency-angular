@@ -434,6 +434,24 @@ textarea.kurrency-input {
   & + p {
     margin-top: 25px;
   }
+  &.half {
+    width: 48%;
+    display: inline-block;
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
 }
 
 .kurrency-product {
@@ -441,12 +459,17 @@ textarea.kurrency-input {
 }
 
 .kurrency-cart,
-.kurrency-checkout {
-  .cart-products {
+.kurrency-checkout,
+.kurrency-account {
+  .cart-products,
+  .addresses-list,
+  .payment-methods {
     margin: 30px 0;
     padding: 0;
     list-style: none;
-    .cart-product {
+    .cart-product,
+    .address,
+    .payment-method {
       background-color: @closeButtonBgColor;
       margin-bottom: 1px;
       margin-left: -20px;
@@ -502,5 +525,8 @@ textarea.kurrency-input {
         font-weight: bold;
       }
     }
+  }
+  .addresses-list {
+    margin-top: 0;
   }
 }

@@ -470,6 +470,9 @@
           $scope.req = function (type, url, data, error) {
             $rootScope.$broadcast('apiLoading', true);
             var opts = angular.extend({}, $scope.options);
+            if(kurrency.options.user) {
+              opts.headers['authentication-key'] = kurrency.options.user.authenticationKey;
+            }
             opts.method = type;
             opts.url = url;
             if (type === 'post' || type === 'put') {
@@ -619,6 +622,7 @@
             accessToken: '',
             authenticationKey: null, // if user is logged in
             session: null,
+            user: null,
             mode: 'test',
             baseUrl: baseUrls[this.local ? 'test' : 'production']
           };
@@ -630,6 +634,8 @@
             } else {
               $scope.options.baseUrl = baseUrls.production;
             }
+
+            $scope.options.user = storage.get('user');
 
             return $scope;
           };
@@ -654,12 +660,12 @@
             }
           }
 
-          session.prototype.get = function (cb) {
+          session.prototype.get = function (cb, force) {
             if (!cb) {
               return $scope.options.session;
             }
             $scope.options.session = storage.get('session');
-            if (!$scope.options.session) {
+            if (!$scope.options.session || force) {
               var req = new Request($scope).get($scope.options.baseUrl + '/session', null, $scope.handleError);
               req.success(function (res) {
                 $scope.options.session = res.pkg.data;
@@ -806,9 +812,12 @@
           auth.prototype.register = function (data, cb) {
             var req = new Request($scope).post($scope.options.baseUrl + '/register', data, $scope.handleError);
             req.success(function (res) {
-              storage.set('user', res.pkg.data);
-              $rootScope.$broadcast('kurrencyRegistered', res.pkg.data);
-              return cb(null, res.pkg.data);
+              session.user_id = res.pkg.data._id;
+              $scope.session.get(function (err, session) {
+                $scope.auth.setUser(res.pkg.data);
+                $rootScope.$broadcast('kurrencyRegistered', res.pkg.data);
+                return cb(null, res.pkg.data);
+              }, true);
             });
           };
           auth.prototype.login = function (username, password, cb) {
@@ -817,9 +826,11 @@
               password: password
             }, $scope.handleError);
             req.success(function (res) {
-              storage.set('user', res.pkg.data);
-              $rootScope.$broadcast('kurrencySignIn', res.pkg.data);
-              return cb(null, res.pkg.data);
+              $scope.session.get(function (err, session) {
+                $scope.auth.setUser(res.pkg.data);
+                $rootScope.$broadcast('kurrencySignIn', res.pkg.data);
+                return cb(null, res.pkg.data);
+              }, true);
             });
           };
 
@@ -841,6 +852,12 @@
 
           auth.prototype.loggedIn = function() {
             return storage.get('user');
+          };
+
+          auth.prototype.setUser = function(user) {
+            storage.set('user', user);
+            $scope.options.user = user;
+            return user;
           };
 
           /*
@@ -900,7 +917,7 @@
 
           payment_methods.prototype.list = function (cb) {
             $scope.session.get(function (err, session) {
-              var req = new Request($scope).get($scope.options.baseUrl + '/payment_methods', null, $scope.handleError);
+              var req = new Request($scope).get($scope.options.baseUrl + '/transaction-accounts', null, $scope.handleError);
               req.success(function (res) {
                 return cb(null, res.pkg.data);
               });
@@ -908,7 +925,7 @@
           };
           payment_methods.prototype.create = function (data, cb) {
             $scope.session.get(function (err, session) {
-              var req = new Request($scope).post($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+              var req = new Request($scope).post($scope.options.baseUrl + '/transaction-accounts', data, $scope.handleError);
               req.success(function (res) {
                 return cb(null, res.pkg.data);
               });
@@ -917,7 +934,7 @@
           payment_methods.prototype.edit = function (data, cb) {
             // User can edit the nickname
             $scope.session.get(function (err, session) {
-              var req = new Request($scope).put($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+              var req = new Request($scope).put($scope.options.baseUrl + '/transaction-accounts', data, $scope.handleError);
               req.success(function (res) {
                 return cb(null, res.pkg.data);
               });
@@ -925,7 +942,7 @@
           };
           payment_methods.prototype.remove = function (data, cb) {
             $scope.session.get(function (err, session) {
-              var req = new Request($scope).del($scope.options.baseUrl + '/payment_methods', data, $scope.handleError);
+              var req = new Request($scope).del($scope.options.baseUrl + '/transaction-accounts', data, $scope.handleError);
               req.success(function (res) {
                 return cb(null, res.pkg.data);
               });
@@ -1360,13 +1377,14 @@
             scope.wishlist = null;
             scope.showing = null;
             scope.back = null;
+            scope.next = null;
             scope.apiLoading = 0;
             scope.product_total = 0;
             scope.quantity_total = 0;
             scope.paymentEnabled = false;
             scope.requiresShipping = false;
             scope.addressList = [];
-            scope.paymentList = [];
+            scope.paymentMethodList = [];
             scope.checkout = {
               service_carrier: null,
               service_code: null,
@@ -1564,6 +1582,45 @@
               });
             };
 
+            scope.getUserDetails = function() {
+              var user = kurrency.auth.loggedIn();
+              if(!user) {
+                return;
+              }
+
+              scope.checkout.shipment.ship_to.name = user.first_name + ' ' + user.last_name;
+              scope.checkout.shipment.ship_to.email = user.email;
+              scope.checkout.shipment.ship_to.phone = user.phone;
+              kurrency.addresses.list(function(err, addresses) {
+                if(!addresses.length) {
+                  return;
+                }
+                scope.addressList = addresses;
+                scope.checkout.shipment.ship_to = addresses[0];
+                scope.geocodeComplete = true;
+              });
+
+              kurrency.payment_methods.list(function(err, payment_methods) {
+                scope.paymentMethodList = payment_methods;
+              });
+            };
+
+            scope.changedAddress = function(address) {
+              scope.geocodeComplete = true;
+            };
+
+            scope.$on('kurrencySignIn', function(evt, user) {
+              scope.getUserDetails();
+            });
+
+            if(kurrency.auth.loggedIn()) {
+              scope.getUserDetails();
+            }
+
+            scope.$on('kurrencyRegistered', function(evt, user) {
+              scope.getUserDetails();
+            });
+
             scope.$watch('selectedRate', function() {
               if(!scope.selectedRate) {
                 return;
@@ -1645,7 +1702,7 @@
               scope.showing = null;
             };
 
-            scope.toggle = function(val, back) {
+            scope.toggle = function(val, back, next) {
               if(scope.showing === val) {
                 scope.showing = null;
               } else {
@@ -1657,6 +1714,13 @@
               } else {
                 scope.back = null;
               }
+
+              if(next) {
+                scope.next = next;
+              } else {
+                scope.next = null;
+              }
+
               scope.wipeMessages();
               scope.resetForms();
               if(val === 'checkout-3') {
@@ -1674,10 +1738,14 @@
               kurrency.auth.login(scope.login.username, scope.login.password, function(user) {
                 scope.addMessage('success', 'Successfully logged in');
                 $timeout(function() {
-                  if (section) {
-                    scope.showing = section;
+                  if(scope.next) {
+                    scope.toggle(scope.next);
                   } else {
-                    scope.showing = null;
+                    if(section) {
+                      scope.showing = section;
+                    } else {
+                      scope.showing = null;
+                    }
                   }
                   scope.wipeMessages();
                 }, 500);
