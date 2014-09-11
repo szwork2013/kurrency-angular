@@ -1242,7 +1242,7 @@
       })
       .directive('kurrencyPopover', function() {
         return {
-          scope: true,
+          scope: {kurrencyPopover: '=', showing: '@'},
           restrict: 'A',
           transclude: true,
           templateUrl: function(tElement, tAttrs) {
@@ -1254,14 +1254,24 @@
             return url;
           },
           link: function(scope, element, attr) {
-            scope.contents = scope.$eval(attr.kurrencyPopover);
             var popover = angular.element(element[0].querySelector('.kurrency-popover'));
             element.bind('mouseover', function(evt) {
-              popover.addClass('active');
+              scope.showing = true;
+              scope.$apply();
             });
             element.bind('mouseout', function(evt) {
-              popover.removeClass('active');
+              scope.showing = false;
+              scope.$apply();
             });
+            scope.$watch(function() { return scope.showing; }, function() {
+              scope.showing = (scope.showing === 'true' || scope.showing === true);
+
+              if(scope.showing === true) {
+                popover.addClass('active');
+              } else {
+                popover.removeClass('active')
+              }
+            }, true);
           }
         }
       })
@@ -1360,21 +1370,26 @@
             scope.checkout = {
               service_carrier: null,
               service_code: null,
-              ship_to: null,
-              bill_to: null,
-              payment_method: null,
+              ship_to: new kurrency.customer(),
+              bill_to: new kurrency.customer(),
+              payment_method: new kurrency.credit_card(),
               products: null,
               notes: ''
             };
             scope.geocodeComplete = false;
             scope.stateList = kurrencyConfig.states;
             scope.countryList = kurrencyConfig.countries;
+            scope.expirationMonths = kurrencyConfig.months;
+            scope.expirationYears = kurrencyConfig.years;
             scope.shippingAddressCopied = false;
             scope.rates = [];
             scope.selectedRate = null;
             scope.tax_total = 0;
             scope.shipping_total = 0;
             scope.final_total = 0;
+            scope.cartAddText = kurrencyConfig.cartAddText ? kurrencyConfig.cartAddText : 'Added to cart';
+            scope.shoppingCartPopoverText = 'Shopping Cart';
+            scope.cartAddActive = false;
 
             // load Gmaps if it isn't on the page
             if(!$window.google) {
@@ -1414,12 +1429,14 @@
             scope.updateProductTotal = function() {
               scope.product_total = 0;
               scope.quantity_total = 0;
+              var line_total;
+
               for(var i = 0; i < scope.cart.length; i++) {
                 if(scope.cart[i].requires_shipping) {
                   scope.requiresShipping = true;
                 }
                 scope.quantity_total += parseInt(scope.cart[i].qty, 10);
-                var line_total = parseInt(scope.cart[i].qty, 10) * scope.cart[i].price;
+                line_total = parseInt(scope.cart[i].qty, 10) * scope.cart[i].price;
                 scope.product_total += line_total;
               }
             };
@@ -1431,8 +1448,17 @@
             };
 
             scope.$on('cartUpdated', function(evt, cart) {
-              scope.cart = cart;
-              scope.updateProductTotal();
+              var tmp = scope.shoppingCartPopoverText;
+              scope.shoppingCartPopoverText = scope.cartAddText;
+              scope.cartAddActive = true;
+              (function(tmp) {
+                $timeout(function () {
+                  scope.shoppingCartPopoverText = tmp;
+                  scope.cartAddActive = false;
+                }, 3000);
+                scope.cart = cart;
+                scope.updateProductTotal();
+              })(tmp);
             });
 
             scope.updateQuantity = function(product) {
@@ -1458,7 +1484,7 @@
             };
 
             scope.copyShippingAddress = function() {
-              scope.checkout.bill_to = angular.extend({}, scope.checkout.ship_to);
+              scope.checkout.bill_to = angular.extend(scope.checkout.bill_to, scope.checkout.ship_to);
               scope.shippingAddressCopied = true;
             };
 
@@ -1483,10 +1509,10 @@
                 for(var i = 0; i < res[0].address_components.length; i++) {
                   var part = res[0].address_components[i];
                   if(part.types[0] === 'locality') {
-                    obj.city = part.long_name;
+                    obj.address.city = part.long_name;
                   }
                   if(part.types[0] === 'administrative_area_level_1') {
-                    obj.state = part.short_name;
+                    obj.address.state_code = part.short_name;
                   }
                   if(part.types[0] === 'country') {
                     obj.country_code = part.short_name;
@@ -1501,7 +1527,7 @@
               kurrency.orders.taxes(scope.product_total, {
                 ship_to: {
                   address: {
-                    postal_code: scope.checkout.ship_to.postal_code
+                    postal_code: scope.checkout.ship_to.address.postal_code
                   }
                 }
               }, function(err, tax) {
@@ -1511,18 +1537,18 @@
             };
 
             scope.getRates = function() {
-              if(!scope.checkout.ship_to.postal_code
-                || scope.checkout.ship_to.postal_code.length < 5) {
+              if(!scope.checkout.ship_to.address.postal_code
+                || scope.checkout.ship_to.address.postal_code.length < 5) {
                 return;
               }
 
               kurrency.shipping.rates({
                 ship_to: {
                   address: {
-                    address_1: scope.checkout.ship_to.address,
-                    state_code: scope.checkout.ship_to.state,
-                    country_code: scope.checkout.ship_to.country_code,
-                    postal_code: scope.checkout.ship_to.postal_code
+                    address_1: scope.checkout.ship_to.address.address_1,
+                    state_code: scope.checkout.ship_to.address.state_code,
+                    country_code: scope.checkout.ship_to.address.country_code,
+                    postal_code: scope.checkout.ship_to.address.postal_code
                   }
                 },
                 products: scope.cart
@@ -1543,9 +1569,33 @@
               }
               scope.shipping_total = scope.selectedRate.cost * 100;
               scope.checkout.service_carrier = scope.selectedRate.carrier;
-              scope.checkout.service_code = scope.selectedRate.carrier_rate;
+              scope.checkout.service_code = scope.selectedRate.code;
               scope.updateFinalTotal();
             }, true);
+
+            scope.completeOrder = function() {
+              if(scope.apiLoading > 0) {
+                scope.addMessage('error', 'Please wait, we are processing your order');
+                return;
+              }
+              kurrency.orders.create({
+                service_carrier: scope.checkout.service_carrier,
+                service_code: scope.checkout.service_code,
+                ship_to: scope.checkout.ship_to,
+                customer: scope.checkout.bill_to,
+                payment_method: scope.checkout.payment_method,
+                products: angular.copy(scope.cart),
+                notes: ''
+              }, function(err, order) {
+                if(err) {
+                  return console.log(err);
+                }
+
+                kurrency.cart.empty(function(err, cart) {
+                  $location.path('/checkout/complete/' + order.order_id);
+                });
+              });
+            };
 
             scope.addMessage = function(type, msg) {
               var section = scope.showing;

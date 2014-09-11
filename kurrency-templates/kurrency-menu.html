@@ -2,7 +2,7 @@
   <ul class="menu-wrapper">
     <li class="sign-in"><a href ng-click="toggle('login')" kurrency-popover="'Sign In'" ng-class="checkClass('login')"><span class="kicon-login"></span></a></li>
     <li class="account"><a href ng-click="toggle('account')" kurrency-popover="'Account'" ng-class="checkClass('account')"><span class="kicon-account"></span></a></li>
-    <li class="cart" ng-class="{'cart-empty': cart.length <= 0}"><a href ng-click="toggle('cart')" kurrency-popover="'Shopping Cart'" ng-class="checkClass('cart')"><span class="kicon-cart"></span><span class="count">{{quantity_total}}</span></a></li>
+    <li class="cart" ng-class="{'cart-empty': cart.length <= 0}"><a href ng-click="toggle('cart')" kurrency-popover="shoppingCartPopoverText" showing="{{cartAddActive}}" ng-class="checkClass('cart')"><span class="kicon-cart"></span><span class="count">{{quantity_total}}</span></a></li>
     <li class="wishlist"><a href ng-click="toggle('wishlist')" kurrency-popover="'Wishlist'" ng-class="checkClass('wishlist')"><span class="kicon-wishlist"></span></a></li>
     <li class="contact"><a href kurrency-popover="'Contact'" ng-click="toggle('contact')" ng-class="checkClass('contact')"><span class="kicon-contact"></span></a></li>
     <li class="sign-out"><a href kurrency-popover="'Sign Out'" ng-click="kurrency.auth.signOut()"><span class="kicon-sign_out"></span></a></li>
@@ -159,6 +159,10 @@
         <div ng-repeat="alert in messages['checkout']" class="alert-{{alert.type}}">{{alert.message}}</div>
       </div>
       <form>
+        <div>
+          <p>Enter your email address</p>
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.email" placeholder="Your email address">
+        </div>
         <div ng-show="requiresShipping">
           <div ng-show="addressList.length > 0">
             <p>Select from a shipping address you have saved</p>
@@ -167,14 +171,14 @@
           <p>Enter a shipping address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.ship_to.name" placeholder="Your Name">
           <input class="kurrency-input" type="text" ng-model="checkout.ship_to.company_name" placeholder="(optional) Company Name">
-          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.ship_to.address, checkout.ship_to.postal_code, checkout.ship_to)">
-          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address2" placeholder="(optional) Address Line 2">
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.ship_to.address.address_1, checkout.ship_to.address.postal_code, checkout.ship_to)">
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address.address_2" placeholder="(optional) Address Line 2">
           <div ng-show="geocodeComplete">
-            <input class="kurrency-input" type="text" ng-model="checkout.ship_to.city" placeholder="Enter your city">
-            <select class="kurrency-input" ng-model="checkout.ship_to.state" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
-            <select class="kurrency-input" ng-model="checkout.ship_to.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
+            <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address.city" placeholder="Enter your city">
+            <select class="kurrency-input" ng-model="checkout.ship_to.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
+            <select class="kurrency-input" ng-model="checkout.ship_to.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
           </div>
-          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.ship_to.address, checkout.ship_to.postal_code, checkout.ship_to)">
+          <input class="kurrency-input" type="text" ng-model="checkout.ship_to.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.ship_to.address.address_1, checkout.ship_to.address.postal_code, checkout.ship_to)">
         </div>
         <button type="submit" class="kurrency-button contact-button" ng-click="toggle('checkout-2', 'checkout')">Continue</button>
       </form>
@@ -182,7 +186,7 @@
   </div>
   <div class="kurrency-sidebar kurrency-checkout" ng-class="{active: show('checkout-2')}">
     <div class="closer">
-      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>
+      <a href class="back" ng-show="back" ng-click="toggle(back, 'cart')"><span class="kicon-arrow-left"></span></a>
       <a href ng-click="close()"><span class="kicon-close"></span></a>
     </div>
     <div class="kurrency-container">
@@ -201,14 +205,14 @@
           <p>Enter a billing address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.bill_to.name" placeholder="Your Name">
           <input class="kurrency-input" type="text" ng-model="checkout.bill_to.company_name" placeholder="(optional) Company Name">
-          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.bill_to.address, checkout.bill_to.postal_code, checkout.bill_to)">
-          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address2" placeholder="(optional) Address Line 2">
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(checkout.bill_to.address.address_1, checkout.bill_to.address.postal_code, checkout.bill_to)">
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address.address_2" placeholder="(optional) Address Line 2">
           <div ng-show="geocodeComplete">
-            <input class="kurrency-input" type="text" ng-model="checkout.bill_to.city" placeholder="Enter your city">
-            <select class="kurrency-input" ng-model="checkout.bill_to.state" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
-            <select class="kurrency-input" ng-model="checkout.bill_to.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
+            <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address.city" placeholder="Enter your city">
+            <select class="kurrency-input" ng-model="checkout.bill_to.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
+            <select class="kurrency-input" ng-model="checkout.bill_to.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
           </div>
-          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.bill_to.address, checkout.bill_to.postal_code, checkout.bill_to)">
+          <input class="kurrency-input" type="text" ng-model="checkout.bill_to.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.bill_to.address.address_1, checkout.bill_to.address.postal_code, checkout.bill_to)">
         </div>
         <button type="submit" class="kurrency-button contact-button" ng-click="toggle('checkout-3', 'checkout-2')">Continue</button>
       </form>
@@ -216,7 +220,7 @@
   </div>
   <div class="kurrency-sidebar kurrency-checkout" ng-class="{active: show('checkout-3')}">
     <div class="closer">
-      <a href class="back" ng-show="back" ng-click="toggle(back)"><span class="kicon-arrow-left"></span></a>
+      <a href class="back" ng-show="back" ng-click="toggle(back, 'checkout')"><span class="kicon-arrow-left"></span></a>
       <a href ng-click="close()"><span class="kicon-close"></span></a>
     </div>
     <div class="kurrency-container">
@@ -237,7 +241,7 @@
           <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.name" placeholder="Name on card">
           <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.card_number" placeholder="Card number">
           <select class="kurrency-input" class="expiration" ng-model="checkout.payment_method.card.expiration_month" ng-options="option.value as option.name for option in expirationMonths"><option value>Expiration Month</option></select>
-          <select class="kurrency-input" class="expiration" ng-model="checkout.payment_method.card.expiration_year" ng-options="option.value as option.name for option in expirationYears"><option valu>Expiration Year</option></select>
+          <select class="kurrency-input" class="expiration" ng-model="checkout.payment_method.card.expiration_year" ng-options="option.value as option.name for option in expirationYears"><option value>Expiration Year</option></select>
           <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.security_code" placeholder="Security code on back">
         </div>
         <div class="order-total">
