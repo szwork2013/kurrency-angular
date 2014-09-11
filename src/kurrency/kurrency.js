@@ -1370,8 +1370,8 @@
             scope.checkout = {
               service_carrier: null,
               service_code: null,
-              ship_to: new kurrency.customer(),
-              bill_to: new kurrency.customer(),
+              shipment: new kurrency.customer(),
+              billing: new kurrency.customer(),
               payment_method: new kurrency.credit_card(),
               products: null,
               notes: ''
@@ -1390,6 +1390,7 @@
             scope.cartAddText = kurrencyConfig.cartAddText ? kurrencyConfig.cartAddText : 'Added to cart';
             scope.shoppingCartPopoverText = 'Shopping Cart';
             scope.cartAddActive = false;
+            scope.order = null;
 
             // load Gmaps if it isn't on the page
             if(!$window.google) {
@@ -1484,7 +1485,7 @@
             };
 
             scope.copyShippingAddress = function() {
-              scope.checkout.bill_to = angular.extend(scope.checkout.bill_to, scope.checkout.ship_to);
+              scope.checkout.billing.ship_to = angular.extend(scope.checkout.billing.ship_to, scope.checkout.shipment.ship_to);
               scope.shippingAddressCopied = true;
             };
 
@@ -1509,13 +1510,13 @@
                 for(var i = 0; i < res[0].address_components.length; i++) {
                   var part = res[0].address_components[i];
                   if(part.types[0] === 'locality') {
-                    obj.address.city = part.long_name;
+                    obj.ship_to.address.city = part.long_name;
                   }
                   if(part.types[0] === 'administrative_area_level_1') {
-                    obj.address.state_code = part.short_name;
+                    obj.ship_to.address.state_code = part.short_name;
                   }
                   if(part.types[0] === 'country') {
-                    obj.country_code = part.short_name;
+                    obj.ship_to.country_code = part.short_name;
                   }
                 }
                 scope.geocodeComplete = true;
@@ -1527,7 +1528,7 @@
               kurrency.orders.taxes(scope.product_total, {
                 ship_to: {
                   address: {
-                    postal_code: scope.checkout.ship_to.address.postal_code
+                    postal_code: scope.checkout.shipment.ship_to.address.postal_code
                   }
                 }
               }, function(err, tax) {
@@ -1537,18 +1538,18 @@
             };
 
             scope.getRates = function() {
-              if(!scope.checkout.ship_to.address.postal_code
-                || scope.checkout.ship_to.address.postal_code.length < 5) {
+              if(!scope.checkout.shipment.ship_to.address.postal_code
+                || scope.checkout.shipment.ship_to.address.postal_code.length < 5) {
                 return;
               }
 
               kurrency.shipping.rates({
                 ship_to: {
                   address: {
-                    address_1: scope.checkout.ship_to.address.address_1,
-                    state_code: scope.checkout.ship_to.address.state_code,
-                    country_code: scope.checkout.ship_to.address.country_code,
-                    postal_code: scope.checkout.ship_to.address.postal_code
+                    address_1: scope.checkout.shipment.ship_to.address.address_1,
+                    state_code: scope.checkout.shipment.ship_to.address.state_code,
+                    country_code: scope.checkout.shipment.ship_to.address.country_code,
+                    postal_code: scope.checkout.shipment.ship_to.address.postal_code
                   }
                 },
                 products: scope.cart
@@ -1581,8 +1582,8 @@
               kurrency.orders.create({
                 service_carrier: scope.checkout.service_carrier,
                 service_code: scope.checkout.service_code,
-                ship_to: scope.checkout.ship_to,
-                customer: scope.checkout.bill_to,
+                ship_to: scope.checkout.shipment.ship_to,
+                customer: scope.checkout.billing.ship_to,
                 payment_method: scope.checkout.payment_method,
                 products: angular.copy(scope.cart),
                 notes: ''
@@ -1591,8 +1592,11 @@
                   return console.log(err);
                 }
 
+                scope.order = order;
+
                 kurrency.cart.empty(function(err, cart) {
-                  $location.path('/checkout/complete/' + order.order_id);
+                  scope.cart = cart;
+                  scope.toggle('checkout-complete');
                 });
               });
             };
