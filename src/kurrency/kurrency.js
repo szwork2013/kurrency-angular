@@ -461,6 +461,59 @@
             }
           };
 
+          $scope.cleanData = function(data) {
+            if(!data) {
+              return data;
+            }
+            var newData = angular.copy(data);
+            if(typeof newData !== 'object') {
+              return newData;
+            }
+            for(var i in newData) {
+              if(i.charAt(0) === '$'
+                && i !== '$or'
+                && i !== '$not'
+                && i !== '$ne'
+                && i !== '$and'
+                && i !== '$gt'
+                && i !== '$gte'
+                && i !== '$lt'
+                && i !== '$gte'
+                && i !== '$in'
+                && i !== '$nin'
+                && i !== '$exists'
+                && i !== '$type'
+                && i !== '$mod'
+                && i !== '$regex'
+                && i !== '$text'
+                && i !== '$where'
+                && i !== '$geoIntersects'
+                && i !== '$geoWithin'
+                && i !== '$nearSphere'
+                && i !== '$near'
+                && i !== '$box'
+                && i !== '$centerSphere'
+                && i !== '$center'
+                && i !== '$geometry'
+                && i !== '$maxDistance'
+                && i !== '$minDistance'
+                && i !== '$polygon'
+                && i !== '$uniqueDocs'
+                && i !== '$all'
+                && i !== '$elemMatch'
+                && i !== '$size'
+                && i !== '$meta'
+                && i !== '$slice') {
+                delete newData[i];
+              }
+              if(typeof newData[i] === 'object') {
+                newData[i] = $scope.cleanData(newData[i]);
+              }
+            }
+
+            return newData;
+          };
+
           $scope.config = function (opts) {
             $scope.options = angular.extend({}, defaults, opts);
 
@@ -475,6 +528,11 @@
             }
             opts.method = type;
             opts.url = url;
+
+            if(data) {
+              data = $scope.cleanData(data);
+            }
+
             if (type === 'post' || type === 'put') {
               opts.data = JSON.stringify(data);
               opts.contentType = 'application/json';
@@ -1500,6 +1558,63 @@
               }
 
               return '';
+            };
+
+            scope.saveAddress = function(address) {
+              var user = kurrency.auth.loggedIn();
+              if(!user) {
+                return;
+              }
+              if(address._id) {
+                kurrency.addresses.edit(address, function(err, address) {
+                  scope.getUserDetails();
+                });
+              }
+              kurrency.addresses.create(address, function(err, address) {
+                scope.getUserDetails();
+              });
+            };
+
+            scope.deleteAddress = function(address) {
+              kurrency.addresses.remove({_id: address._id}, function(err, status){
+                if(err) {
+                  return console.log(err);
+                }
+
+                scope.getUserDetails();
+              });
+            };
+
+            scope.savePaymentMethod = function(payment_method) {
+              var user = kurrency.auth.loggedIn();
+              if(!user) {
+                return;
+              }
+              if(payment_method._id) {
+                kurrency.payment_methods.edit(payment_method, function(err, address) {
+                  scope.getUserDetails();
+                });
+              }
+            };
+
+            scope.getPaymentMethodType = function(payment_method) {
+              if(payment_method.type === 'credit_card') {
+                return 'Credit Card';
+              } else if(payment_method.type === 'bank_account') {
+                return 'Bank Account';
+              } else if(payment_method.type === 'credit_line') {
+                return 'Credit Line';
+              }
+            };
+
+            scope.deletePaymentMethod = function(payment_method) {
+              kurrency.payment_methods.remove({_id: payment_method._id}, function(err, status){
+                if(err) {
+                  return console.log(err);
+                }
+
+                scope.getUserDetails();
+              });
             };
 
             scope.copyShippingAddress = function() {

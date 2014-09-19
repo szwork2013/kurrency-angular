@@ -154,7 +154,7 @@
               </div>
               <input class="kurrency-input" type="text" ng-model="address.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">
               <button class="kurrency-button small half cancel" ng-click="address.$$editing = false">Cancel</button>
-              <button class="kurrency-button small half submit" ng-click="deleteAddress(address)">Save</button>
+              <button class="kurrency-button small half submit" ng-click="saveAddress(address)">Save</button>
             </form>
           </div>
           <div ng-show="!address.$$editing">
@@ -167,7 +167,18 @@
       <ul class="payment-methods">
         <li class="payment-method" ng-repeat="payment_method in paymentMethodList">
           <div class="left" ng-bind="payment_method.nickname"></div>
-          <div class="right" ng-bind="payment_method.type"></div>
+          <div class="right" ng-bind="getPaymentMethodType(payment_method)"></div>
+          <div class="edit-holder" ng-show="payment_method.$$editing">
+            <form ng-submit="updatePaymentMethod(payment_method)">
+              <input class="kurrency-input" type="text" ng-model="payment_method.nickname" placeholder="Nickname">
+              <button class="kurrency-button small half cancel" ng-click="payment_method.$$editing = false">Cancel</button>
+              <button class="kurrency-button small half submit" ng-click="savePaymentMethod(payment_method)">Save</button>
+            </form>
+          </div>
+          <div ng-show="!payment_method.$$editing">
+            <button class="kurrency-button small half edit" ng-click="payment_method.$$editing = true">Edit</button>
+            <button class="kurrency-button small half delete" ng-click="deletePaymentMethod(payment_method)">Delete</button>
+          </div>
         </li>
       </ul>
     </div>
@@ -207,15 +218,15 @@
           <p>Have an account?</p>
           <button class="kurrency-button small" type="button" ng-click="toggle('login', 'checkout', 'checkout')">Login Now</button>
         </div>
+        <div ng-show="addressList.length > 0">
+          <p>Select from a shipping address you have saved</p>
+          <select class="kurrency-input" ng-model="checkout.shipment.ship_to" ng-options="address as address.address.address_1 for address in addressList" ng-change="changedAddress()"><option value>New Address</option></select>
+        </div>
         <div>
           <p>Enter your email address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.email" placeholder="Your email address">
         </div>
         <div ng-show="requiresShipping">
-          <div ng-show="addressList.length > 0">
-            <p>Select from a shipping address you have saved</p>
-            <select class="kurrency-input" ng-model="checkout.shipment.ship_to" ng-options="address as address.address.address_1 for address in addressList" ng-change="changedAddress()"><option value>Select an address</option></select>
-          </div>
           <p>Enter a shipping address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.name" placeholder="Your Name">
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.company_name" placeholder="(optional) Company Name">
@@ -228,7 +239,7 @@
           </div>
           <input class="kurrency-input" type="text" ng-model="checkout.shipment.ship_to.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.shipment.ship_to.address.address_1, checkout.shipment.ship_to.address.postal_code, checkout.shipment)">
         </div>
-        <button type="submit" class="kurrency-button contact-button" ng-click="toggle('checkout-2', 'checkout')">Continue</button>
+        <button type="submit" class="kurrency-button contact-button" ng-click="saveAddress(checkout.shipment.ship_to); toggle('checkout-2', 'checkout')">Continue</button>
       </form>
     </div>
   </div>
@@ -244,16 +255,18 @@
         <div ng-repeat="alert in messages['checkout']" class="alert-{{alert.type}}">{{alert.message}}</div>
       </div>
       <form>
+        <div ng-show="addressList.length > 0">
+          <p>Select from a billing address you have saved</p>
+          <select class="kurrency-input" ng-model="checkout.billing.ship_to" ng-options="address as address.address.address_1 for address in addressList" ng-change="changedAddress()"><option value>New Address</option></select>
+        </div>
         <div>
           <button type="button" class="kurrency-button small" ng-click="copyShippingAddress()" ng-hide="shippingAddressCopied">Copy Shipping Address</button>
+        </div>
+        <div>
           <p>Enter your email address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.email" placeholder="Your email address">
         </div>
         <div>
-          <div ng-show="addressList.length > 0">
-            <p>Select from a billing address you have saved</p>
-            <select class="kurrency-input" ng-model="checkout.bill_to" ng-options="address as address.address.address_1 for address in addressList" ng-change="changedAddress()"><option value>Select an address</option></select>
-          </div>
           <p>Enter a billing address</p>
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.name" placeholder="Your Name">
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.company_name" placeholder="(optional) Company Name">
@@ -261,8 +274,8 @@
           <div ng-show="geocodeComplete">
             <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.address_2" placeholder="(optional) Address Line 2">
             <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.city" placeholder="Enter your city">
-            <select class="kurrency-input" ng-model="checkout.bill_to.address.ship_to.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
-            <select class="kurrency-input" ng-model="checkout.bill_to.address.ship_to.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
+            <select class="kurrency-input" ng-model="checkout.billing.ship_to.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
+            <select class="kurrency-input" ng-model="checkout.billing.ship_to.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
           </div>
           <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.billing.ship_to.address.address_1, checkout.billing.ship_to.address.postal_code, checkout.billing)">
         </div>
@@ -288,7 +301,11 @@
             <option value="">Please Wait...</option>
           </select>
         </div>
-        <div>
+        <div ng-show="paymentMethodList.length > 0">
+          <p>Select a payment method</p>
+          <select class="kurrency-input" ng-model="checkout.payment_method" ng-options="payment_method as (getPaymentMethodType(payment_method) + ': ' + payment_method.nickname) for payment_method in paymentMethodList"><option value>New Credit Card</option></select>
+        </div>
+        <div ng-show="!checkout.payment_method || !checkout.payment_method._id">
           <p>Enter your payment information</p>
           <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.name" placeholder="Name on card">
           <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.card_number" placeholder="Card number">
