@@ -1495,7 +1495,8 @@
               'checkout-2': [],
               'checkout-3': [],
               wishlist: [],
-              contact: []
+              contact: [],
+              account: []
             };
             scope.kurrency = kurrency;
             kurrency.cart.get(function(err, cart) {
@@ -1561,6 +1562,7 @@
             };
 
             scope.saveAddress = function(address) {
+              scope.wipeMessages();
               var user = kurrency.auth.loggedIn();
               if(!user) {
                 return;
@@ -1586,6 +1588,7 @@
             };
 
             scope.savePaymentMethod = function(payment_method) {
+              scope.wipeMessages();
               var user = kurrency.auth.loggedIn();
               if(!user) {
                 return;

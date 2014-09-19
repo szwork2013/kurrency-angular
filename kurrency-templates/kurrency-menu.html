@@ -126,6 +126,9 @@
     </div>
     <div class="kurrency-container">
       <h1>My Account</h1>
+      <div class="alerts">
+        <div ng-repeat="alert in messages['account']" class="alert-{{alert.type}}">{{alert.message}}</div>
+      </div>
       <p>Shipping Addresses</p>
       <ul class="addresses-list">
         <li class="address" ng-repeat="address in addressList">
@@ -164,10 +167,15 @@
         </li>
       </ul>
       <p>Payment Methods</p>
+      <div class="alerts">
+        <div ng-repeat="alert in messages['payment_methods']" class="alert-{{alert.type}}">{{alert.message}}</div>
+      </div>
       <ul class="payment-methods">
         <li class="payment-method" ng-repeat="payment_method in paymentMethodList">
-          <div class="left" ng-bind="payment_method.nickname"></div>
-          <div class="right" ng-bind="getPaymentMethodType(payment_method)"></div>
+          <div class="clearfix" ng-show="!payment_method.$$editing">
+            <div class="left" ng-bind="payment_method.nickname"></div>
+            <div class="right" ng-bind="getPaymentMethodType(payment_method)"></div>
+          </div>
           <div class="edit-holder" ng-show="payment_method.$$editing">
             <form ng-submit="updatePaymentMethod(payment_method)">
               <input class="kurrency-input" type="text" ng-model="payment_method.nickname" placeholder="Nickname">
