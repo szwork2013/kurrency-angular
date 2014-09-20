@@ -791,7 +791,8 @@
                 product_lines: product.product_lines,
                 requires_shipping: product.requires_shipping,
                 allow_presale: product.allow_presale,
-                taxable: product.taxable
+                taxable: product.taxable,
+                variants: product.variants
               });
               $scope.session.get(function (err, session) {
                 session.data.cart = cart;
@@ -1400,12 +1401,28 @@
             scope.kurrency = kurrency;
             scope.config = kurrencyConfig;
             scope.product = null;
+            scope.variants = []; // {name: null, value: null} pair
 
             kurrency.products.list({_id: scope.id}, function(err, products) {
               scope.product = products[0];
             });
 
+            scope.setVariant = function(name, value) {
+              for(var i = 0; i < scope.variants.length; i++) {
+                if(scope.variants[i].name === name) {
+                  scope.variants[i].value = value.name;
+                  return;
+                }
+              }
+
+              scope.variants.push({name: name, value: value.name});
+            };
+
             scope.addToCart = function(product, qty) {
+              console.log(scope.variants);
+              if(scope.variants.length) {
+                product.variants = scope.variants;
+              }
               kurrency.cart.add(product, qty, function(err, cart) {
                 if(err) {
                   return console.log(err);
@@ -1904,6 +1921,18 @@
 
             scope.$on('kurrencySignOut', function(evt) {
               scope.showing = null;
+              scope.paymentMethodList = [];
+              scope.addressList = [];
+
+              scope.checkout = {
+                service_carrier: null,
+                service_code: null,
+                shipment: new kurrency.customer(),
+                billing: new kurrency.customer(),
+                payment_method: new kurrency.credit_card(),
+                products: null,
+                notes: ''
+              };
             });
 
             scope.$on('apiLoading', function(evt, val) {
