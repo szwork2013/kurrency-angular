@@ -1,0 +1,13 @@
+<h1>Wishlist</h1>
+<div ng-show="!wishlist || !wishlist.length">
+  <p>You have nothing in your wishlist</p>
+  <button type="button" class="kurrency-button" ng-click="close()">Continue Shopping</button>
+</div>
+<div ng-show="wishlist && wishlist.length">
+  <ul>
+    <li ng-repeat="product in cart">
+
+    </li>
+  </ul>
+  <button type="button" class="kurrency-button share-wishlist-button" ng-click="toggle('share-wishlist', 'wishlist')">Share my wishlist</button>
+</div>

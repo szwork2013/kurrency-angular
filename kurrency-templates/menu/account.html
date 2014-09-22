@@ -1,0 +1,64 @@
+<h1>My Account</h1>
+<div class="alerts">
+  <div ng-repeat="alert in messages['account']" class="alert-{{alert.type}}">{{alert.message}}</div>
+</div>
+<p>Shipping Addresses</p>
+<ul class="addresses-list">
+  <li class="address" ng-repeat="address in addressList">
+    <div class="clearfix" ng-show="!address.$$editing">
+      <div class="left">
+        <div><span ng-bind="address.name | limitTo:18"></span></div>
+        <div><span ng-bind="(address.email | limitTo:18) + '...'"></span></div>
+        <div><span ng-bind="address.phone | limitTo:18"></span></div>
+      </div>
+      <div class="right">
+        <div><span ng-bind="address.address.address_1 | limitTo:18"></span></div>
+        <div><span ng-bind="address.address.city + ', ' + address.address.state_code | limitTo:18"></span></div>
+        <div><span ng-bind="address.address.postal_code + ', ' + address.address.country_code"></span></div>
+      </div>
+    </div>
+    <div class="edit-holder" ng-show="address.$$editing">
+      <form ng-submit="updateAddress(address)">
+        <input class="kurrency-input" type="text" ng-model="address.name" placeholder="Your Name">
+        <input class="kurrency-input" type="text" ng-model="address.company_name" placeholder="(optional) Company Name">
+        <input class="kurrency-input" type="text" ng-model="address.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">
+        <div ng-show="geocodeComplete">
+          <input class="kurrency-input" type="text" ng-model="address.address.address_2" placeholder="(optional) Address Line 2">
+          <input class="kurrency-input" type="text" ng-model="address.address.city" placeholder="Enter your city">
+          <select class="kurrency-input" ng-model="address.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>
+          <select class="kurrency-input" ng-model="address.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>
+        </div>
+        <input class="kurrency-input" type="text" ng-model="address.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">
+        <button class="kurrency-button small half cancel" ng-click="address.$$editing = false">Cancel</button>
+        <button class="kurrency-button small half submit" ng-click="saveAddress(address)">Save</button>
+      </form>
+    </div>
+    <div ng-show="!address.$$editing">
+      <button class="kurrency-button small half edit" ng-click="address.$$editing = true">Edit</button>
+      <button class="kurrency-button small half delete" ng-click="deleteAddress(address)">Delete</button>
+    </div>
+  </li>
+</ul>
+<p>Payment Methods</p>
+<div class="alerts">
+  <div ng-repeat="alert in messages['payment_methods']" class="alert-{{alert.type}}">{{alert.message}}</div>
+</div>
+<ul class="payment-methods">
+  <li class="payment-method" ng-repeat="payment_method in paymentMethodList">
+    <div class="clearfix" ng-show="!payment_method.$$editing">
+      <div class="left" ng-bind="payment_method.nickname"></div>
+      <div class="right" ng-bind="getPaymentMethodType(payment_method)"></div>
+    </div>
+    <div class="edit-holder" ng-show="payment_method.$$editing">
+      <form ng-submit="updatePaymentMethod(payment_method)">
+        <input class="kurrency-input" type="text" ng-model="payment_method.nickname" placeholder="Nickname">
+        <button class="kurrency-button small half cancel" ng-click="payment_method.$$editing = false">Cancel</button>
+        <button class="kurrency-button small half submit" ng-click="savePaymentMethod(payment_method)">Save</button>
+      </form>
+    </div>
+    <div ng-show="!payment_method.$$editing">
+      <button class="kurrency-button small half edit" ng-click="payment_method.$$editing = true">Edit</button>
+      <button class="kurrency-button small half delete" ng-click="deletePaymentMethod(payment_method)">Delete</button>
+    </div>
+  </li>
+</ul>

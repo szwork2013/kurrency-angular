@@ -1,0 +1,14 @@
+<h1>Sign In</h1>
+<p>Sign into your Kurrency account.</p>
+<div class="alerts">
+  <div ng-repeat="alert in messages['login']" class="alert-{{alert.type}}">{{alert.message}}</div>
+</div>
+<form ng-submit="loginUser()">
+  <input class="kurrency-input" type="text" ng-model="login.username" placeholder="Enter your username or email">
+  <input class="kurrency-input" type="password" ng-model="login.password" placeholder="Enter your password">
+  <button type="submit" class="kurrency-button login-button">Sign In</button>
+  <div class="spacer"></div>
+  <button type="button" class="kurrency-button small forgot-password" ng-click="toggle('forgot-password', 'login')">Forgot your password?</button>
+  <p>Don't have an account?</p>
+  <button type="button" class="kurrency-button small register-button" ng-click="toggle('register', 'login')">Register Now</button>
+</form>

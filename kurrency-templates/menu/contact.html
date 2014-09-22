@@ -1,0 +1,11 @@
+<h1>Contact Us</h1>
+<p>Fill out the form below and we'll respond as soon as possible</p>
+<div class="alerts">
+  <div ng-repeat="alert in messages['contact']" class="alert-{{alert.type}}">{{alert.message}}</div>
+</div>
+<form ng-submit="sendContact()">
+  <input class="kurrency-input" type="text" ng-model="contact.name" placeholder="Enter your name">
+  <input class="kurrency-input" type="email" ng-model="contact.email" placeholder="Enter your email">
+  <textarea rows="3" class="kurrency-input" ng-model="contact.message" placeholder="Enter a message or concern to send to us"></textarea>
+  <button type="submit" class="kurrency-button contact-button">Contact</button>
+</form>

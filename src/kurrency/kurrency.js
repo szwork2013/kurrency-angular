@@ -14,7 +14,10 @@
 
   if(!w.KURRENCY_CONFIG) {
     w.KURRENCY_CONFIG = {
-      ANGULAR: 'angular'
+      ANGULAR: 'angular',
+      MENU: {
+
+      }
     };
   } else {
     if(!w.KURRENCY_CONFIG.ANGULAR) {
@@ -661,7 +664,7 @@
           $scope.Stor = Stor;
           $scope.Request = Request;
 
-          var storage = new $scope.Stor();
+          var storage = $scope.storage = new $scope.Stor();
           var baseUrls = $scope.baseUrls = {
             test: 'http://0.0.0.0:3458/jsapi',
             production: 'https://api.kurrency.io/api/jsapi'
@@ -759,10 +762,12 @@
             $scope.session.get(function (err, session) {
               if (!session.data.cart) {
                 session.data.cart = [];
-              }
-              $scope.session.save(session, function (err, session) {
+                $scope.session.save(session, function (err, session) {
+                  return cb(null, session.data.cart);
+                });
+              } else {
                 return cb(null, session.data.cart);
-              });
+              }
             });
           };
           cart.prototype.add = function (product, qty, cb) {
@@ -1316,6 +1321,188 @@
       .config(function($sceProvider) {
         $sceProvider.enabled(false);
       })
+      .factory('kurrencyMenuService', ['kurrency', 'kurrencyConfig', '$compile', function(kurrency, kurrencyConfig, $compile) {
+        var $scope = this;
+
+        $scope.menu = [];
+        $scope.sidebars = [];
+
+        $scope.addMenuItem = function(item, position) {
+          if(!position) {
+            position = $scope.menu.length;
+          }
+
+          var defaults = {
+            name: null,
+            tag: null,
+            uri: null,
+            buttonTemplateUrl: '/kurrency-templates/menu/button.html',
+            showLoggedIn: false,
+            showLoggedOut: false,
+            onClick: null
+          };
+
+          item = angular.extend({}, defaults, item);
+
+          $scope.menu.splice(position, 0, item);
+
+          return $scope;
+        };
+
+        $scope.addSidebar = function(item) {
+          var defaults = {
+            tag: null,
+            className: null,
+            templateUrl: null
+          };
+
+          item = angular.extend({}, defaults, item);
+
+          $scope.sidebars.push(item);
+
+          return $scope;
+        };
+
+        $scope.getUri = function(item) {
+          if(item.uri && item.uri.length > 0) {
+            return item.uri;
+          }
+
+          return '';
+        };
+
+        $scope.checkShowing = function(item) {
+          var loggedIn = kurrency.auth.loggedIn();
+          if(loggedIn && item.showLoggedIn) {
+            return true;
+          }
+          if(!loggedIn && item.showLoggedOut) {
+            return true;
+          }
+
+          return false;
+        };
+
+        $scope.clearMenu = function() {
+          $scope.menu = [];
+          return $scope;
+        };
+
+        $scope.clearSidebar = function() {
+          $scope.sidebars = [];
+          return $scope;
+        };
+
+        $scope.addSidebar({
+          tag: 'login',
+          className: 'kurrency-login',
+          templateUrl: '/kurrency-templates/menu/sign-in.html'
+        }).addSidebar({
+          tag: 'account',
+          className: 'kurrency-account',
+          templateUrl: '/kurrency-templates/menu/account.html'
+        }).addSidebar({
+          tag: 'cart',
+          className: 'kurrency-cart',
+          templateUrl: '/kurrency-templates/menu/cart.html'
+        }).addSidebar({
+          tag: 'checkout',
+          className: 'kurrency-checkout',
+          templateUrl: '/kurrency-templates/menu/checkout.html'
+        }).addSidebar({
+          tag: 'checkout-2',
+          className: 'kurrency-checkout',
+          templateUrl: '/kurrency-templates/menu/checkout-2.html'
+        }).addSidebar({
+          tag: 'checkout-3',
+          className: 'kurrency-checkout',
+          templateUrl: '/kurrency-templates/menu/checkout-3.html'
+        }).addSidebar({
+          tag: 'checkout-complete',
+          className: 'kurrency-checkout',
+          templateUrl: '/kurrency-templates/menu/checkout-complete.html'
+        }).addSidebar({
+          tag: 'forgot-password',
+          className: 'kurrency-forgot-password',
+          templateUrl: '/kurrency-templates/menu/forgot-password.html'
+        }).addSidebar({
+          tag: 'register',
+          className: 'kurrency-register',
+          templateUrl: '/kurrency-templates/menu/register.html'
+        })
+
+        /*
+         $scope.addSidebar({
+           tag: 'wishlist',
+           className: 'kurrency-wishlist',
+           templateUrl: '/kurrency-templates/menu/wishlist.html'
+         }).addSidebar({
+           tag: 'contact',
+           className: 'kurrency-contact',
+           templateUrl: '/kurrency-templates/menu/contact.html'
+         });
+        */
+
+        $scope.addMenuItem({
+          name: 'Sign In',
+          tag: 'login',
+          icon: 'kicon-login',
+          template: '/kurrency-templates/menu/sign-in.html',
+          showLoggedIn: false,
+          showLoggedOut: true
+        }).addMenuItem({
+          name: 'Account',
+          tag: 'account',
+          icon: 'kicon-account',
+          template: '/kurrency-templates/menu/account.html',
+          showLoggedIn: true,
+          showLoggedOut: false
+        }).addMenuItem({
+          name: 'Shopping Cart',
+          tag: 'cart',
+          buttonTemplateUrl: '/kurrency-templates/menu/button-cart.html',
+          template: '/kurrency-templates/menu/cart.html',
+          showLoggedIn: true,
+          showLoggedOut: true
+        });
+
+        //Wishlist
+        /*
+         kurrencyMenuService.addMenuItem({
+         name: 'Wishlist',
+         tag: 'wishlist',
+         icon: 'kicon-wishlist',
+         template: '/kurrency-templates/menu/wishlist.html',
+         showLoggedIn: true,
+         showLoggedOut: true
+         });
+         */
+
+        //Contact
+        /*
+         kurrencyMenuService.addMenuItem({
+         name: 'Contact',
+         tag: 'contact',
+         icon: 'kicon-contact',
+         template: '/kurrency-templates/menu/contact.html',
+         showLoggedIn: true,
+         showLoggedOut: true
+         });
+         */
+
+        $scope.addMenuItem({
+          name: 'Sign Out',
+          tag: 'sign-out',
+          icon: 'kicon-sign_out',
+          onClick: function (evt) {
+            kurrency.auth.signOut();
+          },
+          showLoggedIn: true,
+          showLoggedOut: false
+        });
+
+        return $scope;
+      }])
       .directive('kurrencyPopover', function() {
         return {
           scope: {kurrencyPopover: '=', showing: '@'},
@@ -1410,6 +1597,10 @@
             scope.setVariant = function(name, value) {
               for(var i = 0; i < scope.variants.length; i++) {
                 if(scope.variants[i].name === name) {
+                  if(value === null) {
+                    scope.variants.splice(i, 1);
+                    return;
+                  }
                   scope.variants[i].value = value.name;
                   return;
                 }
@@ -1419,7 +1610,6 @@
             };
 
             scope.addToCart = function(product, qty) {
-              console.log(scope.variants);
               if(scope.variants.length) {
                 product.variants = scope.variants;
               }
@@ -1434,7 +1624,7 @@
           }
         }
       }])
-      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', '$timeout', '$window', '$document', function(kurrency, kurrencyConfig, $timeout, $window, $document) {
+      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', 'kurrencyMenuService', '$timeout', '$window', '$document', function(kurrency, kurrencyConfig, kurrencyMenuService, $timeout, $window, $document) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -1448,6 +1638,7 @@
           replace: true,
           link: function(scope, element, attr) {
             scope.config = kurrencyConfig;
+            scope.menuService = kurrencyMenuService;
             scope.cart = null;
             scope.wishlist = null;
             scope.showing = null;
@@ -1516,10 +1707,6 @@
               account: []
             };
             scope.kurrency = kurrency;
-            kurrency.cart.get(function(err, cart) {
-              scope.cart = cart;
-              scope.updateProductTotal();
-            });
 
             scope.updateProductTotal = function() {
               scope.product_total = 0;
@@ -1535,6 +1722,11 @@
                 scope.product_total += line_total;
               }
             };
+
+            kurrency.cart.get(function(err, cart) {
+              scope.cart = cart;
+              scope.updateProductTotal();
+            });
 
             scope.updateFinalTotal = function() {
               scope.final_total = scope.product_total +
@@ -1576,6 +1768,15 @@
               }
 
               return '';
+            };
+
+            scope.checkButtonClass = function(item) {
+              if(item.tag === 'cart') {
+                return {cart: true, 'cart-empty': scope.cart.length <= 0}
+              } else {
+                var obj = {};
+                return obj[item.tag] = true;
+              }
             };
 
             scope.saveAddress = function(address) {
@@ -1923,6 +2124,10 @@
               scope.showing = null;
               scope.paymentMethodList = [];
               scope.addressList = [];
+              kurrency.cart.get(function(err, cart) {
+                scope.cart = cart;
+                scope.updateProductTotal();
+              });
 
               scope.checkout = {
                 service_carrier: null,
@@ -1951,15 +2156,15 @@
     if(w.KURRENCY_CONFIG) {
       // we are using kurrency from an embed standpoint
       if(!w.KURRENCY_CONFIG.integrated) {
-        angular.injector(['ng', 'KurrencyApp']).invoke(['$compile', '$rootScope', 'kurrency', 'kurrencyConfig', function($compile, $rootScope, kurrency, kurrencyConfig) {
+        angular.injector(['ng', 'KurrencyApp']).invoke(['$compile', '$rootScope', 'kurrency', 'kurrencyConfig', 'kurrencyMenuService', function($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
           kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
           kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
           kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
           kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
 
-
-          angular.element(d).find('body').append('<kurrency-menu></kurrency-menu>');
-          angular.bootstrap(angular.element(d).find('body')[0], ['KurrencyApp']);
+          var body = angular.element(d).find('body');
+          body.append('<kurrency-menu></kurrency-menu>');
+          angular.bootstrap(body[0], ['KurrencyApp']);
         }]);
 
         if(!w.KURRENCY_CONFIG.GOOGLE_FONTS || w.KURRENCY_CONFIG.GOOGLE_FONTS === true) {

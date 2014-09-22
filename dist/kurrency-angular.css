@@ -67,10 +67,6 @@
 }
 .kurrency-menu > .menu-wrapper > li.account {
   padding-top: 4px;
-  display: none;
-}
-.kurrency-menu > .menu-wrapper > li.sign-out {
-  display: none;
 }
 .kurrency-menu > .menu-wrapper > li.contact a {
   border-bottom: none;
@@ -113,17 +109,8 @@
   -moz-opacity: 0;
   opacity: 0;
 }
-.kurrency-menu.logged-in > .menu-wrapper > li.sign-in {
-  display: none;
-}
-.kurrency-menu.logged-in > .menu-wrapper > li.account {
-  display: block;
-}
 .kurrency-menu.logged-in > .menu-wrapper > li.contact a {
   border-bottom: 2px solid #555555;
-}
-.kurrency-menu.logged-in > .menu-wrapper > li.sign-out {
-  display: block;
 }
 .kurrency-menu.logged-in > .menu-wrapper > li.sign-out a {
   border-bottom: none;

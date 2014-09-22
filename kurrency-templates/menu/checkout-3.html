@@ -1,0 +1,46 @@
+<h1>Checkout</h1>
+<p>Please complete the form below to finish checkout</p>
+<div class="alerts">
+  <div ng-repeat="alert in messages['checkout']" class="alert-{{alert.type}}">{{alert.message}}</div>
+</div>
+<form>
+  <div ng-show="requiresShipping">
+    <p>Select a shipping method</p>
+    <select class="kurrency-input" ng-model="selectedRate" ng-disabled="rates.length <= 0" ng-options="rate as ((rate.cost | currency) + ' - ' + rate.name) for rate in rates">
+      <option value="">Please Wait...</option>
+    </select>
+  </div>
+  <div ng-show="paymentMethodList.length > 0">
+    <p>Select a payment method</p>
+    <select class="kurrency-input" ng-model="checkout.payment_method" ng-options="payment_method as (getPaymentMethodType(payment_method) + ': ' + payment_method.nickname) for payment_method in paymentMethodList"><option value>New Credit Card</option></select>
+  </div>
+  <div ng-show="!checkout.payment_method || !checkout.payment_method._id">
+    <p>Enter your payment information</p>
+    <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.name" placeholder="Name on card">
+    <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.card_number" placeholder="Card number">
+    <select class="kurrency-input" class="expiration" ng-model="checkout.payment_method.card.expiration_month" ng-options="option.value as option.name for option in expirationMonths"><option value>Expiration Month</option></select>
+    <select class="kurrency-input" class="expiration" ng-model="checkout.payment_method.card.expiration_year" ng-options="option.value as option.name for option in expirationYears"><option value>Expiration Year</option></select>
+    <input class="kurrency-input" type="text" ng-model="checkout.payment_method.card.security_code" placeholder="Security code on back">
+  </div>
+  <div class="order-total">
+    <ul class="cart-products">
+      <li class="cart-product total">
+        <div class="left">Product Total</div>
+        <div class="right product-total">{{product_total/100 | currency}}</div>
+      </li>
+      <li class="cart-product total">
+        <div class="left">Tax Total</div>
+        <div class="right product-total">{{tax_total/100 | currency}}</div>
+      </li>
+      <li class="cart-product total">
+        <div class="left">Shipping Total</div>
+        <div class="right product-total">{{shipping_total/100 | currency}}</div>
+      </li>
+      <li class="cart-product final total">
+        <div class="left">Final Total</div>
+        <div class="right product-total">{{final_total/100 | currency}}</div>
+      </li>
+    </ul>
+  </div>
+  <button type="submit" class="kurrency-button contact-button" ng-click="completeOrder()">Complete Order</button>
+</form>
