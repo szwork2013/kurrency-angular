@@ -4,7 +4,7 @@
     "dist/kurrency-angular.min.js",
     "dist/kurrency-angular.css"
   ],
-  "version": "0.0.3",
+  "version": "0.0.4",
   "authors": [
     {
       "name": "typefoo",
@@ -28,9 +28,6 @@
     "npm-debug.log",
     "package.json"
   ],
-  "dependencies": {
-    "angular": ">=1.2"
-  },
   "devDependencies": {
     "angular": "~1.2.22"
   }
