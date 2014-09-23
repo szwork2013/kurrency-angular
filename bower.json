@@ -1,8 +1,8 @@
 {
   "name": "kurrency-angular",
   "main": [
-    "dist/styles/kurrency-angular.min.js",
-    "dist/kurrency-angular.css"
+    "dist/kurrency-angular.min.js",
+    "dist/styles/kurrency-angular.css"
   ],
   "version": "0.0.5",
   "authors": [
@@ -21,11 +21,11 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "./styles",
     "kurrency-templates",
-    "styles",
     "examples",
     "public",
-    "src",
+    "./src",
     "build",
     "Gruntfile",
     "npm-debug.log",
