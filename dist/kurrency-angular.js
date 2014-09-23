@@ -1656,18 +1656,21 @@
               return '';
             };
             scope.checkButtonClass = function (item) {
-              if (!scope.cart) {
-                var obj = {};
-                return obj[item.tag] = true;
-              }
               if (item.tag === 'cart') {
+                if (!scope.cart || !scope.cart.length) {
+                  return {
+                    cart: true,
+                    'cart-empty': true
+                  };
+                }
                 return {
                   cart: true,
                   'cart-empty': scope.cart.length <= 0
                 };
               } else {
                 var obj = {};
-                return obj[item.tag] = true;
+                obj[item.tag] = true;
+                return obj;
               }
             };
             scope.saveAddress = function (address) {
@@ -1993,31 +1996,30 @@
     if (w.KURRENCY_CONFIG) {
       // we are using kurrency from an embed standpoint
       if (!w.KURRENCY_CONFIG.integrated) {
-        try {
-          w[KURRENCY_CONFIG.ANGULAR].module('KurrencyApp');
-        } catch (e) {
-          w[KURRENCY_CONFIG.ANGULAR].injector([
-            'ng',
-            'KurrencyApp'
-          ]).invoke([
-            '$compile',
-            '$rootScope',
-            'kurrency',
-            'kurrencyConfig',
-            'kurrencyMenuService',
-            function ($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
-              kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
-              kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
-              kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
-              kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
-              var body = w[KURRENCY_CONFIG.ANGULAR].element(d).find('body');
-              if (kurrencyConfig.accessToken) {
-                body.append('<kurrency-menu></kurrency-menu>');
-              }
+        w[KURRENCY_CONFIG.ANGULAR].injector([
+          'ng',
+          'KurrencyApp'
+        ]).invoke([
+          '$compile',
+          '$rootScope',
+          'kurrency',
+          'kurrencyConfig',
+          'kurrencyMenuService',
+          function ($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
+            kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
+            kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
+            kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
+            kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
+            var body = w[KURRENCY_CONFIG.ANGULAR].element(d).find('body');
+            if (kurrencyConfig.accessToken) {
+              body.append('<kurrency-menu></kurrency-menu>');
+            }
+            var injectors = w[KURRENCY_CONFIG.ANGULAR].element(d).injector();
+            if (!d.querySelectorAll('[ngApp]').length && !injectors) {
               w[KURRENCY_CONFIG.ANGULAR].bootstrap(body[0], ['KurrencyApp']);
             }
-          ]);
-        }
+          }
+        ]);
         if (!w.KURRENCY_CONFIG.GOOGLE_FONTS || w.KURRENCY_CONFIG.GOOGLE_FONTS === true) {
           w.WebFontConfig = { google: { families: ['Questrial::latin'] } };
           (function () {

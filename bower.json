@@ -4,7 +4,7 @@
     "dist/kurrency-angular.js",
     "dist/styles/kurrency-angular.css"
   ],
-  "version": "0.0.6",
+  "version": "0.0.7",
   "authors": [
     {
       "name": "typefoo",
@@ -27,7 +27,7 @@
     "public",
     "/src",
     "build",
-    "Gruntfile",
+    "Gruntfile.js",
     "npm-debug.log",
     "package.json"
   ],

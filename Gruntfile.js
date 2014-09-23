@@ -95,10 +95,7 @@ module.exports = function(grunt) {
       },
       less: {
         files: ['<%= styles %>/**/*.less'],
-        tasks: ['less:dev', 'copy:server'],
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        }
+        tasks: ['build']
       },
       livereload: {
         options: {
@@ -107,6 +104,7 @@ module.exports = function(grunt) {
         files: [
           '<%= examples %>/*.html',
           'kurrency-templates/**/*.html',
+          'dist/**/*.css',
           'src/**/*.js'
         ]
       }
