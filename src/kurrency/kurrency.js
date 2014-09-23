@@ -1771,6 +1771,10 @@
             };
 
             scope.checkButtonClass = function(item) {
+              if(!scope.cart) {
+                var obj = {};
+                return obj[item.tag] = true;
+              }
               if(item.tag === 'cart') {
                 return {cart: true, 'cart-empty': scope.cart.length <= 0}
               } else {

@@ -8,6 +8,7 @@ var mountFolder = function (connect, dir) {
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -57,6 +58,9 @@ module.exports = function(grunt) {
         templateFile: 'misc/changelog.tpl.md',
         github: 'typefoo/kurrency-angular'
       }
+    },
+    clean: {
+      build: ['<%= dist %>', '<%= build %>']
     },
     ngdocs: {
       options: {
@@ -134,7 +138,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= dist %>/<%= filename %>.css': '<%= styles %>/main.less'
+          '<%= dist %>/styles/<%= filename %>.css': '<%= styles %>/main.less'
         }
       }
     },
@@ -166,12 +170,12 @@ module.exports = function(grunt) {
     copy: {
       server: {
         files: [
-          {expand: true, src: ['styles/fonts/**'], dest: 'build/'}
+          {expand: true, src: ['styles/fonts/**'], dest: '<%= build %>/'}
         ]
       },
       dist: {
         files: [
-          {expand: true, src: ['styles/fonts/**'], dest: 'dist/'}
+          {expand: true, src: ['styles/fonts/**'], dest: '<%= dist %>/'}
         ]
       }
     }
@@ -195,6 +199,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', 'Create kurrency build files', function() {
     var _ = grunt.util._;
+    grunt.task.run(['clean:build']);
 
     //If arguments define what modules to build, build those. Else, everything
     var modules = [];

@@ -795,15 +795,15 @@ textarea.kurrency-input {
 }
 @font-face {
   font-family: 'KurrencyIcons';
-  src: url('/build/styles/fonts/KurrencyIcons.eot?-orzlfj');
-  src: url('/build/styles/fonts/KurrencyIcons.eot?#iefix-orzlfj') format('embedded-opentype'), url('/build/styles/fonts/KurrencyIcons.woff?-orzlfj') format('woff'), url('/build/styles/fonts/KurrencyIcons.ttf?-orzlfj') format('truetype'), url('/build/styles/fonts/KurrencyIcons.svg?-orzlfj#KurrencyIcons') format('svg');
+  src: url('fonts/KurrencyIcons.eot?-orzlfj');
+  src: url('fonts/KurrencyIcons.eot?#iefix-orzlfj') format('embedded-opentype'), url('fonts/KurrencyIcons.woff?-orzlfj') format('woff'), url('fonts/KurrencyIcons.ttf?-orzlfj') format('truetype'), url('fonts/KurrencyIcons.svg?-orzlfj#KurrencyIcons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'WinterthurCondensedRegular';
-  src: url('/build/styles/fonts/WinterthurCondensed-webfont.eot');
-  src: url('/build/styles/fonts/WinterthurCondensed-webfont.eot?#iefix') format('embedded-opentype'), url('/build/styles/fonts/WinterthurCondensed-webfont.woff') format('woff'), url('/build/styles/fonts/WinterthurCondensed-webfont.ttf') format('truetype'), url('/build/styles/fonts/WinterthurCondensed-webfont.svg#winterthurcondensedregular') format('svg');
+  src: url('fonts/WinterthurCondensed-webfont.eot');
+  src: url('fonts/WinterthurCondensed-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/WinterthurCondensed-webfont.woff') format('woff'), url('fonts/WinterthurCondensed-webfont.ttf') format('truetype'), url('fonts/WinterthurCondensed-webfont.svg#winterthurcondensedregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
