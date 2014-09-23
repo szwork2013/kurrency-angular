@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.0.4 - 2014-09-22
+ * Version: 0.0.9 - 2014-09-22
  * License: AGPL
  */
 /**
@@ -2015,7 +2015,7 @@
               body.append('<kurrency-menu></kurrency-menu>');
             }
             var injectors = w[KURRENCY_CONFIG.ANGULAR].element(d).injector();
-            if (!d.querySelectorAll('[ngApp]').length && !injectors) {
+            if (!d.querySelectorAll('[ng-app]').length && !injectors) {
               w[KURRENCY_CONFIG.ANGULAR].bootstrap(body[0], ['KurrencyApp']);
             }
           }

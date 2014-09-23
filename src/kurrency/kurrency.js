@@ -2173,7 +2173,7 @@
             body.append('<kurrency-menu></kurrency-menu>');
           }
           var injectors = w[KURRENCY_CONFIG.ANGULAR].element(d).injector();
-          if(!d.querySelectorAll('[ngApp]').length && !injectors) {
+          if(!d.querySelectorAll('[ng-app]').length && !injectors) {
             w[KURRENCY_CONFIG.ANGULAR].bootstrap(body[0], ['KurrencyApp']);
           }
         }]);
