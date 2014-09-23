@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.0.1 - 2014-09-21
+ * Version: 0.0.4 - 2014-09-22
  * License: AGPL
  */
 /**
@@ -1219,7 +1219,7 @@
               name: null,
               tag: null,
               uri: null,
-              buttonTemplateUrl: '/kurrency-templates/menu/button.html',
+              buttonTemplateUrl: 'kurrency-templates/menu/button.html',
               showLoggedIn: false,
               showLoggedOut: false,
               onClick: null
@@ -1265,70 +1265,70 @@
         $scope.addSidebar({
           tag: 'login',
           className: 'kurrency-login',
-          templateUrl: '/kurrency-templates/menu/sign-in.html'
+          templateUrl: 'kurrency-templates/menu/sign-in.html'
         }).addSidebar({
           tag: 'account',
           className: 'kurrency-account',
-          templateUrl: '/kurrency-templates/menu/account.html'
+          templateUrl: 'kurrency-templates/menu/account.html'
         }).addSidebar({
           tag: 'cart',
           className: 'kurrency-cart',
-          templateUrl: '/kurrency-templates/menu/cart.html'
+          templateUrl: 'kurrency-templates/menu/cart.html'
         }).addSidebar({
           tag: 'checkout',
           className: 'kurrency-checkout',
-          templateUrl: '/kurrency-templates/menu/checkout.html'
+          templateUrl: 'kurrency-templates/menu/checkout.html'
         }).addSidebar({
           tag: 'checkout-2',
           className: 'kurrency-checkout',
-          templateUrl: '/kurrency-templates/menu/checkout-2.html'
+          templateUrl: 'kurrency-templates/menu/checkout-2.html'
         }).addSidebar({
           tag: 'checkout-3',
           className: 'kurrency-checkout',
-          templateUrl: '/kurrency-templates/menu/checkout-3.html'
+          templateUrl: 'kurrency-templates/menu/checkout-3.html'
         }).addSidebar({
           tag: 'checkout-complete',
           className: 'kurrency-checkout',
-          templateUrl: '/kurrency-templates/menu/checkout-complete.html'
+          templateUrl: 'kurrency-templates/menu/checkout-complete.html'
         }).addSidebar({
           tag: 'forgot-password',
           className: 'kurrency-forgot-password',
-          templateUrl: '/kurrency-templates/menu/forgot-password.html'
+          templateUrl: 'kurrency-templates/menu/forgot-password.html'
         }).addSidebar({
           tag: 'register',
           className: 'kurrency-register',
-          templateUrl: '/kurrency-templates/menu/register.html'
+          templateUrl: 'kurrency-templates/menu/register.html'
         });
         /*
          $scope.addSidebar({
            tag: 'wishlist',
            className: 'kurrency-wishlist',
-           templateUrl: '/kurrency-templates/menu/wishlist.html'
+           templateUrl: 'kurrency-templates/menu/wishlist.html'
          }).addSidebar({
            tag: 'contact',
            className: 'kurrency-contact',
-           templateUrl: '/kurrency-templates/menu/contact.html'
+           templateUrl: 'kurrency-templates/menu/contact.html'
          });
         */
         $scope.addMenuItem({
           name: 'Sign In',
           tag: 'login',
           icon: 'kicon-login',
-          template: '/kurrency-templates/menu/sign-in.html',
+          template: 'kurrency-templates/menu/sign-in.html',
           showLoggedIn: false,
           showLoggedOut: true
         }).addMenuItem({
           name: 'Account',
           tag: 'account',
           icon: 'kicon-account',
-          template: '/kurrency-templates/menu/account.html',
+          template: 'kurrency-templates/menu/account.html',
           showLoggedIn: true,
           showLoggedOut: false
         }).addMenuItem({
           name: 'Shopping Cart',
           tag: 'cart',
-          buttonTemplateUrl: '/kurrency-templates/menu/button-cart.html',
-          template: '/kurrency-templates/menu/cart.html',
+          buttonTemplateUrl: 'kurrency-templates/menu/button-cart.html',
+          template: 'kurrency-templates/menu/cart.html',
           showLoggedIn: true,
           showLoggedOut: true
         });
@@ -1338,7 +1338,7 @@
          name: 'Wishlist',
          tag: 'wishlist',
          icon: 'kicon-wishlist',
-         template: '/kurrency-templates/menu/wishlist.html',
+         template: 'kurrency-templates/menu/wishlist.html',
          showLoggedIn: true,
          showLoggedOut: true
          });
@@ -1349,7 +1349,7 @@
          name: 'Contact',
          tag: 'contact',
          icon: 'kicon-contact',
-         template: '/kurrency-templates/menu/contact.html',
+         template: 'kurrency-templates/menu/contact.html',
          showLoggedIn: true,
          showLoggedOut: true
          });
@@ -1375,7 +1375,7 @@
         restrict: 'A',
         transclude: true,
         templateUrl: function (tElement, tAttrs) {
-          var url = '/kurrency-templates/kurrency-popover.html';
+          var url = 'kurrency-templates/kurrency-popover.html';
           if (tAttrs.templateUrl) {
             url = tAttrs.templateUrl;
           }
@@ -1449,7 +1449,7 @@
           restrict: 'E',
           scope: { id: '=' },
           templateUrl: function (tElement, tAttrs) {
-            var url = '/kurrency-templates/kurrency-product.html';
+            var url = 'kurrency-templates/kurrency-product.html';
             if (tAttrs.templateUrl) {
               url = tAttrs.templateUrl;
             }
@@ -1506,7 +1506,7 @@
         return {
           restrict: 'E',
           templateUrl: function (tElement, tAttrs) {
-            var url = '/kurrency-templates/kurrency-menu.html';
+            var url = 'kurrency-templates/kurrency-menu.html';
             if (tAttrs.templateUrl) {
               url = tAttrs.templateUrl;
             }
