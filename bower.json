@@ -4,7 +4,7 @@
     "dist/kurrency-angular.js",
     "dist/styles/kurrency-angular.css"
   ],
-  "version": "0.0.7",
+  "version": "0.0.8",
   "authors": [
     {
       "name": "typefoo",
@@ -13,6 +13,7 @@
   ],
   "description": "Kurrency AngularJS Library",
   "keywords": [
+    "angular",
     "angularjs",
     "kurrency"
   ],
@@ -32,6 +33,6 @@
     "package.json"
   ],
   "devDependencies": {
-    "angular": "~1.2.22"
+    "angular": "~1.2.25"
   }
 }
