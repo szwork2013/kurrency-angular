@@ -1993,27 +1993,31 @@
     if (w.KURRENCY_CONFIG) {
       // we are using kurrency from an embed standpoint
       if (!w.KURRENCY_CONFIG.integrated) {
-        w[KURRENCY_CONFIG.ANGULAR].injector([
-          'ng',
-          'KurrencyApp'
-        ]).invoke([
-          '$compile',
-          '$rootScope',
-          'kurrency',
-          'kurrencyConfig',
-          'kurrencyMenuService',
-          function ($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
-            kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
-            kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
-            kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
-            kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
-            var body = w[KURRENCY_CONFIG.ANGULAR].element(d).find('body');
-            if (kurrencyConfig.accessToken) {
-              body.append('<kurrency-menu></kurrency-menu>');
+        try {
+          w[KURRENCY_CONFIG.ANGULAR].module('KurrencyApp');
+        } catch (e) {
+          w[KURRENCY_CONFIG.ANGULAR].injector([
+            'ng',
+            'KurrencyApp'
+          ]).invoke([
+            '$compile',
+            '$rootScope',
+            'kurrency',
+            'kurrencyConfig',
+            'kurrencyMenuService',
+            function ($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
+              kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
+              kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
+              kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
+              kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
+              var body = w[KURRENCY_CONFIG.ANGULAR].element(d).find('body');
+              if (kurrencyConfig.accessToken) {
+                body.append('<kurrency-menu></kurrency-menu>');
+              }
+              w[KURRENCY_CONFIG.ANGULAR].bootstrap(body[0], ['KurrencyApp']);
             }
-            w[KURRENCY_CONFIG.ANGULAR].bootstrap(body[0], ['KurrencyApp']);
-          }
-        ]);
+          ]);
+        }
         if (!w.KURRENCY_CONFIG.GOOGLE_FONTS || w.KURRENCY_CONFIG.GOOGLE_FONTS === true) {
           w.WebFontConfig = { google: { families: ['Questrial::latin'] } };
           (function () {
