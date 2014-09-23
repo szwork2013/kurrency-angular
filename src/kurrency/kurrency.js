@@ -29,7 +29,7 @@
     var scrip = d.createElement('script');
     scrip.type = 'text/javascript';
     scrip.async = true;
-    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js';
+    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js';
     d.getElementsByTagName('body')[0].appendChild(scrip);
     if (scrip.readyState) {
       scrip.onreadystatechange = function () {
@@ -48,8 +48,9 @@
   }
 
   function setupKurrency() {
-    angular.module('KurrencyApp', []);
-    angular.module('KurrencyApp')
+    w[KURRENCY_CONFIG.ANGULAR].module('KurrencyApp', []);
+    //$templateCache
+    w[KURRENCY_CONFIG.ANGULAR].module('KurrencyApp')
       .constant('kurrencyConfig', {
         cache: false,
         local: false,
@@ -468,7 +469,7 @@
             if(!data) {
               return data;
             }
-            var newData = angular.copy(data);
+            var newData = w[KURRENCY_CONFIG.ANGULAR].copy(data);
             if(typeof newData !== 'object') {
               return newData;
             }
@@ -518,14 +519,14 @@
           };
 
           $scope.config = function (opts) {
-            $scope.options = angular.extend({}, defaults, opts);
+            $scope.options = w[KURRENCY_CONFIG.ANGULAR].extend({}, defaults, opts);
 
             return $scope;
           };
 
           $scope.req = function (type, url, data, error) {
             $rootScope.$broadcast('apiLoading', true);
-            var opts = angular.extend({}, $scope.options);
+            var opts = w[KURRENCY_CONFIG.ANGULAR].extend({}, $scope.options);
             if(kurrency.options.user) {
               opts.headers['authentication-key'] = kurrency.options.user.authenticationKey;
             }
@@ -689,7 +690,7 @@
           };
 
           $scope.config = function (opts) {
-            $scope.options = angular.extend(defaults, opts);
+            $scope.options = w[KURRENCY_CONFIG.ANGULAR].extend(defaults, opts);
             if ($scope.options.local) {
               $scope.options.baseUrl = baseUrls.test;
             } else {
@@ -1125,7 +1126,7 @@
             if (!data.products) {
               return cb(new Error('Missing products'), null);
             }
-            var params = angular.copy(data);
+            var params = w[KURRENCY_CONFIG.ANGULAR].copy(data);
 
             delete params.products;
             params.packages = [
@@ -1195,7 +1196,7 @@
               $scope.ship_to.address = address;
             };
 
-            $scope = angular.extend($scope, options);
+            $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
             return $scope;
           }
 
@@ -1239,7 +1240,7 @@
               $scope.ship_to.address = address;
             };
 
-            $scope = angular.extend($scope, options);
+            $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
             return $scope;
           }
 
@@ -1253,7 +1254,7 @@
             $scope.type = 'credit_card';
             $scope.card = {};
             $scope.bank_account = {};
-            $scope = angular.extend($scope, options);
+            $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
             return $scope;
           }
 
@@ -1275,7 +1276,7 @@
             $scope.card.security_code = undefined;
             $scope.card.postal_code = undefined;
 
-            $scope = angular.extend($scope, options);
+            $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
             return $scope;
           }
 
@@ -1295,7 +1296,7 @@
             $scope.bank_account.routing_number = undefined;
             $scope.bank_account.type = 'checking';
 
-            $scope = angular.extend($scope, options);
+            $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
             return $scope;
           }
 
@@ -1342,7 +1343,7 @@
             onClick: null
           };
 
-          item = angular.extend({}, defaults, item);
+          item = w[KURRENCY_CONFIG.ANGULAR].extend({}, defaults, item);
 
           $scope.menu.splice(position, 0, item);
 
@@ -1356,7 +1357,7 @@
             templateUrl: null
           };
 
-          item = angular.extend({}, defaults, item);
+          item = w[KURRENCY_CONFIG.ANGULAR].extend({}, defaults, item);
 
           $scope.sidebars.push(item);
 
@@ -1517,7 +1518,7 @@
             return url;
           },
           link: function(scope, element, attr) {
-            var popover = angular.element(element[0].querySelector('.kurrency-popover'));
+            var popover = w[KURRENCY_CONFIG.ANGULAR].element(element[0].querySelector('.kurrency-popover'));
             element.bind('mouseover', function(evt) {
               scope.showing = true;
               scope.$apply();
@@ -1843,7 +1844,7 @@
             };
 
             scope.copyShippingAddress = function() {
-              scope.checkout.billing.ship_to = angular.extend(scope.checkout.billing.ship_to, scope.checkout.shipment.ship_to);
+              scope.checkout.billing.ship_to = w[KURRENCY_CONFIG.ANGULAR].extend(scope.checkout.billing.ship_to, scope.checkout.shipment.ship_to);
               scope.shippingAddressCopied = true;
             };
 
@@ -1982,7 +1983,7 @@
                 ship_to: scope.checkout.shipment.ship_to,
                 customer: scope.checkout.billing.ship_to,
                 payment_method: scope.checkout.payment_method,
-                products: angular.copy(scope.cart),
+                products: w[KURRENCY_CONFIG.ANGULAR].copy(scope.cart),
                 notes: ''
               }, function(err, order) {
                 if(err) {
@@ -2160,15 +2161,17 @@
     if(w.KURRENCY_CONFIG) {
       // we are using kurrency from an embed standpoint
       if(!w.KURRENCY_CONFIG.integrated) {
-        angular.injector(['ng', 'KurrencyApp']).invoke(['$compile', '$rootScope', 'kurrency', 'kurrencyConfig', 'kurrencyMenuService', function($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
+        w[KURRENCY_CONFIG.ANGULAR].injector(['ng', 'KurrencyApp']).invoke(['$compile', '$rootScope', 'kurrency', 'kurrencyConfig', 'kurrencyMenuService', function($compile, $rootScope, kurrency, kurrencyConfig, kurrencyMenuService) {
           kurrencyConfig.cache = w.KURRENCY_CONFIG.CACHE ? w.KURRENCY_CONFIG.CACHE : true;
           kurrencyConfig.accessToken = w.KURRENCY_CONFIG.ACCESS_TOKEN;
           kurrencyConfig.mode = w.KURRENCY_CONFIG.MODE ? w.KURRENCY_CONFIG.MODE : 'test';
           kurrencyConfig.local = w.KURRENCY_CONFIG.LOCAL ? w.KURRENCY_CONFIG.LOCAL : false;
 
-          var body = angular.element(d).find('body');
-          body.append('<kurrency-menu></kurrency-menu>');
-          angular.bootstrap(body[0], ['KurrencyApp']);
+          var body = w[KURRENCY_CONFIG.ANGULAR].element(d).find('body');
+          if(kurrencyConfig.accessToken) {
+            body.append('<kurrency-menu></kurrency-menu>');
+          }
+          w[KURRENCY_CONFIG.ANGULAR].bootstrap(body[0], ['KurrencyApp']);
         }]);
 
         if(!w.KURRENCY_CONFIG.GOOGLE_FONTS || w.KURRENCY_CONFIG.GOOGLE_FONTS === true) {
@@ -2192,7 +2195,5 @@
       // for Gmaps
       //console.log(w.google);
     };
-
-    //$templateCache
   }
 })(window, document);
