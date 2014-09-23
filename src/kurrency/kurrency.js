@@ -1369,7 +1369,7 @@
             return item.uri;
           }
 
-          return '';
+          return null;
         };
 
         $scope.checkShowing = function(item) {

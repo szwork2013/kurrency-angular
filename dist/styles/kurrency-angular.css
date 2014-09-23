@@ -43,6 +43,7 @@
   padding: 0 4px;
 }
 .kurrency-menu > .menu-wrapper > li a {
+  cursor: pointer;
   display: block;
   height: 45px;
   width: 45px;
