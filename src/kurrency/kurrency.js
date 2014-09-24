@@ -1322,11 +1322,54 @@
       .config(function($sceProvider) {
         $sceProvider.enabled(false);
       })
-      .factory('kurrencyMenuService', ['kurrency', 'kurrencyConfig', '$compile', function(kurrency, kurrencyConfig, $compile) {
+      .factory('kurrencyMenuService', ['kurrency', 'kurrencyConfig', '$rootScope', function(kurrency, kurrencyConfig, $rootScope) {
         var $scope = this;
 
         $scope.menu = [];
+        $scope.cart = [];
         $scope.sidebars = [];
+        $scope.showing = null;
+        $scope.back = null;
+        $scope.next = null;
+
+        kurrency.cart.get(function(err, cart) {
+          $scope.cart = cart;
+        });
+
+        $rootScope.$on('cartUpdated', function(evt, cart) {
+          $scope.cart = cart;
+        });
+
+        $scope.close = function() {
+          $scope.showing = null;
+          $rootScope.$broadcast('menuClosed', true);
+        };
+
+        $scope.toggle = function(val, back, next) {
+          if($scope.showing === val) {
+            $scope.showing = null;
+          } else {
+            $scope.showing = val;
+          }
+
+          if(back) {
+            $scope.back = back;
+          } else {
+            $scope.back = null;
+          }
+
+          if(next) {
+            $scope.next = next;
+          } else {
+            $scope.next = null;
+          }
+
+          $rootScope.$broadcast('menuToggled', {val: val, back: back, next: next});
+        };
+
+        $scope.show = function(val) {
+          return (val === $scope.showing);
+        };
 
         $scope.addMenuItem = function(item, position) {
           if(!position) {
@@ -1394,6 +1437,27 @@
           return $scope;
         };
 
+        $scope.checkClass = function(c) {
+          if($scope.showing === c) {
+            return {active: true};
+          }
+
+          return '';
+        };
+
+        $scope.checkButtonClass = function(item) {
+          if(item.tag === 'cart') {
+            if(!$scope.cart || !$scope.cart.length) {
+              return {cart: true, 'cart-empty': true};
+            }
+            return {cart: true, 'cart-empty': $scope.cart.length <= 0};
+          } else {
+            var obj = {};
+            obj[item.tag] = true;
+            return obj;
+          }
+        };
+
         $scope.addSidebar({
           tag: 'login',
           className: 'kurrency-login',
@@ -1430,7 +1494,7 @@
           tag: 'register',
           className: 'kurrency-register',
           templateUrl: 'kurrency-templates/menu/register.html'
-        })
+        });
 
         /*
          $scope.addSidebar({
@@ -1642,9 +1706,6 @@
             scope.menuService = kurrencyMenuService;
             scope.cart = null;
             scope.wishlist = null;
-            scope.showing = null;
-            scope.back = null;
-            scope.next = null;
             scope.apiLoading = 0;
             scope.product_total = 0;
             scope.quantity_total = 0;
@@ -1762,27 +1823,6 @@
                 scope.cart = cart;
                 scope.updateProductTotal();
               });
-            };
-
-            scope.checkClass = function(c) {
-              if(scope.showing === c) {
-                return {active: true};
-              }
-
-              return '';
-            };
-
-            scope.checkButtonClass = function(item) {
-              if(item.tag === 'cart') {
-                if(!scope.cart || !scope.cart.length) {
-                  return {cart: true, 'cart-empty': true};
-                }
-                return {cart: true, 'cart-empty': scope.cart.length <= 0};
-              } else {
-                var obj = {};
-                obj[item.tag] = true;
-                return obj;
-              }
             };
 
             scope.saveAddress = function(address) {
@@ -2040,41 +2080,6 @@
               }
             };
 
-            scope.close = function() {
-              scope.showing = null;
-            };
-
-            scope.toggle = function(val, back, next) {
-              if(scope.showing === val) {
-                scope.showing = null;
-              } else {
-                scope.showing = val;
-              }
-
-              if(back) {
-                scope.back = back;
-              } else {
-                scope.back = null;
-              }
-
-              if(next) {
-                scope.next = next;
-              } else {
-                scope.next = null;
-              }
-
-              scope.wipeMessages();
-              scope.resetForms();
-              if(val === 'checkout-3') {
-                scope.getRates();
-                scope.getTaxes();
-              }
-            };
-
-            scope.show = function(val) {
-              return (val === scope.showing);
-            };
-
             scope.loginUser = function(section) {
               scope.wipeMessages();
               kurrency.auth.login(scope.login.username, scope.login.password, function(user) {
@@ -2151,6 +2156,15 @@
                 scope.apiLoading++;
               } else if(scope.apiLoading > 0) {
                 scope.apiLoading--;
+              }
+            });
+
+            scope.$on('menuToggled', function(evt, data) {
+              scope.wipeMessages();
+              scope.resetForms();
+              if(data.val === 'checkout-3') {
+                scope.getRates();
+                scope.getTaxes();
               }
             });
 
