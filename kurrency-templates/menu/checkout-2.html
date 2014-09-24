@@ -28,5 +28,5 @@
     </div>
     <input class="kurrency-input" type="text" ng-model="checkout.billing.ship_to.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(checkout.billing.ship_to.address.address_1, checkout.billing.ship_to.address.postal_code, checkout.billing)">
   </div>
-  <button type="submit" class="kurrency-button contact-button" ng-click="toggle('checkout-3', 'checkout-2')">Continue</button>
+  <button type="submit" class="kurrency-button contact-button" ng-click="menuService.toggle('checkout-3', 'checkout-2')">Continue</button>
 </form>

@@ -6,7 +6,7 @@
 <form>
   <div ng-show="!kurrency.auth.loggedIn()">
     <p>Have an account?</p>
-    <button class="kurrency-button small" type="button" ng-click="toggle('login', 'checkout', 'checkout')">Login Now</button>
+    <button class="kurrency-button small" type="button" ng-click="menuService.toggle('login', 'checkout', 'checkout')">Login Now</button>
   </div>
   <div ng-show="addressList.length > 0">
     <p>Select from a shipping address you have saved</p>
