@@ -2028,20 +2028,20 @@
                 notes: ''
               }, function(err, order) {
                 if(err) {
-                  return console.log(err);
+                  scope.addMessage('error', err);
                 }
 
                 scope.order = order;
 
                 kurrency.cart.empty(function(err, cart) {
                   scope.cart = cart;
-                  scope.toggle('checkout-complete');
+                  kurrencyMenuService.toggle('checkout-complete');
                 });
               });
             };
 
             scope.addMessage = function(type, msg) {
-              var section = scope.showing;
+              var section = kurrencyMenuService.showing;
               if(!section) {
                 section = 'none';
               }
@@ -2085,13 +2085,13 @@
               kurrency.auth.login(scope.login.username, scope.login.password, function(user) {
                 scope.addMessage('success', 'Successfully logged in');
                 $timeout(function() {
-                  if(scope.next) {
-                    scope.toggle(scope.next);
+                  if(kurrencyMenuService.next) {
+                    kurrencyMenuService.toggle(scope.next);
                   } else {
                     if(section) {
-                      scope.showing = section;
+                      kurrencyMenuService.showing = section;
                     } else {
-                      scope.showing = null;
+                      kurrencyMenuService.showing = null;
                     }
                   }
                   scope.wipeMessages();
@@ -2105,10 +2105,14 @@
               kurrency.auth.register(scope.register, function(user) {
                 scope.addMessage('success', 'Account registered, and logged in');
                 $timeout(function() {
-                  if (section) {
-                    scope.showing = section;
+                  if(kurrencyMenuService.next) {
+                    kurrencyMenuService.toggle(scope.next);
                   } else {
-                    scope.showing = null;
+                    if(section) {
+                      kurrencyMenuService.showing = section;
+                    } else {
+                      kurrencyMenuService.showing = null;
+                    }
                   }
                   scope.wipeMessages();
                 }, 500);
@@ -2132,7 +2136,7 @@
             });
 
             scope.$on('kurrencySignOut', function(evt) {
-              scope.showing = null;
+              kurrencyMenuService.showing = null;
               scope.paymentMethodList = [];
               scope.addressList = [];
               kurrency.cart.get(function(err, cart) {
