@@ -507,7 +507,8 @@
                 && i !== '$elemMatch'
                 && i !== '$size'
                 && i !== '$meta'
-                && i !== '$slice') {
+                && i !== '$slice'
+                && i !== '$options') {
                 delete newData[i];
               }
               if(typeof newData[i] === 'object') {
@@ -1606,13 +1607,10 @@
       .directive('kurrencyImage', ['kurrency', 'kurrencyConfig', '$parse', function(kurrency, kurrencyConfig, $parse) {
         return {
           restrict: 'E',
-          scope: {src: '=', options: '@', alt: '='},
+          scope: {src: '=', options: '=?', alt: '='},
           template: '<img ng-src="{{newSrc}}" alt="{{alt}}">',
           link: function(scope, element, attr) {
             scope.newSrc = null;
-            attr.$observe('options', function(opts) {
-              scope.options = scope.$eval(opts);
-            });
             scope.$watch('src', function() {
               if(!scope.src) {
                 return;

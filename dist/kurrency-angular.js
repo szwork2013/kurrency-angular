@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.9 - 2014-09-25
+ * Version: 0.1.10 - 2014-10-01
  * License: AGPL
  */
 /**
@@ -491,7 +491,7 @@
               return newData;
             }
             for (var i in newData) {
-              if (i.charAt(0) === '$' && i !== '$or' && i !== '$not' && i !== '$ne' && i !== '$and' && i !== '$gt' && i !== '$gte' && i !== '$lt' && i !== '$gte' && i !== '$in' && i !== '$nin' && i !== '$exists' && i !== '$type' && i !== '$mod' && i !== '$regex' && i !== '$text' && i !== '$where' && i !== '$geoIntersects' && i !== '$geoWithin' && i !== '$nearSphere' && i !== '$near' && i !== '$box' && i !== '$centerSphere' && i !== '$center' && i !== '$geometry' && i !== '$maxDistance' && i !== '$minDistance' && i !== '$polygon' && i !== '$uniqueDocs' && i !== '$all' && i !== '$elemMatch' && i !== '$size' && i !== '$meta' && i !== '$slice') {
+              if (i.charAt(0) === '$' && i !== '$or' && i !== '$not' && i !== '$ne' && i !== '$and' && i !== '$gt' && i !== '$gte' && i !== '$lt' && i !== '$gte' && i !== '$in' && i !== '$nin' && i !== '$exists' && i !== '$type' && i !== '$mod' && i !== '$regex' && i !== '$text' && i !== '$where' && i !== '$geoIntersects' && i !== '$geoWithin' && i !== '$nearSphere' && i !== '$near' && i !== '$box' && i !== '$centerSphere' && i !== '$center' && i !== '$geometry' && i !== '$maxDistance' && i !== '$minDistance' && i !== '$polygon' && i !== '$uniqueDocs' && i !== '$all' && i !== '$elemMatch' && i !== '$size' && i !== '$meta' && i !== '$slice' && i !== '$options') {
                 delete newData[i];
               }
               if (typeof newData[i] === 'object') {
@@ -1497,15 +1497,12 @@
           restrict: 'E',
           scope: {
             src: '=',
-            options: '@',
+            options: '=?',
             alt: '='
           },
           template: '<img ng-src="{{newSrc}}" alt="{{alt}}">',
           link: function (scope, element, attr) {
             scope.newSrc = null;
-            attr.$observe('options', function (opts) {
-              scope.options = scope.$eval(opts);
-            });
             scope.$watch('src', function () {
               if (!scope.src) {
                 return;
