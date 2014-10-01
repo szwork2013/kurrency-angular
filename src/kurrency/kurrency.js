@@ -543,6 +543,9 @@
               opts.contentType = 'application/json';
             } else {
               opts.params = data;
+              if(opts.params.conditions && typeof opts.params.conditions === 'object') {
+                opts.params.conditions = JSON.stringify(opts.params.conditions);
+              }
             }
 
             var req = $http(opts);

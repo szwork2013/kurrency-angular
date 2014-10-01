@@ -4,7 +4,7 @@
     "dist/kurrency-angular.js",
     "dist/styles/kurrency-angular.css"
   ],
-  "version": "0.1.10",
+  "version": "0.1.11",
   "authors": [
     {
       "name": "typefoo",
