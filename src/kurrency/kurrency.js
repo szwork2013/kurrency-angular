@@ -543,7 +543,7 @@
               opts.contentType = 'application/json';
             } else {
               opts.params = data;
-              if(opts.params.conditions && typeof opts.params.conditions === 'object') {
+              if(opts.params && typeof opts.params.conditions === 'object') {
                 opts.params.conditions = JSON.stringify(opts.params.conditions);
               }
             }
