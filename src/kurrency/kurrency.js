@@ -1614,11 +1614,10 @@
           template: '<img ng-src="{{newSrc}}" alt="{{alt}}">',
           link: function(scope, element, attr) {
             scope.newSrc = null;
-            scope.$watch('src', function() {
-              if(!scope.src) {
+            scope.$watch(function() { return scope.src}, function () {
+              if (!scope.src) {
                 return;
               }
-
               scope.newSrc = buildUrl(scope.src, scope.options);
             });
 
@@ -1630,6 +1629,9 @@
               }
               if(options.effect) {
                 url += '&effect=' + options.effect;
+              }
+              if(options.force) {
+                url += '&force=true';
               }
 
               return url;

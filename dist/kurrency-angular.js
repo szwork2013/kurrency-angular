@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.12 - 2014-10-02
+ * Version: 0.1.13 - 2014-10-06
  * License: AGPL
  */
 /**
@@ -1506,7 +1506,9 @@
           template: '<img ng-src="{{newSrc}}" alt="{{alt}}">',
           link: function (scope, element, attr) {
             scope.newSrc = null;
-            scope.$watch('src', function () {
+            scope.$watch(function () {
+              return scope.src;
+            }, function () {
               if (!scope.src) {
                 return;
               }
@@ -1520,6 +1522,9 @@
               }
               if (options.effect) {
                 url += '&effect=' + options.effect;
+              }
+              if (options.force) {
+                url += '&force=true';
               }
               return url;
             }
