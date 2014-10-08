@@ -1126,6 +1126,26 @@
             }
           }
 
+          function getProductWeight(p) {
+            var weight = p.weight;
+            for(var i = 0; i < p.variants.length; i++) {
+              if(p.variants[i].weight && p.variants[i].weight.length > 0) {
+                weight += parseInt(p.variants[i].weight, 10);
+              }
+            }
+            return weight;
+          }
+
+          function getProductPrice(p) {
+            var price = p.price;
+            for(var i = 0; i < p.variants.length; i++) {
+              if(p.variants[i].price && p.variants[i].price > 0) {
+                price += parseInt(p.variants[i].price, 10);
+              }
+            }
+            return price;
+          }
+
           shipping.prototype.rates = function (data, cb) {
             if (!data.products) {
               return cb(new Error('Missing products'), null);
@@ -1140,8 +1160,8 @@
               }
             ];
             for (var i = 0; i < data.products.length; i++) {
-              params.packages[0].weight += data.products[i].weight * data.products[i].qty;
-              params.packages[0].price += data.products[i].price * data.products[i].qty;
+              params.packages[0].weight += getProductWeight(data.products[i]) * data.products[i].qty;
+              params.packages[0].price += getProductPrice(data.products[i]) * data.products[i].qty;
             }
 
             $scope.session.get(function (err, session) {
@@ -1639,7 +1659,7 @@
           }
         }
       }])
-      .directive('kurrencyProduct', ['kurrency', 'kurrencyConfig', function(kurrency, kurrencyConfig) {
+      .directive('kurrencyProduct', ['kurrency', 'kurrencyConfig', '$filter', function(kurrency, kurrencyConfig, $filter) {
         return {
           restrict: 'E',
           scope: {id: '='},
@@ -1662,6 +1682,27 @@
               scope.product = products[0];
             });
 
+            scope.getPrice = function() {
+              if(!scope.product) {
+                return 'N/A';
+              }
+              var p = scope.product.price;
+              for(var i = 0; i < scope.variants.length; i++) {
+                if(scope.variants[i].price) {
+                  p += parseInt(scope.variants[i].price, 10);
+                }
+              }
+              return $filter('currency')(p / 100);
+            };
+
+            scope.variantDisplay = function(v) {
+              var out = v.name;
+              if(v.price) {
+                out += ' (' + $filter('currency')(v.price/100) + ')';
+              }
+              return out;
+            };
+
             scope.setVariant = function(name, value) {
               for(var i = 0; i < scope.variants.length; i++) {
                 if(scope.variants[i].name === name) {
@@ -1670,11 +1711,13 @@
                     return;
                   }
                   scope.variants[i].value = value.name;
+                  scope.variants[i].price = value.price;
+                  scope.variants[i].weight = value.weight;
                   return;
                 }
               }
 
-              scope.variants.push({name: name, value: value.name});
+              scope.variants.push({name: name, value: value.name, price: value.price, weight: value.weight});
             };
 
             scope.addToCart = function(product, qty) {
@@ -1784,9 +1827,19 @@
                   scope.requiresShipping = true;
                 }
                 scope.quantity_total += parseInt(scope.cart[i].qty, 10);
-                line_total = parseInt(scope.cart[i].qty, 10) * scope.cart[i].price;
+                line_total = parseInt(scope.cart[i].qty, 10) * scope.getProductPrice(scope.cart[i]);
                 scope.product_total += line_total;
               }
+            };
+
+            scope.getProductPrice = function(product) {
+              var p = product.price;
+              for(var i = 0; i < product.variants.length; i++) {
+                if(product.variants[i].price) {
+                  p += parseInt(product.variants[i].price, 10);
+                }
+              }
+              return p;
             };
 
             kurrency.cart.get(function(err, cart) {
@@ -2089,7 +2142,7 @@
                 scope.addMessage('success', 'Successfully logged in');
                 $timeout(function() {
                   if(kurrencyMenuService.next) {
-                    kurrencyMenuService.toggle(scope.next);
+                    kurrencyMenuService.toggle(kurrencyMenuService.next);
                   } else {
                     if(section) {
                       kurrencyMenuService.showing = section;
@@ -2109,7 +2162,7 @@
                 scope.addMessage('success', 'Account registered, and logged in');
                 $timeout(function() {
                   if(kurrencyMenuService.next) {
-                    kurrencyMenuService.toggle(scope.next);
+                    kurrencyMenuService.toggle(kurrencyMenuService.next);
                   } else {
                     if(section) {
                       kurrencyMenuService.showing = section;

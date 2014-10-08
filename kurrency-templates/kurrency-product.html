@@ -6,12 +6,12 @@
     <div class="column">
       <h2 ng-bind="product.name"></h2>
       <h3 ng-show="product.sub_title" ng-bind="product.sub_title"></h3>
-      <span class="price" ng-bind="product.price / 100 | currency"></span>
+      <span class="price" ng-bind="getPrice()"></span>
     </div>
     <div class="column">
       <div ng-show="product.attributes">
         <div ng-repeat="variant in product.attributes">
-          <select ng-model="variant.$$selected" ng-change="setVariant(variant.name, variant.$$selected)" ng-options="option as option.name for option in variant.options"><option value>Select a {{variant.name}}</select>
+          <select ng-model="variant.$$selected" ng-change="setVariant(variant.name, variant.$$selected)" ng-options="option as variantDisplay(option) for option in variant.options"><option value>Select a {{variant.name}}</select>
         </div>
       </div>
       <button type="button" ng-click="addToCart(product, 1)">Buy Now</button>

@@ -8,10 +8,12 @@
     <li class="cart-product" ng-repeat="product in cart">
       <div class="left">
         <div class="name" ng-bind="product.name"></div>
+        <div class="variants" ng-repeat="v in product.variants">{{v.name}}: {{v.value}}</div>
         <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>
       </div>
       <div class="right">
         <div class="price"><span ng-bind="product.price/100 | currency"></span></div>
+        <div class="variants" ng-repeat="v in product.variants">{{v.price/100 | currency}}</div>
         <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>
       </div>
     </li>
