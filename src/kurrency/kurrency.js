@@ -776,9 +776,10 @@
             });
           };
           cart.prototype.add = function (product, qty, cb) {
+            var variants = JSON.stringify(product.variants);
             $scope.cart.get(function (err, cart) {
               for (var i = 0; i < cart.length; i++) {
-                if (cart[i]._id === product._id) {
+                if (cart[i]._id === product._id && JSON.stringify(cart[i].variants) === variants) {
                   cart[i].qty += parseInt(qty, 10);
                   return $scope.session.get(function (err, session) {
                     session.data.cart = cart;
@@ -802,7 +803,7 @@
                 requires_shipping: product.requires_shipping,
                 allow_presale: product.allow_presale,
                 taxable: product.taxable,
-                variants: product.variants
+                variants: w[KURRENCY_CONFIG.ANGULAR].copy(product.variants)
               });
               $scope.session.get(function (err, session) {
                 session.data.cart = cart;
@@ -1735,7 +1736,7 @@
           }
         }
       }])
-      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', 'kurrencyMenuService', '$timeout', '$window', '$document', function(kurrency, kurrencyConfig, kurrencyMenuService, $timeout, $window, $document) {
+      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', 'kurrencyMenuService', '$timeout', '$window', '$document', '$rootScope', function(kurrency, kurrencyConfig, kurrencyMenuService, $timeout, $window, $document, $rootScope) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -2091,6 +2092,7 @@
 
                 kurrency.cart.empty(function(err, cart) {
                   scope.cart = cart;
+                  $rootScope.$emit('cartUpdated', cart);
                   kurrencyMenuService.toggle('checkout-complete');
                 });
               });
