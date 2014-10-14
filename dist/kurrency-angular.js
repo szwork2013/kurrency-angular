@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.14 - 2014-10-09
+ * Version: 0.1.15 - 2014-10-14
  * License: AGPL
  */
 /**
@@ -1065,6 +1065,9 @@
           }
           function getProductPrice(p) {
             var price = p.price;
+            if (!p.variants) {
+              p.variants = [];
+            }
             for (var i = 0; i < p.variants.length; i++) {
               if (p.variants[i].price && p.variants[i].price > 0) {
                 price += parseInt(p.variants[i].price, 10);
@@ -1580,6 +1583,9 @@
                 return 'N/A';
               }
               var p = scope.product.price;
+              if (!scope.variants) {
+                scope.variants = [];
+              }
               for (var i = 0; i < scope.variants.length; i++) {
                 if (scope.variants[i].price) {
                   p += parseInt(scope.variants[i].price, 10);
@@ -1595,6 +1601,9 @@
               return out;
             };
             scope.setVariant = function (name, value) {
+              if (!scope.variants) {
+                scope.variants = [];
+              }
               for (var i = 0; i < scope.variants.length; i++) {
                 if (scope.variants[i].name === name) {
                   if (value === null) {
@@ -1615,6 +1624,9 @@
               });
             };
             scope.addToCart = function (product, qty) {
+              if (!scope.variants) {
+                scope.variants = [];
+              }
               if (scope.variants.length) {
                 product.variants = scope.variants;
               }
@@ -1728,6 +1740,9 @@
             };
             scope.getProductPrice = function (product) {
               var p = product.price;
+              if (!product.variants) {
+                product.variants = [];
+              }
               for (var i = 0; i < product.variants.length; i++) {
                 if (product.variants[i].price) {
                   p += parseInt(product.variants[i].price, 10);
