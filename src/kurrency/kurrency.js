@@ -1880,6 +1880,7 @@
                 }, 3000);
                 scope.cart = cart;
                 scope.updateProductTotal();
+                scope.updateFinalTotal();
               })(tmp);
             });
 

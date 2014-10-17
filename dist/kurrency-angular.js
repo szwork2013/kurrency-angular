@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.15 - 2014-10-14
+ * Version: 0.1.16 - 2014-10-17
  * License: AGPL
  */
 /**
@@ -1768,6 +1768,7 @@
                 }, 3000);
                 scope.cart = cart;
                 scope.updateProductTotal();
+                scope.updateFinalTotal();
               }(tmp));
             });
             scope.updateQuantity = function (product) {
