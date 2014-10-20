@@ -1,6 +1,6 @@
 {
   "name": "kurrency-angular",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Kurrency AngularJS Library",
   "main": "index.js",
   "scripts": {
