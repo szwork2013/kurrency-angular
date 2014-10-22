@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.16 - 2014-10-20
+ * Version: 0.1.18 - 2014-10-22
  * License: AGPL
  */
 /**
@@ -978,6 +978,15 @@
               });
             });
           };
+          products.prototype.total = function (options, cb) {
+            $scope.session.get(function (err, session) {
+              var stringOptions = JSON.stringify(options);
+              var req = new Request($scope).post($scope.options.baseUrl + '/products/total', options, $scope.handleError);
+              req.success(function (res) {
+                return cb(null, res.pkg.data);
+              });
+            });
+          };
           /*
            *
            * Product Line methods
@@ -999,6 +1008,15 @@
                 if ($scope.options.caching === true) {
                   cache.product_lines[stringOptions] = res.pkg.data;
                 }
+                return cb(null, res.pkg.data);
+              });
+            });
+          };
+          product_lines.prototype.total = function (options, cb) {
+            $scope.session.get(function (err, session) {
+              var stringOptions = JSON.stringify(options);
+              var req = new Request($scope).post($scope.options.baseUrl + '/product-lines/total', options, $scope.handleError);
+              req.success(function (res) {
                 return cb(null, res.pkg.data);
               });
             });
