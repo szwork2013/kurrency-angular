@@ -29,7 +29,7 @@
     var scrip = d.createElement('script');
     scrip.type = 'text/javascript';
     scrip.async = true;
-    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js';
+    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js';
     d.getElementsByTagName('body')[0].appendChild(scrip);
     if (scrip.readyState) {
       scrip.onreadystatechange = function () {
@@ -1370,7 +1370,7 @@
       .config(function($sceProvider) {
         $sceProvider.enabled(false);
       })
-      .factory('kurrencyMenuService', ['kurrency', 'kurrencyConfig', '$rootScope', function(kurrency, kurrencyConfig, $rootScope) {
+      .factory('kurrencyMenuService', ['kurrency', 'kurrencyConfig', '$rootScope', '$filter', function(kurrency, kurrencyConfig, $rootScope, $filter) {
         var $scope = this;
 
         $scope.menu = [];
@@ -1461,6 +1461,57 @@
           }
 
           return null;
+        };
+
+        $scope.addToCart = function(product, qty, variants) {
+          if(variants && variants.length) {
+            product.variants = variants;
+          }
+          kurrency.cart.add(product, qty, function(err, cart) {
+            if(err) {
+              $rootScope.$emit('cartError', err);
+              return console.log(err);
+            }
+
+            $rootScope.$emit('cartUpdated', cart);
+          });
+        };
+
+        $scope.getPrice = function(product) {
+          if(!product) {
+            return 'N/A';
+          }
+          var p = product.price;
+          if(!product.variants) {
+            return $filter('currency')(p / 100);
+          }
+          for(var i = 0; i < product.variants.length; i++) {
+            if(product.variants[i].price) {
+              p += parseInt(product.variants[i].price, 10);
+            }
+          }
+          return $filter('currency')(p / 100);
+        };
+
+        $scope.setVariant = function(product, name, value) {
+          if(!product.variants) {
+            product.variants = [];
+          }
+          for(var i = 0; i < product.variants.length; i++) {
+            if(product.variants[i].name === name) {
+              if(value === null) {
+                product.variants.splice(i, 1);
+                return;
+              }
+              product.variants[i].value = value.name;
+              product.variants[i].price = value.price;
+              product.variants[i].weight = value.weight;
+              return product;
+            }
+          }
+
+          product.variants.push({name: name, value: value.name, price: value.price, weight: value.weight});
+          return product;
         };
 
         $scope.checkShowing = function(item) {
@@ -1683,7 +1734,7 @@
           }
         }
       }])
-      .directive('kurrencyProduct', ['kurrency', 'kurrencyConfig', '$filter', function(kurrency, kurrencyConfig, $filter) {
+      .directive('kurrencyProduct', ['kurrency', 'kurrencyConfig', 'kurrencyMenuService', '$filter', function(kurrency, kurrencyConfig, kurrencyMenuService, $filter) {
         return {
           restrict: 'E',
           scope: {id: '='},
@@ -1699,71 +1750,49 @@
           link: function(scope, element, attr) {
             scope.kurrency = kurrency;
             scope.config = kurrencyConfig;
-            scope.product = null;
-            scope.variants = []; // {name: null, value: null} pair
+            scope.product = {};
+            scope.kurrencyMenuService = kurrencyMenuService;
 
             kurrency.products.list({_id: scope.id}, function(err, products) {
               scope.product = products[0];
-            });
 
-            scope.getPrice = function() {
-              if(!scope.product) {
-                return 'N/A';
-              }
-              var p = scope.product.price;
-              if(!scope.variants) {
-                scope.variants = [];
-              }
-              for(var i = 0; i < scope.variants.length; i++) {
-                if(scope.variants[i].price) {
-                  p += parseInt(scope.variants[i].price, 10);
+              if(scope.product.attributes && scope.product.attributes.length) {
+                for(var i = 0; i < scope.product.attributes.length; i++) {
+                  if(scope.product.attributes[i].type === 'select') {
+                    scope.product.attributes[i].$selected = null;
+                  } else if(scope.product.attributes[i].type === 'multi') {
+                    scope.product.attributes[i].$selected = [];
+                  }
+                  if(scope.product.attributes[i].required) {
+                    if(!scope.product.attributes[i].default) {
+                      scope.product.attributes[i].$selected = scope.product.attributes[i].options[0];
+                      scope.product = kurrencyMenuService.setVariant(scope.product, scope.product.attributes[i].name, scope.product.attributes[i].options[0]);
+                    } else {
+                      for(var j = 0; j < scope.product.attributes[i].options.length; j++) {
+                        if(scope.product.attributes[i].options[j].name === scope.product.attributes[i].default) {
+                          scope.product.attributes[i].$selected = scope.product.attributes[i].options[j];
+                          scope.product = kurrencyMenuService.setVariant(scope.product, scope.product.attributes[i].name, scope.product.attributes[i].options[j]);
+                        }
+                      }
+                    }
+                  } else {
+                    for(var j = 0; j < scope.product.attributes[i].options.length; j++) {
+                      if(scope.product.attributes[i].options[j].name === scope.product.attributes[i].default) {
+                        scope.product.attributes[i].$selected = scope.product.attributes[i].options[j];
+                        scope.product = kurrencyMenuService.setVariant(scope.product, scope.product.attributes[i].name, scope.product.attributes[i].options[j]);
+                      }
+                    }
+                  }
                 }
               }
-              return $filter('currency')(p / 100);
-            };
+            });
 
             scope.variantDisplay = function(v) {
               var out = v.name;
               if(v.price) {
-                out += ' (' + $filter('currency')(v.price/100) + ')';
+                out += ' ' + (v.price > 0 ? 'add ' : 'subtract ') + $filter('currency')(v.price/100);
               }
               return out;
-            };
-
-            scope.setVariant = function(name, value) {
-              if(!scope.variants) {
-                scope.variants = [];
-              }
-              for(var i = 0; i < scope.variants.length; i++) {
-                if(scope.variants[i].name === name) {
-                  if(value === null) {
-                    scope.variants.splice(i, 1);
-                    return;
-                  }
-                  scope.variants[i].value = value.name;
-                  scope.variants[i].price = value.price;
-                  scope.variants[i].weight = value.weight;
-                  return;
-                }
-              }
-
-              scope.variants.push({name: name, value: value.name, price: value.price, weight: value.weight});
-            };
-
-            scope.addToCart = function(product, qty) {
-              if(!scope.variants) {
-                scope.variants = [];
-              }
-              if(scope.variants.length) {
-                product.variants = scope.variants;
-              }
-              kurrency.cart.add(product, qty, function(err, cart) {
-                if(err) {
-                  return console.log(err);
-                }
-
-                scope.$emit('cartUpdated', cart);
-              });
             };
           }
         }
@@ -1790,6 +1819,7 @@
             scope.quantity_total = 0;
             scope.paymentEnabled = false;
             scope.requiresShipping = false;
+            scope.requiresTax = false;
             scope.addressList = [];
             scope.paymentMethodList = [];
             scope.checkout = {
@@ -1859,6 +1889,9 @@
                 if(scope.cart[i].requires_shipping) {
                   scope.requiresShipping = true;
                 }
+                if(scope.cart[i].taxable) {
+                  scope.requiresTax = true;
+                }
                 scope.quantity_total += parseInt(scope.cart[i].qty, 10);
                 line_total = parseInt(scope.cart[i].qty, 10) * scope.getProductPrice(scope.cart[i]);
                 scope.product_total += line_total;
@@ -1868,7 +1901,7 @@
             scope.getProductPrice = function(product) {
               var p = product.price;
               if(!product.variants) {
-                product.variants = [];
+                return p;
               }
               for(var i = 0; i < product.variants.length; i++) {
                 if(product.variants[i].price) {
@@ -1999,7 +2032,6 @@
                   return scope.geocodeComplete = true;
                 }
 
-                console.log(res);
                 for(var i = 0; i < res[0].address_components.length; i++) {
                   var part = res[0].address_components[i];
                   if(part.types[0] === 'locality') {
@@ -2018,6 +2050,10 @@
             };
 
             scope.getTaxes = function() {
+              if(!scope.requiresTax) {
+                scope.tax_total = tax;
+                return scope.updateFinalTotal();
+              }
               kurrency.orders.taxes(scope.product_total, {
                 ship_to: {
                   address: {

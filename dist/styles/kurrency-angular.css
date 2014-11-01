@@ -210,8 +210,8 @@
 }
 .kurrency-menu .kurrency-sidebar .kurrency-container {
   width: 340px;
-  padding: 20px;
-  min-height: 100%;
+  padding: 20px 20px 60px;
+  min-height: calc(100% - 45px);
   -webkit-transform: scale(0.8);
   -moz-transform: scale(0.8);
   -o-transform: scale(0.8);
@@ -237,6 +237,34 @@
   height: 2px;
   background-color: #d7d7d7;
   margin: 36px 0;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  color: #bbbbbb;
+  text-decoration: none;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo img {
+  margin-left: 5px;
+  width: 100px;
+  vertical-align: middle;
+  zoom: 1;
+  filter: alpha(opacity=80);
+  -webkit-opacity: 0.8;
+  -moz-opacity: 0.8;
+  opacity: 0.8;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo:hover {
+  color: #6f6e6e;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo:hover img {
+  zoom: 1;
+  filter: alpha(opacity=100);
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
 }
 .kurrency-menu .kurrency-sidebar.active {
   z-index: 5;
@@ -910,15 +938,15 @@ textarea.kurrency-input {
 }
 @font-face {
   font-family: 'KurrencyIcons';
-  src: url('fonts/KurrencyIcons.eot?-orzlfj');
-  src: url('fonts/KurrencyIcons.eot?#iefix-orzlfj') format('embedded-opentype'), url('fonts/KurrencyIcons.woff?-orzlfj') format('woff'), url('fonts/KurrencyIcons.ttf?-orzlfj') format('truetype'), url('fonts/KurrencyIcons.svg?-orzlfj#KurrencyIcons') format('svg');
+  src: url('https://assets.kurrency.io/fonts/KurrencyIcons.eot?-orzlfj');
+  src: url('https://assets.kurrency.io/fonts/KurrencyIcons.eot?#iefix-orzlfj') format('embedded-opentype'), url('https://assets.kurrency.io/fonts/KurrencyIcons.woff?-orzlfj') format('woff'), url('https://assets.kurrency.io/fonts/KurrencyIcons.ttf?-orzlfj') format('truetype'), url('https://assets.kurrency.io/fonts/KurrencyIcons.svg?-orzlfj#KurrencyIcons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'WinterthurCondensedRegular';
-  src: url('fonts/WinterthurCondensed-webfont.eot');
-  src: url('fonts/WinterthurCondensed-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/WinterthurCondensed-webfont.woff') format('woff'), url('fonts/WinterthurCondensed-webfont.ttf') format('truetype'), url('fonts/WinterthurCondensed-webfont.svg#winterthurcondensedregular') format('svg');
+  src: url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.eot');
+  src: url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.eot?#iefix') format('embedded-opentype'), url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.woff') format('woff'), url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.ttf') format('truetype'), url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.svg#winterthurcondensedregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }

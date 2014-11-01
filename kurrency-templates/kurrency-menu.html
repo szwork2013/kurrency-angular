@@ -10,6 +10,9 @@
       <a href class="back" ng-show="menuService.back" ng-click="menuService.toggle(menuService.back)"><span class="kicon-arrow-left"></span></a>
       <a href ng-click="menuService.close()"><span class="kicon-close"></span></a>
     </div>
-    <div class="kurrency-container" ng-include="sidebar.templateUrl"></div>
+    <div class="kurrency-container">
+      <div ng-include="sidebar.templateUrl"></div>
+      <a href="https://www.kurrency.co" target="_blank" class="logo">powered by <img src="//assets.kurrency.io/images/kurrency_logo.png"></a>
+    </div>
   </div>
 </div>

@@ -6,15 +6,20 @@
     <div class="column">
       <h2 ng-bind="product.name"></h2>
       <h3 ng-show="product.sub_title" ng-bind="product.sub_title"></h3>
-      <span class="price" ng-bind="getPrice()"></span>
+      <span class="price" ng-bind="kurrencyMenuService.getPrice(product)"></span>
     </div>
     <div class="column">
       <div ng-show="product.attributes">
         <div ng-repeat="variant in product.attributes">
-          <select ng-model="variant.$$selected" ng-change="setVariant(variant.name, variant.$$selected)" ng-options="option as variantDisplay(option) for option in variant.options"><option value>Select a {{variant.name}}</select>
+          <div ng-if="variant.type == 'select'">
+            <select class="form-control" ng-model="variant.$selected" ng-change="kurrencyMenuService.setVariant(product, variant.name, variant.$selected)" ng-options="option as variantDisplay(option) for option in variant.options"><option value>Select a {{variant.name}}</option></select>
+          </div>
+          <div ng-if="variant.type == 'multi'">
+            <p>Multi select options coming soon.</p>
+          </div>
         </div>
       </div>
-      <button type="button" ng-click="addToCart(product, 1)">Buy Now</button>
+      <button class="add-to-cart" type="button" ng-click="kurrencyMenuService.addToCart(product, 1)">Buy Now</button>
     </div>
     <p ng-bind-html="product.short_description"></p>
   </div>

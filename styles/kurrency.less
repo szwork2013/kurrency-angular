@@ -246,8 +246,8 @@
     }
     .kurrency-container {
       width: 340px;
-      padding: 20px;
-      min-height: 100%;
+      padding: 20px 20px 60px;
+      min-height: calc(~"100% - 45px");
       .transform(scale(.8));
       .transition(all .5s);
       h1 {
@@ -265,6 +265,26 @@
         height: 2px;
         background-color: @windowSpacerColor;
         margin: 36px 0;
+      }
+      .logo {
+        display: block;
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        color: lighten(@defaultColor, 30%);
+        text-decoration: none;
+        img {
+          margin-left: 5px;
+          width: 100px;
+          vertical-align: middle;
+          .opacity(.8);
+        }
+        &:hover {
+          color: @defaultColor;
+          img {
+            .opacity(1);
+          }
+        }
       }
     }
     &.active {
