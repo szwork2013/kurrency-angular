@@ -1,8 +1,11 @@
 {
   "name": "kurrency-angular",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Kurrency AngularJS Library",
-  "main": "index.js",
+  "main": [
+    "dist/kurrency-angular.js",
+    "dist/styles/kurrency-angular.css"
+  ],
   "scripts": {
     "test": "node test"
   },

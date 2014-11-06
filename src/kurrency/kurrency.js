@@ -602,8 +602,16 @@
 
         function Stor() {
           var $scope = this;
-
-          if (typeof Storage !== 'undefined') {
+          var useLocalStorage = false;
+          if(typeof Storage !== 'undefined') {
+            try {
+              sessionStorage['validStorage'] = true;
+              useLocalStorage = true;
+            } catch(e) {
+              useLocalStorage = false;
+            }
+          }
+          if (useLocalStorage) {
             $scope.set = function (name, value) {
               if (typeof value === 'object') {
                 sessionStorage[name] = JSON.stringify(value);

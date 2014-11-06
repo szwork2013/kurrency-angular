@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.18 - 2014-10-31
+ * Version: 0.1.19 - 2014-11-06
  * License: AGPL
  */
 /**
@@ -569,7 +569,16 @@
         }
         function Stor() {
           var $scope = this;
+          var useLocalStorage = false;
           if (typeof Storage !== 'undefined') {
+            try {
+              sessionStorage['validStorage'] = true;
+              useLocalStorage = true;
+            } catch (e) {
+              useLocalStorage = false;
+            }
+          }
+          if (useLocalStorage) {
             $scope.set = function (name, value) {
               if (typeof value === 'object') {
                 sessionStorage[name] = JSON.stringify(value);
