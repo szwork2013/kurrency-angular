@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.19 - 2014-11-06
+ * Version: 0.1.20 - 2014-11-06
  * License: AGPL
  */
 /**
@@ -1083,6 +1083,9 @@
           }
           function getProductWeight(p) {
             var weight = p.weight;
+            if (!p.variants) {
+              p.variants = [];
+            }
             for (var i = 0; i < p.variants.length; i++) {
               if (p.variants[i].weight && p.variants[i].weight.length > 0) {
                 weight += parseInt(p.variants[i].weight, 10);
