@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.20 - 2014-11-06
+ * Version: 0.1.21 - 2014-11-06
  * License: AGPL
  */
 /**
@@ -1932,7 +1932,7 @@
             };
             scope.getTaxes = function () {
               if (!scope.requiresTax) {
-                scope.tax_total = tax;
+                scope.tax_total = 0;
                 return scope.updateFinalTotal();
               }
               kurrency.orders.taxes(scope.product_total, { ship_to: { address: { postal_code: scope.checkout.shipment.ship_to.address.postal_code } } }, function (err, tax) {

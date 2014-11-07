@@ -2062,7 +2062,7 @@
 
             scope.getTaxes = function() {
               if(!scope.requiresTax) {
-                scope.tax_total = tax;
+                scope.tax_total = 0;
                 return scope.updateFinalTotal();
               }
               kurrency.orders.taxes(scope.product_total, {
