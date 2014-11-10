@@ -2322,7 +2322,7 @@
                 return kurrencyMenuService.getPrice(p);
               }
 
-              return $filter('currency')(product.price/100);
+              return $filter('currency')(p.price/100);
             };
 
             scope.displayVariantPrice = function(v) {

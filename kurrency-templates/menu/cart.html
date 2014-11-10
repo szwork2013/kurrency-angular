@@ -6,15 +6,23 @@
 <div ng-show="cart && cart.length">
   <ul class="cart-products">
     <li class="cart-product" ng-repeat="product in cart">
-      <div class="left">
-        <div class="name" ng-bind="product.name"></div>
-        <div class="variants" ng-repeat="v in product.variants">{{v.name}}: {{v.value}}</div>
-        <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>
+      <div class="clearfix">
+        <div class="left">
+          <div class="name" ng-bind="product.name"></div>
+        </div>
+        <div class="right">
+          <div class="price"><span ng-bind-html="displayProductPrice(product)"></span></div>
+        </div>
       </div>
-      <div class="right">
-        <div class="price"><span ng-bind-html="displayProductPrice(product)"></span></div>
-        <div class="variants" ng-repeat="v in product.variants" ng-bind-html="displayVariantPrice(v)"></div>
-        <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>
+      <div class="clearfix">
+        <div class="left">
+          <div class="variants" ng-repeat="v in product.variants">{{v.name}}: {{v.value}}</div>
+          <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>
+        </div>
+        <div class="right">
+          <div class="variants" ng-repeat="v in product.variants" ng-bind-html="displayVariantPrice(v)"></div>
+          <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>
+        </div>
       </div>
     </li>
     <li class="cart-product total">

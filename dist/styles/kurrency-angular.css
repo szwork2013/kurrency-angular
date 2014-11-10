@@ -575,6 +575,7 @@ textarea.kurrency-input {
 .kurrency-cart .payment-methods .payment-method .left,
 .kurrency-checkout .payment-methods .payment-method .left,
 .kurrency-account .payment-methods .payment-method .left {
+  width: 50%;
   float: left;
 }
 .kurrency-cart .cart-products .cart-product .right,
