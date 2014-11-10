@@ -12,8 +12,8 @@
         <div class="quantity">Count: <input ng-model="product.qty" ng-change="updateQuantity(product)"></div>
       </div>
       <div class="right">
-        <div class="price"><span ng-bind="product.price/100 | currency"></span></div>
-        <div class="variants" ng-repeat="v in product.variants">{{v.price/100 | currency}}</div>
+        <div class="price"><span ng-bind-html="displayProductPrice(product)"></span></div>
+        <div class="variants" ng-repeat="v in product.variants" ng-bind-html="displayVariantPrice(v)"></div>
         <div class="remove"><a href ng-click="removeProduct(product)">remove</a></div>
       </div>
     </li>

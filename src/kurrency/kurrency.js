@@ -59,6 +59,7 @@
         phrases: {
           cart_empty: 'You don\'t have anything in your cart'
         },
+        display_price_breakdown: true,
         months: [
           {
             name: 'January',
@@ -1800,6 +1801,9 @@
 
             scope.variantDisplay = function(v) {
               var out = v.name;
+              if(!kurrencyConfig.display_price_breakdown) {
+                return out;
+              }
               if(v.price) {
                 out += ' ' + (v.price > 0 ? 'add ' : 'subtract ') + $filter('currency')(v.price/100);
               }
@@ -1808,7 +1812,7 @@
           }
         }
       }])
-      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', 'kurrencyMenuService', '$timeout', '$window', '$document', '$rootScope', function(kurrency, kurrencyConfig, kurrencyMenuService, $timeout, $window, $document, $rootScope) {
+      .directive('kurrencyMenu', ['kurrency', 'kurrencyConfig', 'kurrencyMenuService', '$timeout', '$window', '$document', '$rootScope', '$filter', function(kurrency, kurrencyConfig, kurrencyMenuService, $timeout, $window, $document, $rootScope, $filter) {
         return {
           restrict: 'E',
           templateUrl: function(tElement, tAttrs) {
@@ -2312,6 +2316,22 @@
                 scope.getTaxes();
               }
             });
+
+            scope.displayProductPrice = function(p) {
+              if(!kurrencyConfig.display_price_breakdown) {
+                return kurrencyMenuService.getPrice(p);
+              }
+
+              return $filter('currency')(product.price/100);
+            };
+
+            scope.displayVariantPrice = function(v) {
+              if(!kurrencyConfig.display_price_breakdown) {
+                return '&nbsp;';
+              }
+
+              return $filter('currency')(v.price/100);
+            };
 
             scope.resetForms();
           }
