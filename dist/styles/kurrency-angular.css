@@ -18,6 +18,11 @@
   font-family: 'Questrial', 'Helvetica', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
@@ -118,7 +123,11 @@
   border-bottom: none;
 }
 .kurrency-menu.open {
-  right: 340px;
+  -webkit-transform: translate3d(-340px, 0, 0);
+  -moz-transform: translate3d(-340px, 0, 0);
+  -o-transform: translate3d(-340px, 0, 0);
+  -ms-transform: translate3d(-340px, 0, 0);
+  transform: translate3d(-340px, 0, 0);
 }
 .kurrency-menu .kurrency-loading {
   position: absolute;

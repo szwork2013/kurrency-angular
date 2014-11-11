@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.23 - 2014-11-10
+ * Version: 0.1.24 - 2014-11-11
  * License: AGPL
  */
 /**

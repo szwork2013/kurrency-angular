@@ -70,6 +70,7 @@
   font-family: @defaultFontFamily, 'Helvetica', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  .transform(translate3d(0, 0, 0));
   .transition(all .5s);
   [class^="kicon-"] {
     font-size: 42px;
@@ -171,7 +172,7 @@
   }
 
   &.open {
-    right: 340px;
+    .transform(translate3d(-340px, 0, 0));
   }
 
   .kurrency-loading {
