@@ -56,6 +56,7 @@
         local: false,
         accessToken: 'ABC123',
         mode: 'test',
+        display_logo: true,
         phrases: {
           cart_empty: 'You don\'t have anything in your cart'
         },
@@ -1523,6 +1524,21 @@
           }
 
           product.variants.push({name: name, value: value.name, price: value.price, weight: value.weight});
+          return product;
+        };
+
+        $scope.setMultiVariant = function(product, name, option) {
+          if(!product.variants) {
+            product.variants = [];
+          }
+          for(var i = 0; i < product.variants.length; i++) {
+            if(product.variants[i].name === name && product.variants[i].value === option.name) {
+              product.variants.splice(i, 1);
+              return;
+            }
+          }
+
+          product.variants.push({name: name, value: option.name, price: option.price, weight: option.weight});
           return product;
         };
 

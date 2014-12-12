@@ -15,7 +15,9 @@
             <select class="form-control" ng-model="variant.$selected" ng-change="kurrencyMenuService.setVariant(product, variant.name, variant.$selected)" ng-options="option as variantDisplay(option) for option in variant.options"><option value>Select a {{variant.name}}</option></select>
           </div>
           <div ng-if="variant.type == 'multi'">
-            <p>Multi select options coming soon.</p>
+            <div class="variant-option checkbox" ng-repeat="option in variant.options" ng-hide="!option.name.length">
+              <label><input type="checkbox" ng-click="kurrencyMenuService.setMultiVariant(product, variant.name, option)">{{option.name}}</label>
+            </div>
           </div>
         </div>
       </div>
