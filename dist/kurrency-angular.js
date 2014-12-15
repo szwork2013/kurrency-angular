@@ -72,7 +72,7 @@
       '$templateCache',
       function ($templateCache) {
         'use strict';
-        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.auth.loggedIn(), \'open\': menuService.showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li ng-repeat="mi in menuService.menu" ng-show="menuService.checkShowing(mi)" ng-class="menuService.checkButtonClass(mi)">\n' + '      <ng-include src="mi.buttonTemplateUrl"></ng-include>\n' + '    </li>\n' + '  </ul>\n' + '  <div class="kurrency-loading" ng-class="{active: (apiLoading > 0)}"><div class="loading-indicator">Loading...</div></div>\n' + '  <div class="kurrency-sidebar {{sidebar.className}}" ng-repeat="sidebar in menuService.sidebars" ng-class="{active: menuService.show(sidebar.tag)}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="menuService.back" ng-click="menuService.toggle(menuService.back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="menuService.close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <div ng-include="sidebar.templateUrl"></div>\n' + '      <a ng-show="config.display_logo" href="https://www.kurrency.co" target="_blank" class="logo">powered by <img src="//assets.kurrency.io/images/kurrency_logo.png"></a>\n' + '    </div>\n' + '  </div>\n' + '</div>');
+        $templateCache.put('kurrency-templates/kurrency-menu.html', '<div class="kurrency-menu" ng-class="{\'logged-in\': kurrency.auth.loggedIn(), \'open\': menuService.showing}">\n' + '  <ul class="menu-wrapper">\n' + '    <li ng-repeat="mi in menuService.menu" ng-show="menuService.checkShowing(mi)" ng-class="menuService.checkButtonClass(mi)">\n' + '      <ng-include src="mi.buttonTemplateUrl"></ng-include>\n' + '    </li>\n' + '  </ul>\n' + '  <div class="kurrency-loading" ng-class="{active: (apiLoading > 0)}"><div class="loading-indicator">Loading...</div></div>\n' + '  <div class="kurrency-sidebar {{sidebar.className}}" ng-repeat="sidebar in menuService.sidebars" ng-class="{active: menuService.show(sidebar.tag)}">\n' + '    <div class="closer">\n' + '      <a href class="back" ng-show="menuService.back" ng-click="menuService.toggle(menuService.back)"><span class="kicon-arrow-left"></span></a>\n' + '      <a href ng-click="menuService.close()"><span class="kicon-close"></span></a>\n' + '    </div>\n' + '    <div class="kurrency-container">\n' + '      <div ng-include="sidebar.templateUrl"></div>\n' + '      <a ng-show="config.display_logo" href="https://www.kurrency.co" target="_blank" class="logo">powered by <img src="https://assets.kurrency.io/images/kurrency_logo.png"></a>\n' + '    </div>\n' + '  </div>\n' + '</div>');
         $templateCache.put('kurrency-templates/kurrency-popover.html', '<span ng-transclude></span>\n' + '<div class="kurrency-popover">\n' + '  <span ng-bind="kurrencyPopover"></span>\n' + '</div>');
         $templateCache.put('kurrency-templates/kurrency-product.html', '<div class="kurrency-product">\n' + '  <div class="kurrency-product-container">\n' + '    <kurrency-image src="product.images[0]" options="{size: \'300x200\'}" alt="product.name"></kurrency-image>\n' + '  </div>\n' + '  <div class="kurrency-product-container">\n' + '    <div class="column">\n' + '      <h2 ng-bind="product.name"></h2>\n' + '      <h3 ng-show="product.sub_title" ng-bind="product.sub_title"></h3>\n' + '      <span class="price" ng-bind="kurrencyMenuService.getPrice(product)"></span>\n' + '    </div>\n' + '    <div class="column">\n' + '      <div ng-show="product.attributes">\n' + '        <div ng-repeat="variant in product.attributes">\n' + '          <div ng-if="variant.type == \'select\'">\n' + '            <select class="form-control" ng-model="variant.$selected" ng-change="kurrencyMenuService.setVariant(product, variant.name, variant.$selected)" ng-options="option as variantDisplay(option) for option in variant.options"><option value>Select a {{variant.name}}</option></select>\n' + '          </div>\n' + '          <div ng-if="variant.type == \'multi\'">\n' + '            <div class="variant-option checkbox" ng-repeat="option in variant.options" ng-hide="!option.name.length">\n' + '              <label><input type="checkbox" ng-click="kurrencyMenuService.setMultiVariant(product, variant.name, option)">{{option.name}}</label>\n' + '            </div>\n' + '          </div>\n' + '        </div>\n' + '      </div>\n' + '      <button class="add-to-cart" type="button" ng-click="kurrencyMenuService.addToCart(product, 1)">Buy Now</button>\n' + '    </div>\n' + '    <p ng-bind-html="product.short_description"></p>\n' + '  </div>\n' + '</div>');
         $templateCache.put('kurrency-templates/menu/account.html', '<h1>My Account</h1>\n' + '<div class="alerts">\n' + '  <div ng-repeat="alert in messages[\'account\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '</div>\n' + '<p>Shipping Addresses</p>\n' + '<ul class="addresses-list">\n' + '  <li class="address" ng-repeat="address in addressList">\n' + '    <div class="clearfix" ng-show="!address.$editing">\n' + '      <div class="left">\n' + '        <div><span ng-bind="address.name | limitTo:18"></span></div>\n' + '        <div><span ng-bind="(address.email | limitTo:18) + \'...\'"></span></div>\n' + '        <div><span ng-bind="address.phone | limitTo:18"></span></div>\n' + '      </div>\n' + '      <div class="right">\n' + '        <div><span ng-bind="address.address.address_1 | limitTo:18"></span></div>\n' + '        <div><span ng-bind="address.address.city + \', \' + address.address.state_code | limitTo:18"></span></div>\n' + '        <div><span ng-bind="address.address.postal_code + \', \' + address.address.country_code"></span></div>\n' + '      </div>\n' + '    </div>\n' + '    <div class="edit-holder" ng-show="address.$editing">\n' + '      <form ng-submit="updateAddress(address)">\n' + '        <input class="kurrency-input" type="text" ng-model="address.name" placeholder="Your Name">\n' + '        <input class="kurrency-input" type="text" ng-model="address.company_name" placeholder="(optional) Company Name">\n' + '        <input class="kurrency-input" type="text" ng-model="address.address.address_1" placeholder="Enter your address" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">\n' + '        <div ng-show="geocodeComplete">\n' + '          <input class="kurrency-input" type="text" ng-model="address.address.address_2" placeholder="(optional) Address Line 2">\n' + '          <input class="kurrency-input" type="text" ng-model="address.address.city" placeholder="Enter your city">\n' + '          <select class="kurrency-input" ng-model="address.address.state_code" ng-options="state.value as state.name for state in stateList"><option value>Select a State</option></select>\n' + '          <select class="kurrency-input" ng-model="address.address.country_code" ng-options="country.value as country.name for country in countryList"><option value>Select a Country</option></select>\n' + '        </div>\n' + '        <input class="kurrency-input" type="text" ng-model="address.address.postal_code" placeholder="Enter your postal/zip code" ng-change="lookupGeoCode(address.address.address_1, address.address.postal_code, address)">\n' + '        <button class="kurrency-button small half cancel" ng-click="address.$editing = false">Cancel</button>\n' + '        <button class="kurrency-button small half submit" ng-click="saveAddress(address)">Save</button>\n' + '      </form>\n' + '    </div>\n' + '    <div ng-show="!address.$editing">\n' + '      <button class="kurrency-button small half edit" ng-click="address.$editing = true">Edit</button>\n' + '      <button class="kurrency-button small half delete" ng-click="deleteAddress(address)">Delete</button>\n' + '    </div>\n' + '  </li>\n' + '</ul>\n' + '<p>Payment Methods</p>\n' + '<div class="alerts">\n' + '  <div ng-repeat="alert in messages[\'payment_methods\']" class="alert-{{alert.type}}">{{alert.message}}</div>\n' + '</div>\n' + '<ul class="payment-methods">\n' + '  <li class="payment-method" ng-repeat="payment_method in paymentMethodList">\n' + '    <div class="clearfix" ng-show="!payment_method.$editing">\n' + '      <div class="left" ng-bind="payment_method.nickname"></div>\n' + '      <div class="right" ng-bind="getPaymentMethodType(payment_method)"></div>\n' + '    </div>\n' + '    <div class="edit-holder" ng-show="payment_method.$editing">\n' + '      <form ng-submit="updatePaymentMethod(payment_method)">\n' + '        <input class="kurrency-input" type="text" ng-model="payment_method.nickname" placeholder="Nickname">\n' + '        <button class="kurrency-button small half cancel" ng-click="payment_method.$editing = false">Cancel</button>\n' + '        <button class="kurrency-button small half submit" ng-click="savePaymentMethod(payment_method)">Save</button>\n' + '      </form>\n' + '    </div>\n' + '    <div ng-show="!payment_method.$editing">\n' + '      <button class="kurrency-button small half edit" ng-click="payment_method.$editing = true">Edit</button>\n' + '      <button class="kurrency-button small half delete" ng-click="deletePaymentMethod(payment_method)">Delete</button>\n' + '    </div>\n' + '  </li>\n' + '</ul>');
@@ -478,6 +478,7 @@
       '$rootScope',
       '$http',
       'kurrencyConfig',
+      '$q',
       function ($rootScope, $http, kurrencyConfig, $q) {
         function Request(kurrency, opts) {
           var $scope = this;
@@ -1259,6 +1260,11 @@
             $scope._id = undefined;
             $scope.card_token = null;
             $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
+            /*
+             * Tokenize a card in Stripe/Balanced
+             *
+             *
+             */
             $scope.tokenizeCard = function (card_data, key) {
               Stripe.setPublishableKey(key);
               var defer = $q.defer();
@@ -1271,6 +1277,7 @@
                 if (resp.error) {
                   return defer.reject(resp.error);
                 }
+                $scope.card_token = resp.id;
                 defer.resolve(resp.id);
               });
               return defer.promise;
@@ -2062,12 +2069,32 @@
                 scope.addMessage('error', 'Please wait, we are processing your order');
                 return;
               }
+              if (!scope.checkout.payment_method._id) {
+                new kurrency.credit_card().tokenizeCard({
+                  name: scope.checkout.payment_method.card.name,
+                  number: scope.checkout.payment_method.card.card_number,
+                  exp_month: scope.checkout.payment_method.card.expiration_month,
+                  exp_year: scope.checkout.payment_method.card.expiration_year,
+                  cvc: scope.checkout.payment_method.card.security_code
+                }, kurrency.options.session.stripe_publishable_key).then(function (card_id) {
+                  scope.finishCompleteOrder({
+                    type: 'credit_card',
+                    card: { card_token: card_id }
+                  });
+                }).catch(function (err) {
+                  scope.addMessage('error', err);
+                });
+              } else {
+                scope.finishCompleteOrder(scope.checkout.payment_method);
+              }
+            };
+            scope.finishCompleteOrder = function (payment) {
               kurrency.orders.create({
                 service_carrier: scope.checkout.service_carrier,
                 service_code: scope.checkout.service_code,
                 ship_to: scope.checkout.shipment.ship_to,
                 customer: scope.checkout.billing.ship_to,
-                payment_method: scope.checkout.payment_method,
+                payment_method: payment,
                 products: w[KURRENCY_CONFIG.ANGULAR].copy(scope.cart),
                 notes: ''
               }, function (err, order) {

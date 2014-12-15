@@ -459,7 +459,7 @@
             }
           ]
       })
-      .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function ($rootScope, $http, kurrencyConfig, $q) {
+      .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', '$q', function ($rootScope, $http, kurrencyConfig, $q) {
         function Request(kurrency, opts) {
           var $scope = this;
           $scope.options = {};
@@ -1354,6 +1354,11 @@
 
             $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
 
+            /*
+             * Tokenize a card in Stripe/Balanced
+             *
+             *
+             */
             $scope.tokenizeCard = function(card_data, key) {
               Stripe.setPublishableKey(key);
               var defer = $q.defer();
@@ -1367,6 +1372,7 @@
                   return defer.reject(resp.error);
                 }
 
+                $scope.card_token = resp.id;
                 defer.resolve(resp.id);
               });
 
@@ -2213,12 +2219,30 @@
                 scope.addMessage('error', 'Please wait, we are processing your order');
                 return;
               }
+              if(!scope.checkout.payment_method._id) {
+                new kurrency.credit_card().tokenizeCard({
+                  name: scope.checkout.payment_method.card.name,
+                  number: scope.checkout.payment_method.card.card_number,
+                  exp_month: scope.checkout.payment_method.card.expiration_month,
+                  exp_year: scope.checkout.payment_method.card.expiration_year,
+                  cvc: scope.checkout.payment_method.card.security_code
+                }, kurrency.options.session.stripe_publishable_key).then(function (card_id) {
+                  scope.finishCompleteOrder({type: 'credit_card', card: {card_token: card_id}});
+                }).catch(function (err) {
+                  scope.addMessage('error', err);
+                });
+              } else {
+                scope.finishCompleteOrder(scope.checkout.payment_method);
+              }
+            };
+
+            scope.finishCompleteOrder = function(payment) {
               kurrency.orders.create({
                 service_carrier: scope.checkout.service_carrier,
                 service_code: scope.checkout.service_code,
                 ship_to: scope.checkout.shipment.ship_to,
                 customer: scope.checkout.billing.ship_to,
-                payment_method: scope.checkout.payment_method,
+                payment_method: payment,
                 products: w[KURRENCY_CONFIG.ANGULAR].copy(scope.cart),
                 notes: ''
               }, function(err, order) {
