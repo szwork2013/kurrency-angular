@@ -1363,10 +1363,12 @@
               Stripe.setPublishableKey(key);
               var defer = $q.defer();
               Stripe.card.createToken({
+                name: card_data.name,
                 number: card_data.number,
                 cvc: card_data.cvc,
                 exp_month: card_data.exp_month,
-                exp_year: card_data.exp_year
+                exp_year: card_data.exp_year,
+                address_zip: card_data.address_zip
               }, function(status, resp) {
                 if(resp.error) {
                   return defer.reject(resp.error);
@@ -2225,7 +2227,8 @@
                   number: scope.checkout.payment_method.card.card_number,
                   exp_month: scope.checkout.payment_method.card.expiration_month,
                   exp_year: scope.checkout.payment_method.card.expiration_year,
-                  cvc: scope.checkout.payment_method.card.security_code
+                  cvc: scope.checkout.payment_method.card.security_code,
+                  address_zip: scope.checkout.billing.ship_to.postal_code
                 }, kurrency.options.session.stripe_publishable_key).then(function (card_id) {
                   scope.finishCompleteOrder({type: 'credit_card', card: {card_token: card_id}});
                 }).catch(function (err) {
