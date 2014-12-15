@@ -17,7 +17,8 @@
       ANGULAR: 'angular',
       MENU: {
 
-      }
+      },
+      STRIPEJS: true
     };
   } else {
     if(!w.KURRENCY_CONFIG.ANGULAR) {
@@ -25,16 +26,34 @@
     }
   }
 
+  if(!w.KURRENCY_CONFIG.STRIPEJS) {
+    var stripe_scrip = d.createElement('script');
+    stripe_scrip.type = 'text/javascript';
+    stripe_scrip.async = true;
+    stripe_scrip.src = 'https://js.stripe.com/v2/';
+    d.getElementsByTagName('body')[0].appendChild(stripe_scrip);
+    if (stripe_scrip.readyState) {
+      stripe_scrip.onreadystatechange = function () {
+        if (stripe_scrip.readyState == "loaded" || stripe_scrip.readyState == "complete") {
+          stripe_scrip.onreadystatechange = null;
+        }
+      }
+    } else {
+      stripe_scrip.onload = function () {
+      }
+    }
+  }
+
   if (!w[w.KURRENCY_CONFIG.ANGULAR] && (typeof w.KURRENCY_CONFIG.REQUIRE_ANGULAR === 'undefined' || w.KURRENCY_CONFIG.REQUIRE_ANGULAR === true)) {
     var scrip = d.createElement('script');
     scrip.type = 'text/javascript';
     scrip.async = true;
-    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js';
+    scrip.src = '//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js';
     d.getElementsByTagName('body')[0].appendChild(scrip);
     if (scrip.readyState) {
       scrip.onreadystatechange = function () {
-        if (script.readyState == "loaded" || script.readyState == "complete") {
-          script.onreadystatechange = null;
+        if (scrip.readyState == "loaded" || scrip.readyState == "complete") {
+          scrip.onreadystatechange = null;
           setupKurrency();
         }
       }
@@ -440,7 +459,7 @@
             }
           ]
       })
-      .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function ($rootScope, $http, kurrencyConfig) {
+      .factory('kurrency', ['$rootScope', '$http', 'kurrencyConfig', function ($rootScope, $http, kurrencyConfig, $q) {
         function Request(kurrency, opts) {
           var $scope = this;
           $scope.options = {};
@@ -1316,6 +1335,7 @@
             $scope.card = {};
             $scope.bank_account = {};
             $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
+
             return $scope;
           }
 
@@ -1330,14 +1350,29 @@
             });
 
             $scope._id = undefined;
-            $scope.card.name = undefined;
-            $scope.card.card_number = undefined;
-            $scope.card.expiration_month = new Date().getMonth() + 1;
-            $scope.card.expiration_year = new Date().getFullYear();
-            $scope.card.security_code = undefined;
-            $scope.card.postal_code = undefined;
+            $scope.card_token = null;
 
             $scope = w[KURRENCY_CONFIG.ANGULAR].extend($scope, options);
+
+            $scope.tokenizeCard = function(card_data, key) {
+              Stripe.setPublishableKey(key);
+              var defer = $q.defer();
+              Stripe.card.createToken({
+                number: card_data.number,
+                cvc: card_data.cvc,
+                exp_month: card_data.exp_month,
+                exp_year: card_data.exp_year
+              }, function(status, resp) {
+                if(resp.error) {
+                  return defer.reject(resp.error);
+                }
+
+                defer.resolve(resp.id);
+              });
+
+              return defer.promise;
+            };
+
             return $scope;
           }
 
