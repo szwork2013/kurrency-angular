@@ -1215,9 +1215,11 @@
                 price: 0
               }
             ];
+            params.products = [];
             for (var i = 0; i < data.products.length; i++) {
               params.packages[0].weight += getProductWeight(data.products[i]) * data.products[i].qty;
               params.packages[0].price += getProductPrice(data.products[i]) * data.products[i].qty;
+              params.products.push({_id: data.products[i]._id, qty: data.products[i].qty});
             }
 
             $scope.session.get(function (err, session) {
