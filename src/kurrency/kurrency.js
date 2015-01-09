@@ -2163,7 +2163,7 @@
                   return console.log(err);
                 }
 
-                if(!packages.rates) {
+                if(!(packages instanceof Array)) {
                   packages = [].push({rates: packages});
                 }
 
