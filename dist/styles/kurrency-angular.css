@@ -1,0 +1,1119 @@
+[class^="kurrency-"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+[class^="kurrency-"] * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.kurrency-menu {
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  right: 0;
+  height: 100%;
+  color: #6f6e6e;
+  font-family: 'Questrial', 'Helvetica', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.kurrency-menu [class^="kicon-"] {
+  font-size: 42px;
+  line-height: 42px;
+  vertical-align: middle;
+}
+.kurrency-menu > .menu-wrapper {
+  display: block;
+  background-color: #555555;
+  line-height: 45px;
+  font-size: 0px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 4px 0;
+}
+.kurrency-menu > .menu-wrapper > li {
+  display: block;
+  text-align: center;
+  padding: 0 4px;
+}
+.kurrency-menu > .menu-wrapper > li a {
+  cursor: pointer;
+  display: block;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  border-bottom: 2px solid #555555;
+  position: relative;
+  text-decoration: none;
+  color: #d7d5d4;
+  background-color: #555555;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.kurrency-menu > .menu-wrapper > li a:hover {
+  color: #ffffff;
+  background-color: #555555;
+}
+.kurrency-menu > .menu-wrapper > li a.active,
+.kurrency-menu > .menu-wrapper > li a:active {
+  background-color: #555555;
+  color: #ffffff;
+}
+.kurrency-menu > .menu-wrapper > li.login {
+  padding-top: 4px;
+}
+.kurrency-menu > .menu-wrapper > li.account {
+  padding-top: 4px;
+}
+.kurrency-menu > .menu-wrapper > li.contact a {
+  border-bottom: none;
+}
+.kurrency-menu > .menu-wrapper > li.cart a {
+  position: relative;
+}
+.kurrency-menu > .menu-wrapper > li.cart a .count {
+  display: block;
+  position: absolute;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  background: #e8e8e8;
+  color: #6f6e6e;
+  line-height: 16px;
+  font-size: 13px;
+  -webkit-border-radius: 7.5px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 7.5px;
+  -moz-background-clip: padding;
+  border-radius: 7.5px;
+  background-clip: padding-box;
+  top: 5px;
+  right: 1px;
+  zoom: 1;
+  filter: alpha(opacity=10000);
+  -webkit-opacity: 100;
+  -moz-opacity: 100;
+  opacity: 100;
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+}
+.kurrency-menu > .menu-wrapper > li.cart.cart-empty a .count {
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.contact a {
+  border-bottom: 2px solid #555555;
+}
+.kurrency-menu.logged-in > .menu-wrapper > li.sign-out a {
+  border-bottom: none;
+}
+.kurrency-menu.open {
+  -webkit-transform: translate3d(-340px, 0, 0);
+  -moz-transform: translate3d(-340px, 0, 0);
+  -o-transform: translate3d(-340px, 0, 0);
+  -ms-transform: translate3d(-340px, 0, 0);
+  transform: translate3d(-340px, 0, 0);
+}
+.kurrency-menu .kurrency-loading {
+  position: absolute;
+  left: 53px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background-color: #000000;
+  z-index: -1;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.kurrency-menu .kurrency-loading.active {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  -webkit-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  z-index: 1000;
+}
+.kurrency-menu .kurrency-loading .loading-indicator {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
+.kurrency-menu .kurrency-sidebar {
+  position: absolute;
+  left: 53px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  background-color: #e8e8e8;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.kurrency-menu .kurrency-sidebar .closer {
+  position: relative;
+  background-color: #636363;
+  height: 45px;
+}
+.kurrency-menu .kurrency-sidebar .closer a {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  display: block;
+  color: #6f6e6e;
+  background-color: #f8f7f7;
+  text-decoration: none;
+  text-align: center;
+}
+.kurrency-menu .kurrency-sidebar .closer a:hover {
+  color: #6f6e6e;
+  background-color: #ffffff;
+}
+.kurrency-menu .kurrency-sidebar .closer a.active,
+.kurrency-menu .kurrency-sidebar .closer a:active {
+  background-color: #6f6e6e;
+  color: #ffffff;
+}
+.kurrency-menu .kurrency-sidebar .closer a span {
+  font-size: 18px;
+}
+.kurrency-menu .kurrency-sidebar .closer a.back {
+  right: auto;
+  left: 0;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container {
+  width: 340px;
+  padding: 20px 20px 60px;
+  min-height: calc(100% - 45px);
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container h1 {
+  margin: 7px 0 0;
+  font-size: 28px;
+  text-align: left;
+  font-family: 'WinterthurCondensedRegular';
+  letter-spacing: 1.5px;
+  line-height: 1.0;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container h1 + p {
+  margin-bottom: 25px;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .spacer {
+  height: 2px;
+  background-color: #d7d7d7;
+  margin: 36px 0;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  color: #bbbbbb;
+  text-decoration: none;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo img {
+  margin-left: 5px;
+  width: 100px;
+  vertical-align: middle;
+  zoom: 1;
+  filter: alpha(opacity=80);
+  -webkit-opacity: 0.8;
+  -moz-opacity: 0.8;
+  opacity: 0.8;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo:hover {
+  color: #6f6e6e;
+}
+.kurrency-menu .kurrency-sidebar .kurrency-container .logo:hover img {
+  zoom: 1;
+  filter: alpha(opacity=100);
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+}
+.kurrency-menu .kurrency-sidebar.active {
+  z-index: 5;
+  zoom: 1;
+  filter: alpha(opacity=10000);
+  -webkit-opacity: 100;
+  -moz-opacity: 100;
+  opacity: 100;
+}
+.kurrency-menu .kurrency-sidebar.active .kurrency-container {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+.kurrency-menu .kurrency-sidebar.kurrency-forgot-password .kurrency-container h1,
+.kurrency-menu .kurrency-sidebar.kurrency-contact .kurrency-container h1 {
+  letter-spacing: 1.0px;
+}
+.kurrency-menu p {
+  padding: 0;
+  margin: 8px 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.kurrency-menu .alerts > div {
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.kurrency-menu .alerts > div.alert-error {
+  color: #d52626;
+}
+.kurrency-menu .alerts > div.alert-success {
+  color: #26d551;
+}
+.kurrency-popover {
+  position: absolute;
+  width: 120px;
+  height: 45px;
+  left: -150px;
+  top: 0;
+  font-size: 13px;
+  background-color: #555555;
+  color: #ffffff;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  pointer-events: none;
+  text-transform: uppercase;
+  -webkit-transition: left 0.25s, opacity 0.25s;
+  -moz-transition: left 0.25s, opacity 0.25s;
+  -o-transition: left 0.25s, opacity 0.25s;
+  transition: left 0.25s, opacity 0.25s;
+}
+.kurrency-popover.active {
+  left: -130px;
+  zoom: 1;
+  filter: alpha(opacity=10000);
+  -webkit-opacity: 100;
+  -moz-opacity: 100;
+  opacity: 100;
+}
+.kurrency-popover:before {
+  position: absolute;
+  content: "";
+  left: 120px;
+  top: 50%;
+  margin-top: -5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 8.7px;
+  border-color: transparent transparent transparent #555555;
+}
+.kurrency-input {
+  display: block;
+  width: 100%;
+  height: 49px;
+  background: #f8f7f7;
+  color: #6f6e6e;
+  border: none;
+  margin: 5px 0 0;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-family: 'Questrial';
+  font-weight: lighter;
+  letter-spacing: 1.0px;
+  line-height: 1.4;
+  position: relative;
+  -webkit-box-shadow: 0 0 1px 2px rgba(102, 175, 233, 0);
+  -moz-box-shadow: 0 0 1px 2px rgba(102, 175, 233, 0);
+  box-shadow: 0 0 1px 2px rgba(102, 175, 233, 0);
+  -webkit-transition: -webkit-box-shadow 0.25s;
+  -moz-transition: -moz-box-shadow 0.25s;
+  -o-transition: box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+  -webkit-border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
+  border-radius: 0;
+  background-clip: padding-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.kurrency-input:focus {
+  outline: 0;
+  -webkit-box-shadow: 0 0 1px 2px #66afe9;
+  -moz-box-shadow: 0 0 1px 2px #66afe9;
+  box-shadow: 0 0 1px 2px #66afe9;
+  z-index: 1;
+}
+select.kurrency-input {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAUCAYAAABSx2cSAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTAyQTNFRjkzMTJCMTFFNDkzOUVBNzJFM0Q1QzA5NDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTAyQTNFRkEzMTJCMTFFNDkzOUVBNzJFM0Q1QzA5NDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MDJBM0VGNzMxMkIxMUU0OTM5RUE3MkUzRDVDMDk0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MDJBM0VGODMxMkIxMUU0OTM5RUE3MkUzRDVDMDk0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhiZdygAAACASURBVHjaYvz//z8DuYCJgQIwcJpZCvLztYB0HxAzk6DvLhDnsQCJa0C8GIgXEmnAHSBOBOJfMGcvBeJ4IP5LhEZHIH6C7meQAXF4DEDRiC3AluEwAEMjrtBGNwCrRnBo43DiMihdB8Qu2DQSimeQAXq4NIIA4whM2yNRM0CAAQADnCHavwAgOgAAAABJRU5ErkJggg==");
+  background-position: 95% 50%;
+  background-repeat: no-repeat;
+}
+textarea.kurrency-input {
+  resize: none;
+  height: 98px;
+}
+.kurrency-button {
+  display: block;
+  width: 100%;
+  background: #bbbaba;
+  border: none;
+  color: #ffffff;
+  padding: 6px 10px 0;
+  line-height: 60px;
+  font-size: 28px;
+  letter-spacing: 2.0px;
+  font-weight: 300;
+  cursor: pointer;
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-family: 'WinterthurCondensedRegular';
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.kurrency-button:hover {
+  background: #9d9d9d;
+  color: #ffffff;
+}
+.kurrency-button:active,
+.kurrency-button.active {
+  color: #ffffff;
+  background: #545f68;
+}
+.kurrency-button:focus {
+  outline: 0;
+}
+.kurrency-button[disabled] {
+  zoom: 1;
+  filter: alpha(opacity=33);
+  -webkit-opacity: 0.33;
+  -moz-opacity: 0.33;
+  opacity: 0.33;
+  cursor: default;
+}
+.kurrency-button.small {
+  line-height: 40px;
+  letter-spacing: 1.5px;
+  padding-top: 5px;
+  color: #ffffff;
+  background: #c4c6c4;
+  font-size: 18px;
+}
+.kurrency-button.small:hover {
+  color: #ffffff;
+  background: #b3b4b3;
+}
+.kurrency-button.small:active,
+.kurrency-button.small.active {
+  color: #ffffff;
+  background: #545f68;
+}
+.kurrency-button[type="submit"] {
+  margin-top: 6px;
+}
+.kurrency-button + p {
+  margin-top: 25px;
+}
+.kurrency-button.half {
+  width: 48%;
+  display: inline-block;
+}
+.kurrency-button.half:first-child {
+  margin-right: 5px;
+}
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.kurrency-product {
+  width: 800px;
+}
+.kurrency-cart .cart-products,
+.kurrency-checkout .cart-products,
+.kurrency-account .cart-products,
+.kurrency-cart .addresses-list,
+.kurrency-checkout .addresses-list,
+.kurrency-account .addresses-list,
+.kurrency-cart .payment-methods,
+.kurrency-checkout .payment-methods,
+.kurrency-account .payment-methods {
+  margin: 30px 0;
+  padding: 0;
+  list-style: none;
+}
+.kurrency-cart .cart-products .cart-product,
+.kurrency-checkout .cart-products .cart-product,
+.kurrency-account .cart-products .cart-product,
+.kurrency-cart .addresses-list .cart-product,
+.kurrency-checkout .addresses-list .cart-product,
+.kurrency-account .addresses-list .cart-product,
+.kurrency-cart .payment-methods .cart-product,
+.kurrency-checkout .payment-methods .cart-product,
+.kurrency-account .payment-methods .cart-product,
+.kurrency-cart .cart-products .address,
+.kurrency-checkout .cart-products .address,
+.kurrency-account .cart-products .address,
+.kurrency-cart .addresses-list .address,
+.kurrency-checkout .addresses-list .address,
+.kurrency-account .addresses-list .address,
+.kurrency-cart .payment-methods .address,
+.kurrency-checkout .payment-methods .address,
+.kurrency-account .payment-methods .address,
+.kurrency-cart .cart-products .payment-method,
+.kurrency-checkout .cart-products .payment-method,
+.kurrency-account .cart-products .payment-method,
+.kurrency-cart .addresses-list .payment-method,
+.kurrency-checkout .addresses-list .payment-method,
+.kurrency-account .addresses-list .payment-method,
+.kurrency-cart .payment-methods .payment-method,
+.kurrency-checkout .payment-methods .payment-method,
+.kurrency-account .payment-methods .payment-method {
+  background-color: #f8f7f7;
+  margin-bottom: 1px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 10px 20px;
+}
+.kurrency-cart .cart-products .cart-product:after,
+.kurrency-checkout .cart-products .cart-product:after,
+.kurrency-account .cart-products .cart-product:after,
+.kurrency-cart .addresses-list .cart-product:after,
+.kurrency-checkout .addresses-list .cart-product:after,
+.kurrency-account .addresses-list .cart-product:after,
+.kurrency-cart .payment-methods .cart-product:after,
+.kurrency-checkout .payment-methods .cart-product:after,
+.kurrency-account .payment-methods .cart-product:after,
+.kurrency-cart .cart-products .address:after,
+.kurrency-checkout .cart-products .address:after,
+.kurrency-account .cart-products .address:after,
+.kurrency-cart .addresses-list .address:after,
+.kurrency-checkout .addresses-list .address:after,
+.kurrency-account .addresses-list .address:after,
+.kurrency-cart .payment-methods .address:after,
+.kurrency-checkout .payment-methods .address:after,
+.kurrency-account .payment-methods .address:after,
+.kurrency-cart .cart-products .payment-method:after,
+.kurrency-checkout .cart-products .payment-method:after,
+.kurrency-account .cart-products .payment-method:after,
+.kurrency-cart .addresses-list .payment-method:after,
+.kurrency-checkout .addresses-list .payment-method:after,
+.kurrency-account .addresses-list .payment-method:after,
+.kurrency-cart .payment-methods .payment-method:after,
+.kurrency-checkout .payment-methods .payment-method:after,
+.kurrency-account .payment-methods .payment-method:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.kurrency-cart .cart-products .cart-product .left,
+.kurrency-checkout .cart-products .cart-product .left,
+.kurrency-account .cart-products .cart-product .left,
+.kurrency-cart .addresses-list .cart-product .left,
+.kurrency-checkout .addresses-list .cart-product .left,
+.kurrency-account .addresses-list .cart-product .left,
+.kurrency-cart .payment-methods .cart-product .left,
+.kurrency-checkout .payment-methods .cart-product .left,
+.kurrency-account .payment-methods .cart-product .left,
+.kurrency-cart .cart-products .address .left,
+.kurrency-checkout .cart-products .address .left,
+.kurrency-account .cart-products .address .left,
+.kurrency-cart .addresses-list .address .left,
+.kurrency-checkout .addresses-list .address .left,
+.kurrency-account .addresses-list .address .left,
+.kurrency-cart .payment-methods .address .left,
+.kurrency-checkout .payment-methods .address .left,
+.kurrency-account .payment-methods .address .left,
+.kurrency-cart .cart-products .payment-method .left,
+.kurrency-checkout .cart-products .payment-method .left,
+.kurrency-account .cart-products .payment-method .left,
+.kurrency-cart .addresses-list .payment-method .left,
+.kurrency-checkout .addresses-list .payment-method .left,
+.kurrency-account .addresses-list .payment-method .left,
+.kurrency-cart .payment-methods .payment-method .left,
+.kurrency-checkout .payment-methods .payment-method .left,
+.kurrency-account .payment-methods .payment-method .left {
+  width: 50%;
+  float: left;
+}
+.kurrency-cart .cart-products .cart-product .right,
+.kurrency-checkout .cart-products .cart-product .right,
+.kurrency-account .cart-products .cart-product .right,
+.kurrency-cart .addresses-list .cart-product .right,
+.kurrency-checkout .addresses-list .cart-product .right,
+.kurrency-account .addresses-list .cart-product .right,
+.kurrency-cart .payment-methods .cart-product .right,
+.kurrency-checkout .payment-methods .cart-product .right,
+.kurrency-account .payment-methods .cart-product .right,
+.kurrency-cart .cart-products .address .right,
+.kurrency-checkout .cart-products .address .right,
+.kurrency-account .cart-products .address .right,
+.kurrency-cart .addresses-list .address .right,
+.kurrency-checkout .addresses-list .address .right,
+.kurrency-account .addresses-list .address .right,
+.kurrency-cart .payment-methods .address .right,
+.kurrency-checkout .payment-methods .address .right,
+.kurrency-account .payment-methods .address .right,
+.kurrency-cart .cart-products .payment-method .right,
+.kurrency-checkout .cart-products .payment-method .right,
+.kurrency-account .cart-products .payment-method .right,
+.kurrency-cart .addresses-list .payment-method .right,
+.kurrency-checkout .addresses-list .payment-method .right,
+.kurrency-account .addresses-list .payment-method .right,
+.kurrency-cart .payment-methods .payment-method .right,
+.kurrency-checkout .payment-methods .payment-method .right,
+.kurrency-account .payment-methods .payment-method .right {
+  float: right;
+}
+.kurrency-cart .cart-products .cart-product .right .price,
+.kurrency-checkout .cart-products .cart-product .right .price,
+.kurrency-account .cart-products .cart-product .right .price,
+.kurrency-cart .addresses-list .cart-product .right .price,
+.kurrency-checkout .addresses-list .cart-product .right .price,
+.kurrency-account .addresses-list .cart-product .right .price,
+.kurrency-cart .payment-methods .cart-product .right .price,
+.kurrency-checkout .payment-methods .cart-product .right .price,
+.kurrency-account .payment-methods .cart-product .right .price,
+.kurrency-cart .cart-products .address .right .price,
+.kurrency-checkout .cart-products .address .right .price,
+.kurrency-account .cart-products .address .right .price,
+.kurrency-cart .addresses-list .address .right .price,
+.kurrency-checkout .addresses-list .address .right .price,
+.kurrency-account .addresses-list .address .right .price,
+.kurrency-cart .payment-methods .address .right .price,
+.kurrency-checkout .payment-methods .address .right .price,
+.kurrency-account .payment-methods .address .right .price,
+.kurrency-cart .cart-products .payment-method .right .price,
+.kurrency-checkout .cart-products .payment-method .right .price,
+.kurrency-account .cart-products .payment-method .right .price,
+.kurrency-cart .addresses-list .payment-method .right .price,
+.kurrency-checkout .addresses-list .payment-method .right .price,
+.kurrency-account .addresses-list .payment-method .right .price,
+.kurrency-cart .payment-methods .payment-method .right .price,
+.kurrency-checkout .payment-methods .payment-method .right .price,
+.kurrency-account .payment-methods .payment-method .right .price,
+.kurrency-cart .cart-products .cart-product .right .variants,
+.kurrency-checkout .cart-products .cart-product .right .variants,
+.kurrency-account .cart-products .cart-product .right .variants,
+.kurrency-cart .addresses-list .cart-product .right .variants,
+.kurrency-checkout .addresses-list .cart-product .right .variants,
+.kurrency-account .addresses-list .cart-product .right .variants,
+.kurrency-cart .payment-methods .cart-product .right .variants,
+.kurrency-checkout .payment-methods .cart-product .right .variants,
+.kurrency-account .payment-methods .cart-product .right .variants,
+.kurrency-cart .cart-products .address .right .variants,
+.kurrency-checkout .cart-products .address .right .variants,
+.kurrency-account .cart-products .address .right .variants,
+.kurrency-cart .addresses-list .address .right .variants,
+.kurrency-checkout .addresses-list .address .right .variants,
+.kurrency-account .addresses-list .address .right .variants,
+.kurrency-cart .payment-methods .address .right .variants,
+.kurrency-checkout .payment-methods .address .right .variants,
+.kurrency-account .payment-methods .address .right .variants,
+.kurrency-cart .cart-products .payment-method .right .variants,
+.kurrency-checkout .cart-products .payment-method .right .variants,
+.kurrency-account .cart-products .payment-method .right .variants,
+.kurrency-cart .addresses-list .payment-method .right .variants,
+.kurrency-checkout .addresses-list .payment-method .right .variants,
+.kurrency-account .addresses-list .payment-method .right .variants,
+.kurrency-cart .payment-methods .payment-method .right .variants,
+.kurrency-checkout .payment-methods .payment-method .right .variants,
+.kurrency-account .payment-methods .payment-method .right .variants {
+  text-align: right;
+}
+.kurrency-cart .cart-products .cart-product .name,
+.kurrency-checkout .cart-products .cart-product .name,
+.kurrency-account .cart-products .cart-product .name,
+.kurrency-cart .addresses-list .cart-product .name,
+.kurrency-checkout .addresses-list .cart-product .name,
+.kurrency-account .addresses-list .cart-product .name,
+.kurrency-cart .payment-methods .cart-product .name,
+.kurrency-checkout .payment-methods .cart-product .name,
+.kurrency-account .payment-methods .cart-product .name,
+.kurrency-cart .cart-products .address .name,
+.kurrency-checkout .cart-products .address .name,
+.kurrency-account .cart-products .address .name,
+.kurrency-cart .addresses-list .address .name,
+.kurrency-checkout .addresses-list .address .name,
+.kurrency-account .addresses-list .address .name,
+.kurrency-cart .payment-methods .address .name,
+.kurrency-checkout .payment-methods .address .name,
+.kurrency-account .payment-methods .address .name,
+.kurrency-cart .cart-products .payment-method .name,
+.kurrency-checkout .cart-products .payment-method .name,
+.kurrency-account .cart-products .payment-method .name,
+.kurrency-cart .addresses-list .payment-method .name,
+.kurrency-checkout .addresses-list .payment-method .name,
+.kurrency-account .addresses-list .payment-method .name,
+.kurrency-cart .payment-methods .payment-method .name,
+.kurrency-checkout .payment-methods .payment-method .name,
+.kurrency-account .payment-methods .payment-method .name {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.kurrency-cart .cart-products .cart-product .price,
+.kurrency-checkout .cart-products .cart-product .price,
+.kurrency-account .cart-products .cart-product .price,
+.kurrency-cart .addresses-list .cart-product .price,
+.kurrency-checkout .addresses-list .cart-product .price,
+.kurrency-account .addresses-list .cart-product .price,
+.kurrency-cart .payment-methods .cart-product .price,
+.kurrency-checkout .payment-methods .cart-product .price,
+.kurrency-account .payment-methods .cart-product .price,
+.kurrency-cart .cart-products .address .price,
+.kurrency-checkout .cart-products .address .price,
+.kurrency-account .cart-products .address .price,
+.kurrency-cart .addresses-list .address .price,
+.kurrency-checkout .addresses-list .address .price,
+.kurrency-account .addresses-list .address .price,
+.kurrency-cart .payment-methods .address .price,
+.kurrency-checkout .payment-methods .address .price,
+.kurrency-account .payment-methods .address .price,
+.kurrency-cart .cart-products .payment-method .price,
+.kurrency-checkout .cart-products .payment-method .price,
+.kurrency-account .cart-products .payment-method .price,
+.kurrency-cart .addresses-list .payment-method .price,
+.kurrency-checkout .addresses-list .payment-method .price,
+.kurrency-account .addresses-list .payment-method .price,
+.kurrency-cart .payment-methods .payment-method .price,
+.kurrency-checkout .payment-methods .payment-method .price,
+.kurrency-account .payment-methods .payment-method .price,
+.kurrency-cart .cart-products .cart-product .variants,
+.kurrency-checkout .cart-products .cart-product .variants,
+.kurrency-account .cart-products .cart-product .variants,
+.kurrency-cart .addresses-list .cart-product .variants,
+.kurrency-checkout .addresses-list .cart-product .variants,
+.kurrency-account .addresses-list .cart-product .variants,
+.kurrency-cart .payment-methods .cart-product .variants,
+.kurrency-checkout .payment-methods .cart-product .variants,
+.kurrency-account .payment-methods .cart-product .variants,
+.kurrency-cart .cart-products .address .variants,
+.kurrency-checkout .cart-products .address .variants,
+.kurrency-account .cart-products .address .variants,
+.kurrency-cart .addresses-list .address .variants,
+.kurrency-checkout .addresses-list .address .variants,
+.kurrency-account .addresses-list .address .variants,
+.kurrency-cart .payment-methods .address .variants,
+.kurrency-checkout .payment-methods .address .variants,
+.kurrency-account .payment-methods .address .variants,
+.kurrency-cart .cart-products .payment-method .variants,
+.kurrency-checkout .cart-products .payment-method .variants,
+.kurrency-account .cart-products .payment-method .variants,
+.kurrency-cart .addresses-list .payment-method .variants,
+.kurrency-checkout .addresses-list .payment-method .variants,
+.kurrency-account .addresses-list .payment-method .variants,
+.kurrency-cart .payment-methods .payment-method .variants,
+.kurrency-checkout .payment-methods .payment-method .variants,
+.kurrency-account .payment-methods .payment-method .variants {
+  margin-bottom: 10px;
+}
+.kurrency-cart .cart-products .cart-product .variants,
+.kurrency-checkout .cart-products .cart-product .variants,
+.kurrency-account .cart-products .cart-product .variants,
+.kurrency-cart .addresses-list .cart-product .variants,
+.kurrency-checkout .addresses-list .cart-product .variants,
+.kurrency-account .addresses-list .cart-product .variants,
+.kurrency-cart .payment-methods .cart-product .variants,
+.kurrency-checkout .payment-methods .cart-product .variants,
+.kurrency-account .payment-methods .cart-product .variants,
+.kurrency-cart .cart-products .address .variants,
+.kurrency-checkout .cart-products .address .variants,
+.kurrency-account .cart-products .address .variants,
+.kurrency-cart .addresses-list .address .variants,
+.kurrency-checkout .addresses-list .address .variants,
+.kurrency-account .addresses-list .address .variants,
+.kurrency-cart .payment-methods .address .variants,
+.kurrency-checkout .payment-methods .address .variants,
+.kurrency-account .payment-methods .address .variants,
+.kurrency-cart .cart-products .payment-method .variants,
+.kurrency-checkout .cart-products .payment-method .variants,
+.kurrency-account .cart-products .payment-method .variants,
+.kurrency-cart .addresses-list .payment-method .variants,
+.kurrency-checkout .addresses-list .payment-method .variants,
+.kurrency-account .addresses-list .payment-method .variants,
+.kurrency-cart .payment-methods .payment-method .variants,
+.kurrency-checkout .payment-methods .payment-method .variants,
+.kurrency-account .payment-methods .payment-method .variants {
+  font-size: 11px;
+}
+.kurrency-cart .cart-products .cart-product .quantity input,
+.kurrency-checkout .cart-products .cart-product .quantity input,
+.kurrency-account .cart-products .cart-product .quantity input,
+.kurrency-cart .addresses-list .cart-product .quantity input,
+.kurrency-checkout .addresses-list .cart-product .quantity input,
+.kurrency-account .addresses-list .cart-product .quantity input,
+.kurrency-cart .payment-methods .cart-product .quantity input,
+.kurrency-checkout .payment-methods .cart-product .quantity input,
+.kurrency-account .payment-methods .cart-product .quantity input,
+.kurrency-cart .cart-products .address .quantity input,
+.kurrency-checkout .cart-products .address .quantity input,
+.kurrency-account .cart-products .address .quantity input,
+.kurrency-cart .addresses-list .address .quantity input,
+.kurrency-checkout .addresses-list .address .quantity input,
+.kurrency-account .addresses-list .address .quantity input,
+.kurrency-cart .payment-methods .address .quantity input,
+.kurrency-checkout .payment-methods .address .quantity input,
+.kurrency-account .payment-methods .address .quantity input,
+.kurrency-cart .cart-products .payment-method .quantity input,
+.kurrency-checkout .cart-products .payment-method .quantity input,
+.kurrency-account .cart-products .payment-method .quantity input,
+.kurrency-cart .addresses-list .payment-method .quantity input,
+.kurrency-checkout .addresses-list .payment-method .quantity input,
+.kurrency-account .addresses-list .payment-method .quantity input,
+.kurrency-cart .payment-methods .payment-method .quantity input,
+.kurrency-checkout .payment-methods .payment-method .quantity input,
+.kurrency-account .payment-methods .payment-method .quantity input {
+  width: 40px;
+  border: none;
+  background: white;
+  text-align: center;
+  padding: 4px 0;
+  font-family: 'Questrial';
+  font-size: 14px;
+}
+.kurrency-cart .cart-products .cart-product .remove a,
+.kurrency-checkout .cart-products .cart-product .remove a,
+.kurrency-account .cart-products .cart-product .remove a,
+.kurrency-cart .addresses-list .cart-product .remove a,
+.kurrency-checkout .addresses-list .cart-product .remove a,
+.kurrency-account .addresses-list .cart-product .remove a,
+.kurrency-cart .payment-methods .cart-product .remove a,
+.kurrency-checkout .payment-methods .cart-product .remove a,
+.kurrency-account .payment-methods .cart-product .remove a,
+.kurrency-cart .cart-products .address .remove a,
+.kurrency-checkout .cart-products .address .remove a,
+.kurrency-account .cart-products .address .remove a,
+.kurrency-cart .addresses-list .address .remove a,
+.kurrency-checkout .addresses-list .address .remove a,
+.kurrency-account .addresses-list .address .remove a,
+.kurrency-cart .payment-methods .address .remove a,
+.kurrency-checkout .payment-methods .address .remove a,
+.kurrency-account .payment-methods .address .remove a,
+.kurrency-cart .cart-products .payment-method .remove a,
+.kurrency-checkout .cart-products .payment-method .remove a,
+.kurrency-account .cart-products .payment-method .remove a,
+.kurrency-cart .addresses-list .payment-method .remove a,
+.kurrency-checkout .addresses-list .payment-method .remove a,
+.kurrency-account .addresses-list .payment-method .remove a,
+.kurrency-cart .payment-methods .payment-method .remove a,
+.kurrency-checkout .payment-methods .payment-method .remove a,
+.kurrency-account .payment-methods .payment-method .remove a {
+  color: #6f6e6e;
+  text-decoration: none;
+  font-style: italic;
+}
+.kurrency-cart .cart-products .cart-product .remove a:hover,
+.kurrency-checkout .cart-products .cart-product .remove a:hover,
+.kurrency-account .cart-products .cart-product .remove a:hover,
+.kurrency-cart .addresses-list .cart-product .remove a:hover,
+.kurrency-checkout .addresses-list .cart-product .remove a:hover,
+.kurrency-account .addresses-list .cart-product .remove a:hover,
+.kurrency-cart .payment-methods .cart-product .remove a:hover,
+.kurrency-checkout .payment-methods .cart-product .remove a:hover,
+.kurrency-account .payment-methods .cart-product .remove a:hover,
+.kurrency-cart .cart-products .address .remove a:hover,
+.kurrency-checkout .cart-products .address .remove a:hover,
+.kurrency-account .cart-products .address .remove a:hover,
+.kurrency-cart .addresses-list .address .remove a:hover,
+.kurrency-checkout .addresses-list .address .remove a:hover,
+.kurrency-account .addresses-list .address .remove a:hover,
+.kurrency-cart .payment-methods .address .remove a:hover,
+.kurrency-checkout .payment-methods .address .remove a:hover,
+.kurrency-account .payment-methods .address .remove a:hover,
+.kurrency-cart .cart-products .payment-method .remove a:hover,
+.kurrency-checkout .cart-products .payment-method .remove a:hover,
+.kurrency-account .cart-products .payment-method .remove a:hover,
+.kurrency-cart .addresses-list .payment-method .remove a:hover,
+.kurrency-checkout .addresses-list .payment-method .remove a:hover,
+.kurrency-account .addresses-list .payment-method .remove a:hover,
+.kurrency-cart .payment-methods .payment-method .remove a:hover,
+.kurrency-checkout .payment-methods .payment-method .remove a:hover,
+.kurrency-account .payment-methods .payment-method .remove a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+.kurrency-cart .cart-products .cart-product.total,
+.kurrency-checkout .cart-products .cart-product.total,
+.kurrency-account .cart-products .cart-product.total,
+.kurrency-cart .addresses-list .cart-product.total,
+.kurrency-checkout .addresses-list .cart-product.total,
+.kurrency-account .addresses-list .cart-product.total,
+.kurrency-cart .payment-methods .cart-product.total,
+.kurrency-checkout .payment-methods .cart-product.total,
+.kurrency-account .payment-methods .cart-product.total,
+.kurrency-cart .cart-products .address.total,
+.kurrency-checkout .cart-products .address.total,
+.kurrency-account .cart-products .address.total,
+.kurrency-cart .addresses-list .address.total,
+.kurrency-checkout .addresses-list .address.total,
+.kurrency-account .addresses-list .address.total,
+.kurrency-cart .payment-methods .address.total,
+.kurrency-checkout .payment-methods .address.total,
+.kurrency-account .payment-methods .address.total,
+.kurrency-cart .cart-products .payment-method.total,
+.kurrency-checkout .cart-products .payment-method.total,
+.kurrency-account .cart-products .payment-method.total,
+.kurrency-cart .addresses-list .payment-method.total,
+.kurrency-checkout .addresses-list .payment-method.total,
+.kurrency-account .addresses-list .payment-method.total,
+.kurrency-cart .payment-methods .payment-method.total,
+.kurrency-checkout .payment-methods .payment-method.total,
+.kurrency-account .payment-methods .payment-method.total {
+  background: transparent;
+}
+.kurrency-cart .cart-products .cart-product.final,
+.kurrency-checkout .cart-products .cart-product.final,
+.kurrency-account .cart-products .cart-product.final,
+.kurrency-cart .addresses-list .cart-product.final,
+.kurrency-checkout .addresses-list .cart-product.final,
+.kurrency-account .addresses-list .cart-product.final,
+.kurrency-cart .payment-methods .cart-product.final,
+.kurrency-checkout .payment-methods .cart-product.final,
+.kurrency-account .payment-methods .cart-product.final,
+.kurrency-cart .cart-products .address.final,
+.kurrency-checkout .cart-products .address.final,
+.kurrency-account .cart-products .address.final,
+.kurrency-cart .addresses-list .address.final,
+.kurrency-checkout .addresses-list .address.final,
+.kurrency-account .addresses-list .address.final,
+.kurrency-cart .payment-methods .address.final,
+.kurrency-checkout .payment-methods .address.final,
+.kurrency-account .payment-methods .address.final,
+.kurrency-cart .cart-products .payment-method.final,
+.kurrency-checkout .cart-products .payment-method.final,
+.kurrency-account .cart-products .payment-method.final,
+.kurrency-cart .addresses-list .payment-method.final,
+.kurrency-checkout .addresses-list .payment-method.final,
+.kurrency-account .addresses-list .payment-method.final,
+.kurrency-cart .payment-methods .payment-method.final,
+.kurrency-checkout .payment-methods .payment-method.final,
+.kurrency-account .payment-methods .payment-method.final {
+  font-weight: bold;
+}
+.kurrency-cart .addresses-list,
+.kurrency-checkout .addresses-list,
+.kurrency-account .addresses-list {
+  margin-top: 0;
+}
+@font-face {
+  font-family: 'KurrencyIcons';
+  src: url('https://assets.kurrency.io/fonts/KurrencyIcons.eot?-orzlfj');
+  src: url('https://assets.kurrency.io/fonts/KurrencyIcons.eot?#iefix-orzlfj') format('embedded-opentype'), url('https://assets.kurrency.io/fonts/KurrencyIcons.woff?-orzlfj') format('woff'), url('https://assets.kurrency.io/fonts/KurrencyIcons.ttf?-orzlfj') format('truetype'), url('https://assets.kurrency.io/fonts/KurrencyIcons.svg?-orzlfj#KurrencyIcons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'WinterthurCondensedRegular';
+  src: url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.eot');
+  src: url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.eot?#iefix') format('embedded-opentype'), url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.woff') format('woff'), url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.ttf') format('truetype'), url('https://assets.kurrency.io/fonts/WinterthurCondensed-webfont.svg#winterthurcondensedregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="kicon-"],
+[class*=" kicon-"] {
+  font-family: 'KurrencyIcons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.kicon-account:before {
+  content: "\e612";
+}
+.kicon-cart:before {
+  content: "\e613";
+}
+.kicon-contact:before {
+  content: "\e614";
+}
+.kicon-login:before {
+  content: "\e615";
+}
+.kicon-sign_out:before {
+  content: "\e616";
+}
+.kicon-wishlist:before {
+  content: "\e617";
+}
+.kicon-world:before {
+  content: "\e641";
+}
+.kicon-breifcase:before {
+  content: "\58";
+}
+.kicon-user-circle:before {
+  content: "\59";
+}
+.kicon-bank:before {
+  content: "\48";
+}
+.kicon-card:before {
+  content: "\4c";
+}
+.kicon-close:before {
+  content: "\5a";
+}
+.kicon-config:before {
+  content: "\47";
+}
+.kicon-trash:before {
+  content: "\54";
+}
+.kicon-search:before {
+  content: "\46";
+}
+.kicon-edit:before {
+  content: "\45";
+}
+.kicon-user:before {
+  content: "\55";
+}
+.kicon-wallet-in:before {
+  content: "\51";
+}
+.kicon-card-out:before {
+  content: "\4e";
+}
+.kicon-exchange:before {
+  content: "\49";
+}
+.kicon-card2:before {
+  content: "\44";
+}
+.kicon-card3:before {
+  content: "\4d";
+}
+.kicon-card4:before {
+  content: "\41";
+}
+.kicon-config2:before {
+  content: "\4a";
+}
+.kicon-listing:before {
+  content: "\50";
+}
+.kicon-reports:before {
+  content: "\52";
+}
+.kicon-catalog:before {
+  content: "\43";
+}
+.kicon-shipping:before {
+  content: "\53";
+}
+.kicon-reports2:before {
+  content: "\4f";
+}
+.kicon-bank2:before {
+  content: "\42";
+}
+.kicon-images:before {
+  content: "\e601";
+}
+.kicon-cart2:before {
+  content: "\e600";
+}
+.kicon-support:before {
+  content: "\e602";
+}
+.kicon-phone:before {
+  content: "\e603";
+}
+.kicon-calendar:before {
+  content: "\e604";
+}
+.kicon-screen:before {
+  content: "\e605";
+}
+.kicon-laptop:before {
+  content: "\e606";
+}
+.kicon-mobile:before {
+  content: "\e607";
+}
+.kicon-tablet:before {
+  content: "\e608";
+}
+.kicon-bubble:before {
+  content: "\e609";
+}
+.kicon-bubbles:before {
+  content: "\e60a";
+}
+.kicon-lock:before {
+  content: "\e60b";
+}
+.kicon-unlocked:before {
+  content: "\e60c";
+}
+.kicon-wand:before {
+  content: "\e60d";
+}
+.kicon-gift:before {
+  content: "\e60e";
+}
+.kicon-lab:before {
+  content: "\e60f";
+}
+.kicon-exit:before {
+  content: "\e610";
+}
+.kicon-arrow-left:before {
+  content: "\e611";
+}
