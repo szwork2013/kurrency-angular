@@ -1914,7 +1914,7 @@
             scope.expirationMonths = kurrencyConfig.months;
             scope.expirationYears = kurrencyConfig.years;
             scope.shippingAddressCopied = false;
-            scope.rates = [];
+            scope.packages = [];
             scope.selectedRate = null;
             scope.tax_total = 0;
             scope.shipping_total = 0;
@@ -2158,13 +2158,17 @@
                   }
                 },
                 products: scope.cart
-              }, function(err, rates) {
+              }, function(err, packages) {
                 if(err) {
                   return console.log(err);
                 }
 
-                scope.rates = rates;
-                scope.selectedRate = scope.rates[0];
+                if(!packages.rates) {
+                  packages = [].push({rates: packages});
+                }
+
+                scope.packages = packages;
+                scope.selectedRate = scope.packages[0].rates[0];
                 scope.updateFinalTotal();
               });
             };

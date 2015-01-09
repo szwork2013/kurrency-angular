@@ -3,9 +3,11 @@
 <form>
   <div ng-show="requiresShipping">
     <p>Select a shipping method</p>
-    <select class="kurrency-input" ng-model="selectedRate" ng-disabled="rates.length <= 0" ng-options="rate as ((rate.cost | currency) + ' - ' + rate.name) for rate in rates">
-      <option value="">Please Wait...</option>
-    </select>
+    <div ng-repeat="package in packages">
+      <select class="kurrency-input" ng-model="selectedRate" ng-disabled="rates.length <= 0" ng-options="rate as ((rate.cost | currency) + ' - ' + rate.name) for rate in package.rates">
+        <option value="">Please Wait...</option>
+      </select>
+    </div>
   </div>
   <div ng-show="paymentMethodList.length > 0">
     <p>Select a payment method</p>
