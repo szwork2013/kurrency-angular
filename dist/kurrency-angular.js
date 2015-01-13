@@ -2,7 +2,7 @@
  * kurrency-angular
  * https://github.com/typefoo/kurrency-angular
 
- * Version: 0.1.26 - 2015-01-09
+ * Version: 0.1.27 - 2015-01-13
  * License: AGPL
  */
 /**
@@ -545,6 +545,7 @@
                 opts.params.conditions = JSON.stringify(opts.params.conditions);
               }
             }
+            console.log(opts.headers);
             var req = $http(opts);
             req.success(function () {
               $rootScope.$broadcast('apiLoading', false);
@@ -1338,11 +1339,20 @@
         $scope.showing = null;
         $scope.back = null;
         $scope.next = null;
+        $scope.quantity_total = 0;
         kurrency.cart.get(function (err, cart) {
           $scope.cart = cart;
+          $scope.quantity_total = 0;
+          for (var i = 0; i < $scope.cart.length; i++) {
+            $scope.quantity_total += parseInt($scope.cart[i].qty, 10);
+          }
         });
         $rootScope.$on('cartUpdated', function (evt, cart) {
           $scope.cart = cart;
+          $scope.quantity_total = 0;
+          for (var i = 0; i < $scope.cart.length; i++) {
+            $scope.quantity_total += parseInt($scope.cart[i].qty, 10);
+          }
         });
         $scope.close = function () {
           $scope.showing = null;

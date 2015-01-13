@@ -569,6 +569,8 @@
               }
             }
 
+            console.log(opts.headers);
+
             var req = $http(opts);
 
             req.success(function () {
@@ -1437,13 +1439,22 @@
         $scope.showing = null;
         $scope.back = null;
         $scope.next = null;
+        $scope.quantity_total = 0;
 
         kurrency.cart.get(function(err, cart) {
           $scope.cart = cart;
+          $scope.quantity_total = 0;
+          for(var i = 0; i < $scope.cart.length; i++) {
+            $scope.quantity_total += parseInt($scope.cart[i].qty, 10);
+          }
         });
 
         $rootScope.$on('cartUpdated', function(evt, cart) {
           $scope.cart = cart;
+          $scope.quantity_total = 0;
+          for(var i = 0; i < $scope.cart.length; i++) {
+            $scope.quantity_total += parseInt($scope.cart[i].qty, 10);
+          }
         });
 
         $scope.close = function() {
